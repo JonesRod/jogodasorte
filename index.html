@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login</title>
+    <link rel="stylesheet" href="entrar/lib/css/index.css">
+</head>
+<body>
+    <div class="login">
+        <form action="entrar/lib/verifica_login.php" method="POST">
+            <h3>Login</h3>
+            <input type="email" name="usuario" placeholder="E-mail" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <p>
+            <a style="margin-right:10px;" href="entrar/lib/Recupera_Senha.php">Esqueci minha Senha!</a> 
+            <a href="entrar/lib/cadastro_usuario.php">Criar Conta.</a>
+        </p>
+    </div>
+    <div class="container">
+
+    </div>
+</body>
+</html>

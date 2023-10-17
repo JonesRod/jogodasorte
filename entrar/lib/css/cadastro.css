@@ -1,0 +1,143 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+#login {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
+
+}
+
+#ititulo {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#msg {
+    color: red;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    margin-left: 15px;
+}
+#primeiro_nome{
+    width: 85%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    margin-left: 15px;
+}
+#nascimento{
+    width: 85%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    margin-left: 15px;
+}
+#nome_completo{
+    width: 85%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    margin-left: 15px;
+}
+#email{
+    width: 85%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    margin-left: 15px;
+}
+#senhaInput1{
+    width: 85%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    margin-left: 15px;
+}
+#senhaInput2{
+    width: 85%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    margin-left: 15px;
+}
+
+#senhaInputContainer {
+    position: relative;
+}
+
+#toggleSenha1 {
+    position: absolute;
+    right: 0px;
+    top: 30%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+#toggleSenha2 {
+    position: absolute;
+    right: 0px;
+    top: 85%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
