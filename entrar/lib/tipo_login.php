@@ -19,7 +19,7 @@
                 $_SESSION['admin']; 
 
                 $id = $_SESSION['usuario'];
-                $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+                $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
                 $usuario = $sql_query->fetch_assoc(); 
                 //header("Location: paginas/administrativo/admin_home.php");     
             }else{
@@ -49,7 +49,7 @@
                 $_SESSION['admin']; 
 
                 $id = $_SESSION['usuario'];
-                $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+                $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
                 $usuario = $sql_query->fetch_assoc(); 
                 //header("Location: paginas/administrativo/admin_home.php");     
             }else{
@@ -84,7 +84,7 @@
 </head>
 <body>
     <main>
-        <h2>Olá, <?php echo $usuario['apelido']; ?></h2>
+        <h2>Olá, <?php echo $usuario['primeiro_nome']; ?></h2>
         <h3>Escolha o tipo de login:</h3>
         <form id="escolherLoginForm" method="POST" action="paginas/administrativo/admin_home.php" onsubmit="return resposta()">
             <label>
@@ -104,10 +104,10 @@
             var escolha = document.querySelector('input[name="tipoLogin"]:checked').value;
             //console.log(escolha);
             if (escolha === "1") {
-                //document.getElementById("iresposta").href="../paginas/admin_home.php";
+                document.getElementById("iresposta").href="../paginas/admin_home.php";
                 document.getElementById("iresposta").click();
             } else if (escolha === "0") {
-                //document.getElementById("iresposta").href="../paginas/usuario_home.php";
+                document.getElementById("iresposta").href="../paginas/usuario_home.php";
                 document.getElementById("iresposta").click();
             }
         }

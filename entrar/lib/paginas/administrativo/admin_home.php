@@ -29,7 +29,7 @@
                         $_SESSION['admin'];  
                         
                         $id = $_SESSION['usuario'];
-                        $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+                        $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->$error);
                         $usuario = $sql_query->fetch_assoc();    
                     }else{
                         //echo '8';
@@ -58,7 +58,7 @@
             $_SESSION['admin'];  
     
             $id = $_SESSION['usuario'];
-            $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+            $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
             $usuario = $sql_query->fetch_assoc();    
     
         }else{
@@ -76,7 +76,7 @@
         $_SESSION['admin'];  
 
         $id = $_SESSION['usuario'];
-        $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+        $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
         $usuario = $sql_query->fetch_assoc();    
 
     }else{
@@ -101,7 +101,7 @@
                     $_SESSION['admin'];  
 
                     $id = $_SESSION['usuario'];
-                    $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+                    $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
                     $usuario = $sql_query->fetch_assoc();    
 
                 }else{
@@ -160,7 +160,7 @@
             <div class="iconeMenu"></div>
         </div> 
         <div id="iusuario"> 
-            <a> Olá, <?php echo $usuario['apelido']; ?></a> 
+            <a> Olá, <?php echo $usuario['primeiro_nome']; ?></a> 
         </div> 
     </div>
     <div class="titulo">

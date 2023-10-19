@@ -8,7 +8,7 @@
     if(isset($_SESSION['usuario'])){
         $usuario = $_SESSION['usuario'];
         $id = $_SESSION['usuario'];
-        $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+        $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
         $usuario = $sql_query->fetch_assoc(); 
 
     } else {
@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="usuario_home.css">
     <script>
         //atualiza a pagian a cada 10 min
-        setTimeout(function() {
+        /*setTimeout(function() {
             location.reload();
         }, 100000);
         
@@ -49,31 +49,33 @@
         // Carregar a página de início ao carregar a página
         window.onload = function() {
             abrirNaDiv('inicio.php');
-        }
+        }*/
     </script>
     <title>Meu Site</title>
 </head>
 <body>
-
-    <div id="idivMenu">
+    <div class="DivTitulo">
+        <div id="titulo">
+            <H1>Jogo da Sorte</H1> 
+        </div>
+    
         <div id="imenuBtn" onclick="<?php if (!isset($_SESSION['usuario'])) { ?>
                 location.reload();
             <?php } else { ?>
                 toggleMenu();   
-            <?php } ?>">
-            <div class="iconeMenu"></div>
-            <div class="iconeMenu"></div>
-            <div class="iconeMenu"></div>
+                <?php } ?>">
+                <div class="iconeMenu"></div>
+                <div class="iconeMenu"></div>
+                <div class="iconeMenu"></div>
         </div>  
-
         <div id="iusuario">
-            <a> Olá, <?php echo $usuario['apelido']; ?></a><br>
-            <a> Status: <?php echo $usuario['status']; ?></a> 
+            <a> Olá, <?php echo $usuario['primeiro_nome']; ?></a>
+            <a href="usuario_logout.php">Sair</a>
         </div>
-    </div> 
-
-    <div class="titulo">
-        <div class="menu" id="imenu">
+        </div> 
+    </div>
+    <div class="DivMenu">
+        <div class="menu" id="menu">
             <ul id="ilista" class="lista">
                 <li><a href="#" onclick="abrirNaDiv('inicio.php');toggleMenu()">Inicío </a></li> 
                 <li><a href="#" onclick="abrirNaDiv('perfil.php');toggleMenu()">Meu Perfil </a></li>              
@@ -82,10 +84,9 @@
                 <li><a href="usuario_logout.php">Sair</a></li>
             </ul> 
         </div> 
-        <div id="ititulo">
-            <H1>Associação 40Ribas</H1> 
-        </div>
-    </div>
+
+    </div> 
+
     <div class="container">
         <div class="conteudo" id="iconteudo">
             <!-- Conteúdo central (dados escolhidos) -->

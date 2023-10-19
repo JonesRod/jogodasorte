@@ -87,7 +87,7 @@
                         $msg1 = "Cadastrado com sucesso.";
                         $msg2 = '';
                         //Atualiza a pagina em 5s e redireciona apagina
-                        header("refresh: 5; ../../index.html"); 
+                        header("refresh: 5; ../../index.php"); 
                     } else {
                         // Se houver um erro na consulta
                         die($conn->error); 
@@ -111,7 +111,7 @@
                         $msg1 = "Cadastrado com sucesso.";
                         $msg2 = '';
                         //Atualiza a pagina em 5s e redireciona apagina
-                        header("refresh: 5; ../../index.html"); 
+                        header("refresh: 5; ../../index.php"); 
                     } else {
                         // Se houver um erro na consulta
                         die($conn->error); 
@@ -196,7 +196,7 @@
             </div>
         </p>
         <p>
-            <a href="../../index.html">Voltar para tela de login</a>
+            <a href="../../index.php">Voltar para tela de login</a>
             <button type="submit">Cadastrar</button>
         </p>
     </form>

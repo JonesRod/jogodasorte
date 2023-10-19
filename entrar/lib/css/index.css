@@ -1,24 +1,103 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
 }
 
-.container {
-    text-align: center;
+.cabecalho {
+    overflow: hidden; /* Limpa o float */
+    background-color: chartreuse;
+    width: 100%; /* Garante que a div ocupe 100% da largura do pai */
+    box-sizing: border-box; /* Mantém o padding dentro da largura total */
 }
-
-input, button {
-    margin: 5px;
+.titulo {
+    background-color: chartreuse;
+    float: left; /* Faz com que a div "titulo" flutue à esquerda */
+    margin-top: 0px; /* Adicione margens conforme necessário */
+    color: rgb(11, 141, 4);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
+    padding-top: 0px;
+}
+.login{
+    float: right; /* Faz com que a div "login" flutue à direita */
+    text-align: right;
+    background-color: chartreuse;
+    justify-content: right;/*height: 10vh;*/
+    align-items: right;
+}
+form{
+    overflow: hidden; /* Limpa o float */
+    background-color: chartreuse;
+    justify-content: right;
+    align-items: center;
+}
+.login p{
+    display: flex;
+    justify-content: right;
+    padding-right: 50px;
+    margin-top: 0px;
+    background-color:chartreuse;
+
+}
+.Esq-Cri{
+    margin-right: 50px;
+    margin-bottom: 5px;
+    color: black;
+}
+.Esq-Cri:hover{
+    color: rgba(244, 164, 6, 0.942);
 }
 
-button {
+label, input, button{
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.email{
+    width: 250px;
+    font-size: 15px;
+    border: none;
+}
+.senha{
+    width: 100px;
+    font-size: 15px;
+    border: none;
+}
+#eye {
+    padding: 5px;
+    stroke-width: 5; /* Ajuste a largura da linha conforme necessário */
+}
+.entrar {
     background-color: #007bff;
     color: #fff;
     border: none;
     cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+    /*font-size: auto;*/
+    transition: transform 0.3s;
+    margin-right: 10px;
+}
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+    transform: translateY(5px); /* Ajuste o valor conforme necessário */
+}
+button:hover{
+    background-color: rgba(244, 164, 6, 0.942);
+    transform: scale(1.2);
+}
+.container {
+    text-align: center;
+    align-items: center;
+    border: 1px solid;
+    /*width: 1000px;
+    /*position: absolute;/*inicio*/
+    /*top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);/*fim*/
 }
