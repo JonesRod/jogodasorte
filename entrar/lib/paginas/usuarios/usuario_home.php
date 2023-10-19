@@ -26,8 +26,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="usuario_home.css">
+    <!--<link rel="stylesheet" href="usuario_home.css">-->
+    <style>
+        @charset "UTF-8";
+        /* Estilos para todos os dispositivos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #fff;
+            /*height: 60vh; /* Isso garante que o corpo ocupa 100% da altura da tela */
+        }
+
+        .cabecalho {
+            background-color: chartreuse;
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            justify-content: space-between; /* Distribui o espaço entre os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+            }
+
+            #titulo {
+                flex: 1; /* Ocupa o espaço disponível restante */
+            }
+
+            .usuario #ola{
+                display: flex; /* Ativa o layout flexível para os elementos filhos */
+                align-items: center; /* Alinha os elementos verticalmente no centro */
+                margin-top: -10px;
+                margin-right: 10px;
+            }
+
+            .usuario #sair {
+                display: flex; /* Ativa o layout flexível para os elementos filhos */
+                align-items: right; /* Alinha os elementos verticalmente no centro */
+                /*margin-top: -20px;*/
+                margin-left: 80px;
+            }
+
+            .material-symbols-outlined {
+                margin-right: 10px; /* Adiciona algum espaço entre os elementos span */
+                cursor: pointer; /* Define o cursor para parecer um link clicável */
+            }
+
+            .material-symbols-outlined:last-child {
+                margin-right: 0; /* Remove a margem à direita do último elemento span */
+            }
+
+            .material-symbols-outlined {
+                font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+            }
+            .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+            }
+
+
+            footer {
+                background: #333;
+                color: #fff;
+                padding: 10px 0;
+                text-align: center;
+            }
+
+            footer ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            footer ul li {
+                display: inline;
+                margin-right: 10px;
+            }
+
+            footer ul li a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .bottom-bar {
+                background: #222;
+                padding: 5px 0;
+                text-align: center;
+            }
+
+            .bottom-bar p {
+                margin: 0;
+            }
+
+            /* Estilos para Links */
+            a {
+                color: #333;
+                text-decoration: none;
+            }
+
+            a:hover {
+                color: #555;
+            }
+        /* Estilos para notebooks e desktops */
+        @media screen and (min-width: 768px) {
+            .cabecalho {
+            background-color: chartreuse;
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            justify-content: space-between; /* Distribui o espaço entre os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+            }
+
+            #titulo {
+                flex: 1; /* Ocupa o espaço disponível restante */
+            }
+
+            .usuario #ola{
+                display: flex; /* Ativa o layout flexível para os elementos filhos */
+                align-items: center; /* Alinha os elementos verticalmente no centro */
+                margin-top: -10px;
+                margin-right: 10px;
+            }
+
+            .usuario #sair {
+                display: flex; /* Ativa o layout flexível para os elementos filhos */
+                align-items: right; /* Alinha os elementos verticalmente no centro */
+                /*margin-top: -20px;*/
+                margin-left: 80px;
+            }
+
+            .material-symbols-outlined {
+                margin-right: 10px; /* Adiciona algum espaço entre os elementos span */
+                cursor: pointer; /* Define o cursor para parecer um link clicável */
+            }
+
+            .material-symbols-outlined:last-child {
+                margin-right: 0; /* Remove a margem à direita do último elemento span */
+            }
+
+            .material-symbols-outlined {
+                font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+            }
+            .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+            }
+
+
+            footer {
+                background: #333;
+                color: #fff;
+                padding: 10px 0;
+                text-align: center;
+            }
+
+            footer ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            footer ul li {
+                display: inline;
+                margin-right: 10px;
+            }
+
+            footer ul li a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .bottom-bar {
+                background: #222;
+                padding: 5px 0;
+                text-align: center;
+            }
+
+            .bottom-bar p {
+                margin: 0;
+            }
+
+            /* Estilos para Links */
+            a {
+                color: #333;
+                text-decoration: none;
+            }
+
+            a:hover {
+                color: #555;
+            }
+        }
+        /* Estilos para Tablet */
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+
+        }
+        /* Estilos para iPhone*/
+        @media screen and (max-width: 767px)  {
+
+        }
+
+        /* Estilos para tablets e dispositivos com telas médias a grandes */
+        @media screen and (min-width: 481px) and (max-width: 1024px) {
+            
+        }
+
+        /* Estilos para dispositivos de alta resolução (como Retina) */
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            
+        }
+
+
+    </style>
     <script>
         //atualiza a pagian a cada 10 min
         /*setTimeout(function() {
@@ -54,25 +272,19 @@
     <title>Meu Site</title>
 </head>
 <body>
-    <div class="DivTitulo">
+    <div class="cabecalho">
         <div id="titulo">
-            <H1>Jogo da Sorte</H1> 
-        </div>
-    
-        <div id="imenuBtn" onclick="<?php if (!isset($_SESSION['usuario'])) { ?>
-                location.reload();
-            <?php } else { ?>
-                toggleMenu();   
-                <?php } ?>">
-                <div class="iconeMenu"></div>
-                <div class="iconeMenu"></div>
-                <div class="iconeMenu"></div>
-        </div>  
-        <div id="iusuario">
-            <a> Olá, <?php echo $usuario['primeiro_nome']; ?></a>
-            <a href="usuario_logout.php">Sair</a>
-        </div>
+            <H2>Jogo da Sorte</H2> 
         </div> 
+        <div class="usuario">
+            <div id="ola">
+                <a> Olá, <?php echo $usuario['primeiro_nome']; ?></a>
+                <span class="material-symbols-outlined">menu</span>                
+            </div>
+            <div id="sair">
+                <span class="material-symbols-outlined">logout</span>              
+            </div>
+        </div>
     </div>
     <div class="DivMenu">
         <div class="menu" id="menu">
@@ -84,7 +296,7 @@
                 <li><a href="usuario_logout.php">Sair</a></li>
             </ul> 
         </div> 
-
+ <a href="usuario_logout.php">Sair</a>
     </div> 
 
     <div class="container">
