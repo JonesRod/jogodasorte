@@ -1,0 +1,49 @@
+button:hover{
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: rgba(244, 164, 6, 0.942);
+    transform: scale(1.2);
+}
+/*.container {
+    display: block;
+    text-align: center;
+    align-items: center;
+    height: 80vh;
+    width: 100%; 
+}*/
+.container {
+    /*height: 100vh;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Adicionado para empilhar os elementos verticalmente */
+}
+.conteudo {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100%; 
+}
+
+.botoes button {
+    display: block;
+    width: 150px; /* Define a largura dos botões */
+    height: 50px; /* Define a altura dos botões */
+    margin: 30px;
+    border: none;
+    background-color: #4CAF50; /* Define a cor de fundo */
+    color: white; /* Define a cor do texto */
+    font-size: 16px; /* Define o tamanho da fonte */
+    border-radius: 5px; /* Adiciona bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
+}
+.botoes button:hover {
+    background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
+    cursor: pointer;
+}
+
+.botoes button:focus {
+    outline: none; /* Remove o contorno ao focar no botão */
+}

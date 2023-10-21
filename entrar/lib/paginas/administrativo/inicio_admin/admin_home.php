@@ -1,5 +1,5 @@
 <?php
-    include('../../conexao.php');
+    include('../../../conexao.php');
     //echo '1';
     //die();
     if(!isset($_SESSION)){
@@ -20,7 +20,7 @@
                     if($admin == 0){
                         //echo '6';
                         $_SESSION['usuario'];
-                        header("Location: ../usuarios/usuario_home.php");       
+                        header("Location: ../../usuarios/inicio_usuario/usuario_home.php");       
                     }else if($admin == 1){
                         //echo '7';
                         $usuario = $_SESSION['usuario'];

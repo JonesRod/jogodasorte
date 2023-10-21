@@ -109,13 +109,13 @@ button:hover{
     width: 100%; 
 }*/
 .container {
-    /*height: 100vh;*/
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column; /* Adicionado para empilhar os elementos verticalmente */
 }
-.conteudo {
+/*.conteudo {
     display: block;
     justify-content: center;
     align-items: center;
@@ -125,15 +125,15 @@ button:hover{
 .botoes button {
     display: block;
     width: 150px; /* Define a largura dos botões */
-    height: 50px; /* Define a altura dos botões */
-    margin: 30px;
+/*    height: 50px; /* Define a altura dos botões */
+/*    margin: 30px;
     border: none;
     background-color: #4CAF50; /* Define a cor de fundo */
-    color: white; /* Define a cor do texto */
-    font-size: 16px; /* Define o tamanho da fonte */
-    border-radius: 5px; /* Adiciona bordas arredondadas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
-}
+/*    color: white; /* Define a cor do texto */
+/*    font-size: 16px; /* Define o tamanho da fonte */
+/*    border-radius: 5px; /* Adiciona bordas arredondadas */
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
+/*}*/
 .botoes button:hover {
     background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
     cursor: pointer;

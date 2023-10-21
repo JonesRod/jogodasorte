@@ -1,5 +1,5 @@
 <?php
-    include('../../conexao.php');
+    include('../../../conexao.php');
 
     if(!isset($_SESSION)){
         session_start(); 
@@ -34,14 +34,14 @@
         //atualiza a pagian a cada 10 min
         /*setTimeout(function() {
             location.reload();
-        }, 100000);
+        }, 100000);*/
         
         // Função para carregar o conteúdo na div
         function abrirNaDiv(pagina) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("iconteudo").innerHTML = this.responseText;
+                    document.getElementById("conteudo").innerHTML = this.responseText;
                 }
             };
             xhttp.open("GET", pagina, true);
@@ -51,8 +51,23 @@
         // Carregar a página de início ao carregar a página
         window.onload = function() {
             abrirNaDiv('inicio.php');
-        }*/
-        
+        }
+        function toggleMenu() {
+            $('#menu').toggleClass('aberto');
+        }
+        function abrirNaDiv(link) {
+            var div = document.getElementById('conteudo');
+            div.innerHTML = '<object type="text/html" data="' + link + '" style="width:100%; height:100%;">';
+        }
+        /*document.getElementById('logoutIcon').addEventListener('click', function() {
+            window.location.href = 'usuario_logout.php';
+        });*/
+        function fazerLogout() {
+            window.location.href = 'usuario_logout.php';
+        }
+        function atualizarPagina() {
+            location.reload(); // Recarrega a página
+        }
 
     </script>
     <title>Meu Site</title>
@@ -68,7 +83,7 @@
                 <a><strong> Olá, <?php echo $usuario['primeiro_nome']; ?></strong></a>          
             </div>
             <div id="sair">
-                <span class="material-symbols-outlined" id="logoutIcon">logout</span>              
+                <span class="material-symbols-outlined" id="logoutIcon" onclick="fazerLogout()">logout</span>              
             </div>
         </div>
     </div>
@@ -76,20 +91,10 @@
         <ul id="lista" class="lista">
             <li><a href="#" onclick="abrirNaDiv('inicio.php');toggleMenu()">Inicío </a></li> 
             <li><a href="#" onclick="abrirNaDiv('perfil.php');toggleMenu()">Meu Perfil </a></li>              
-            <li><a href="#" onclick="abrirNaDiv('CarregarMensalidades.php');toggleMenu()">Minhas Mensalidades</a></li>
-            <li><a href="#" onclick="abrirNaDiv('Carregar_joia.php');toggleMenu()">Jóia</a></li>
         </ul> 
     </div> 
-    <div class="container">
-        <div class="conteudo" id="conteudo">
-            <p>Istruções</p>
-            <p>hhhh</p>
-            <p>gggg</p>
-        </div>
-        <div class="botoes">
-            <button>Lotofácil</button>
-            <button>Mega Sena</button>            
-        </div>
+    <div class="container" id="conteudo">
+        <!--conteudo á ser carregado-->
     </div>
     <script src="usuario_home.js"></script>
 </body>

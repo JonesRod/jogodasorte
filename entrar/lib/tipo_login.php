@@ -10,7 +10,7 @@
             
             if($admin == 0){
                 $_SESSION['usuario'];
-                header("Location: paginas/usuario_home.php"); 
+                header("Location: paginas/usuarios/inicio_usuario/usuario_home.php"); 
 
             }else if($admin == 1){
                 $usuario = $_SESSION['usuario'];
@@ -40,7 +40,7 @@
             
             if($admin == 0){
                 $_SESSION['usuario'];
-                header("Location: paginas/usuario_home.php"); 
+                header("Location: paginas/usuarios/inicio_usuario/usuario_home.php"); 
 
             }else if($admin == 1){
                 $usuario = $_SESSION['usuario'];
@@ -86,14 +86,14 @@
     <main>
         <h2>Olá, <?php echo $usuario['primeiro_nome']; ?></h2>
         <h3>Escolha o tipo de login:</h3>
-        <form id="escolherLoginForm" method="POST" action="paginas/administrativo/admin_home.php" onsubmit="return resposta()">
+        <form id="escolherLoginForm" method="POST" action="paginas/administrativo/inicio_admin/admin_home.php" onsubmit="return resposta()">
             <label>
                 <input type="radio" name="tipoLogin" value="1"> Admin
             </label>
             <label>
                 <input type="radio" name="tipoLogin" value="0"> Usuário
             </label>
-            <a id="iresposta" href="outra-pagina.html" type="hidden"></a>
+            <a id="resposta" href="outra-pagina.html" type="hidden"></a>
 
             <button type="submit" onclick="responder()">Logar</button><!---->
         </form>
@@ -104,11 +104,11 @@
             var escolha = document.querySelector('input[name="tipoLogin"]:checked').value;
             //console.log(escolha);
             if (escolha === "1") {
-                document.getElementById("iresposta").href="../paginas/admin_home.php";
-                document.getElementById("iresposta").click();
+                document.getElementById("resposta").href="paginas/administrativo/inicio_admin/admin_home.php";
+                document.getElementById("resposta").click();
             } else if (escolha === "0") {
-                document.getElementById("iresposta").href="../paginas/usuario_home.php";
-                document.getElementById("iresposta").click();
+                document.getElementById("resposta").href="paginas/usuarios/inicio_usuario/usuario_home.php";
+                document.getElementById("resposta").click();
             }
         }
         
