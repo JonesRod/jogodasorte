@@ -75,7 +75,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    <link rel="stylesheet" href="entrar/lib/css/index.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    
+    <link rel="stylesheet" href="entrar/lib/css/index.css">
     <title>Tela de Login</title>
     <script>
         function toggleSenha() {
@@ -90,8 +91,10 @@
                 toggleSenha.textContent = 'visibility_off';
             }
         }
-    </script>
-    
+        function atualizarPagina() {
+            location.reload(); // Recarrega a página
+        }
+    </script>  
 </head>
 <body>
     <div class="cabecalho">
@@ -114,13 +117,40 @@
         </div>
     </div>
     <div class="container">
-        <div>
+        <div class="conteudo" id="conteudo">
             <p>Istruções</p>
             <p>hhhh</p>
             <p>gggg</p>
         </div>
-        <button>Lotofácil</button>
-        <button>Mega Sena</button>
+        <div class="botoes">
+            <button>Lotofácil</button>
+            <button>Mega Sena</button>            
+        </div>
     </div>
 </body>
+    <footer>
+        <div class="container-rodape">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Links Úteis</h3>
+                    <ul>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>Redes Sociais</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <p>&copy; 2023 <?php echo 'Jogo da Sorte';?>. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 </html>
