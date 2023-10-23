@@ -188,7 +188,7 @@
     </div>
     <div class="menu" id="menu">
         <ul id="lista" class="lista">
-            <li><a href="#" onclick="abrirNaDiv('../paginas_div/admin_inicio.php');toggleMenu()">Inicío</a></li>
+            <li><a href="#" onclick="abrirNaDiv('admin_inicio.php');toggleMenu()">Inicío</a></li>
             <li><a href="#" onclick="abrirNaDiv('../paginas_div/configuracoes/config.php');toggleMenu()">Configurações</a></li> 
         </ul> 
     </div> 

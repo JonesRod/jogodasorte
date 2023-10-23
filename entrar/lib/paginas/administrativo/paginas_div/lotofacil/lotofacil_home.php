@@ -1,6 +1,6 @@
 <?php
 
-    include('../../../conexao.php');
+    include('../../../../conexao.php');
 
     // Verifique se o último resultado foi registrado
     $resultado_existe = false;
@@ -344,20 +344,26 @@
                     return null; // Retornar null em caso de erro
                 });
         }
+        function abrirPaginaAddConcursoLotofacil() {
+            window.location.href = 'add_concurso_lotofacil.php';
+        }
+        function inicio_lotofacil_home() {
+            window.location.href = 'inicio_lotofacil_home.php';
+        }
 
     </script>
     <title>Lotofácil</title>
 </head>
 <body>
     <div class="conteiner">
-        <h3>Informações uteis.</h3>
+        <h2>Informações Úteis.</h2>
         <span><?php echo $msg; ?></span>
 
         <?php if(isset($msg_add) && $msg_add !== 0): ?>
             <span id="msg"><?php echo $msg_add; ?>
                 <div class="botoes">
-                    <button>Adicionar Agora</button>
-                    <button>Adicionar Depois</button>
+                    <button onclick="abrirPaginaAddConcursoLotofacil()">Adicionar Agora</button>
+                    <button onclick="inicio_lotofacil_home()">Adicionar Depois</button>
                 </div>            
             </span>
         <?php endif; ?>

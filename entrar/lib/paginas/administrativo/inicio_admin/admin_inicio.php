@@ -19,7 +19,7 @@
     </div>
     <script>
         function abrirPaginaLotofacil() {
-            window.location.href = '../lotofacil/lotofacil_home.php';
+            window.location.href = '../paginas_div/lotofacil/lotofacil_home.php';
         }
         function abrirPaginaMegaSena() {
             window.location.href = '../megasena/megasena_home.php';

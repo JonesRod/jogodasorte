@@ -73,16 +73,16 @@ body {
     border-radius: 5px;
     background-color: #1bd343; /* Cor de fundo do menu */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para o menu */
-    transition: 0.3s; /* Adiciona uma transição suave */
+    transition: 0.5s; /* Adiciona uma transição suave */
     z-index: 2; /* Coloca o menu acima do conteúdo */
 }
 
-#menu.aberto {
+/*#menu.aberto {
     background-color: #75ae6a; /* Substitua pela cor desejada */
-    margin: 3px;
+    /*margin: 3px;
     left: 0; /* Remove o valor left */
-    right: auto; /* Agora o menu está totalmente visível */
-}
+    /*right: auto; /* Agora o menu está totalmente visível */
+/*}*/
 .material-symbols-outlined:hover {
     /*background-color: #0c1701; /* Cor azul mais escura ao passar o mouse */
     /*font-size: 25px; /* Tamanho ao passar o mouse */
@@ -90,8 +90,10 @@ body {
 }
 .menu.aberto {
     background-color: #75ae6a; /* Substitua pela cor desejada */
-    right: 10px; /* Move o menu para dentro da tela quando aberto */
+    /*right: 10px; /* Move o menu para dentro da tela quando aberto */
+    left: 0;
     margin: 2px;
+    /*transform: translateY(-3px);*/
 }
 button:hover{
     margin: 5px;
