@@ -117,8 +117,6 @@
                         die($conn->error); 
                     }
                 }
-
-
             }else if(($registro ) != 0) {
                 $msg1 = '';
                 $msg2 = "Já existe um Usuario cadastrado com esse E-mail!";
@@ -131,19 +129,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    
     <link rel="stylesheet" href="css/cadastro.css">
 
     <script>
         function toggleSenha1() {
             var senhaInput1 = document.getElementById('senhaInput1');
-            var toggleSenha2 = document.getElementById('toggleSenha1');
+            var toggleSenha1 = document.getElementById('toggleSenha1');
 
             if (senhaInput1.type === 'password') {
                 senhaInput1.type = 'text';
-                toggleSenha1.textContent = '👁️';
+                toggleSenha1.textContent = 'visibility';
             } else {
                 senhaInput1.type = 'password';
-                toggleSenha1.textContent = '👁️';
+                toggleSenha1.textContent = 'visibility_off';
             }
         }
         function toggleSenha2() {
@@ -152,10 +151,10 @@
 
             if (senhaInput2.type === 'password') {
                 senhaInput2.type = 'text';
-                toggleSenha2.textContent = '👁️';
+                toggleSenha2.textContent = 'visibility';
             } else {
                 senhaInput2.type = 'password';
-                toggleSenha2.textContent = '👁️';
+                toggleSenha2.textContent = 'visibility_off';
             }
         }
     </script>
@@ -186,13 +185,13 @@
         </p>
         <p>
             <div id="senhaInputContainer">
-                <label for="">Senha: </label>
+                <label for="senhaInput1">Senha: </label>
                 <input required placeholder="Minimo 8 digitos" id="senhaInput1" value="<?php if(isset($_POST['senha'])) echo $_POST['senha']; ?>" type="password" name="senha">
-                <span id="toggleSenha1" onclick="toggleSenha1()">👁️</span>
+                <span id="toggleSenha1" class="material-symbols-outlined" onclick="toggleSenha1()">visibility_off</span>
 
-                <label for="">Confirmar Senha: </label>
+                <label for="senhaInput2">Confirmar Senha: </label>
                 <input placeholder="Minimo 8 digitos" id="senhaInput2" value="<?php if(isset($_POST['confSenha'])) echo $_POST['confSenha']; ?>" type="password" name="confSenha">
-                <span id="toggleSenha2" onclick="toggleSenha2()">👁️</span>
+                <span id="toggleSenha2" class="material-symbols-outlined" onclick="toggleSenha2()">visibility_off</span>
             </div>
         </p>
         <p>

@@ -82,6 +82,9 @@ label, input, button{
     transition: transform 0.3s;
     margin-right: 10px;
 }
+#msg{
+    color: red;
+}
 .material-symbols-outlined {
     font-variation-settings:
     'FILL' 0,
@@ -89,6 +92,9 @@ label, input, button{
     'GRAD' 0,
     'opsz' 24;
     transform: translateY(5px); /* Ajuste o valor conforme necessário */
+}
+.material-symbols-outlined:hover {
+    cursor: pointer;
 }
 button:hover{
     background-color: rgba(244, 164, 6, 0.942);

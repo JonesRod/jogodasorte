@@ -50,7 +50,7 @@
 
         // Carregar a página de início ao carregar a página
         window.onload = function() {
-            abrirNaDiv('inicio.php');
+            abrirNaDiv('usuario_inicio.php');
         }
         function toggleMenu() {
             $('#menu').toggleClass('aberto');

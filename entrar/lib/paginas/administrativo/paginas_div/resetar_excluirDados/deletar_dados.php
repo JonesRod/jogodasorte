@@ -23,7 +23,7 @@
         } else {
             session_unset();
             session_destroy(); 
-            header("Location: ../../../../../../index.php");  
+            header("Location: ../../inicio_admin/admin_logout.php");  
         }
     } else {
         if(isset($_SESSION['usuario'])){
@@ -44,7 +44,7 @@
         } else {
             session_unset();
             session_destroy(); 
-            header("Location: ../../../../../../index.php");  
+            header("Location: ../../inicio_admin/admin_logout.php");  
         }
  
     }
@@ -54,7 +54,7 @@
 
     if(isset($_POST['excluir_dados'])) {
         
-        $senha_usuario = $mysqli->escape_string($_POST['senha']);
+        $senha_usuario = $conn->escape_string($_POST['senha']);
         
         if(strlen($_POST['senha']) == 0 ) {
             $msg1= true;
@@ -63,19 +63,19 @@
             $msg2 = "Preencha sua senha.";
         } else {
 
-            $sql_code = "SELECT * FROM socios WHERE admin = '1'";
-            $sql_query =$mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->$error);
+            $sql_code = "SELECT * FROM usuarios WHERE admin = '1'";
+            $sql_query =$conn->query($sql_code) or die("Falha na execução do código SQL: " . $conn->error);
             $usuario_sessao = $sql_query->fetch_assoc();
             $quantidade = $sql_query->num_rows;//retorna a quantidade encontrado
 
             if(($quantidade ) >= 1) {
 
                 if(password_verify($senha_usuario, $usuario_sessao['senha'])) {
-                                        //pega os Nomes dos dados de acesso do banco
-                    $localhost = $mysqli->real_escape_string($host);
-                    $usuario_log = $mysqli->real_escape_string($usuario);
-                    $senha_log = $mysqli->real_escape_string($senha);
-                    $database = $mysqli->real_escape_string($banco);
+                    //pega os Nomes dos dados de acesso do banco
+                    $localhost = $conn->real_escape_string($host);
+                    $usuario_log = $conn->real_escape_string($usuario);
+                    $senha_log = $conn->real_escape_string($senha);
+                    $database = $conn->real_escape_string($banco);
 
                     // Defina as credenciais do banco de dados
                     //$host = "localhost";
@@ -83,14 +83,14 @@
                     //$senha = "";
                     //$banco = "associacao_40ribas";
 
-                    $mysqli = new mysqli($localhost, $usuario_log, $senha_log, $database);
+                    $conn = new mysqli($localhost, $usuario_log, $senha_log, $database);
 
-                    if ($mysqli->connect_error) {
-                        die("Falha na conexão: " . $mysqli->connect_error);
+                    if ($conn->connect_error) {
+                        die("Falha na conexão: " . $conn->connect_error);
                     }
 
                     $backupFile = 'backup_' . date('Y-m-d') . '.sql';
-                    $database = $mysqli->real_escape_string($banco);
+                    $database = $conn->real_escape_string($banco);
 
                     //var_dump($usuario);
                     //var_dump($senha);
@@ -113,12 +113,12 @@
                     
                     if ($return === 0) {
                         // Excluir todos os dados das tabelas
-                        $tables = $mysqli->query("SHOW TABLES");
+                        $tables = $conn->query("SHOW TABLES");
 
                         while ($row = $tables->fetch_row()) {
                             $table = $row[0];
-                            $mysqli->query("DELETE FROM $table");
-                            $mysqli->query("ALTER TABLE $table AUTO_INCREMENT = 1");
+                            $conn->query("DELETE FROM $table");
+                            $conn->query("ALTER TABLE $table AUTO_INCREMENT = 1");
                         }
 
                         $msg1 = "Backup criado e todos os dados foram excluídos e os IDs foram reiniciados.";
@@ -140,7 +140,7 @@
                     } else {
                         $msg1 = ""; 
                         $msg2 = "Erro ao realizar o backup.";
-                        header("refresh: 5;../inicio.php"); 
+                        header("refresh: 5;../../inicio_admin/admin_inicio.php"); 
                     }
 
                 }else{
@@ -152,7 +152,7 @@
                 $msg = "";  
                 //echo 'oii';
                 // Fecha a conexão
-                $mysqli->close();
+                $conn->close();
             }
         }
     } 
@@ -162,107 +162,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Resetar Sócios</title>
-    <style>
-        
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-        }
-
-        #iform {
-            max-width: 400px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
-
-        }
-
-        #ititulo {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        #msg1 {
-            color: green;
-        }
-
-        #msg2 {
-            color: red;
-        }
-
-        label {
-            font-size: 16px;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            text-align: left;
-            margin-left: 15px;
-        }
-
-        #senhaInput{
-            width: 85%;
-            padding: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            text-align: left;
-            display: block;
-            margin-left: 15px;
-        }
-
-        #senhaInputContainer {
-            position: relative;
-        }
-
-        #toggleSenha {
-            position: absolute;
-            right: 0px;
-            top: 75%;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007bff;
-            font-size: 16px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="deletar_dados.css">
+    <title>Resetar Dados</title>
     <script>
         function toggleSenha() {
-            var senhaInput = document.getElementById('senhaInput');
+            var senhaInput = document.getElementById('senha');
             var toggleSenha = document.getElementById('toggleSenha');
 
             if (senhaInput.type === 'password') {
                 senhaInput.type = 'text';
-                toggleSenha.textContent = '👁️';
+                toggleSenha.textContent = 'visibility';
             } else {
                 senhaInput.type = 'password';
-                toggleSenha.textContent = '👁️';
+                toggleSenha.textContent = 'visibility_off';
             }
         }
     </script>
@@ -281,14 +195,14 @@
         <p>
             <div id="senhaInputContainer">
                 <label for="">Senha do admin: </label>
-                <input required placeholder="Minimo 8 digitos" id="senhaInput" value="<?php if(isset($_POST['senha'])) echo $_POST['senha']; ?>" type="password" name="senha">
-                <span id="toggleSenha" onclick="toggleSenha()">👁️</span>
+                <input required placeholder="Minimo 8 digitos" id="senha" value="<?php if(isset($_POST['senha'])) echo $_POST['senha']; ?>" type="password" name="senha">
+                <span id="toggleSenha" class="material-symbols-outlined" onclick="toggleSenha()">visibility_off</span>
             </div>
         </p>
         <p>
             <button type="submit" name="excluir_dados">Excluir Todos os Dados</button>
         </p>
     </form>
-    <a href="../inicio.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
+    <a href="../configuracoes/config.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
 </body>
 </html>

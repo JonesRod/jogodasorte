@@ -22,16 +22,24 @@
 
    if(isset($_POST['email']) || isset($_POST['senha'])) {
 
-        $email = $conn->escape_string($_POST['email']);//$mysqli->escape_string SERVE PARA PROTEGER O ACESSO 
-        $cpf = $conn->escape_string($_POST['email']);
-        $senha = $conn->escape_string($_POST['senha']);
-        var_dump($_POST);
+        $sql_primeiro_registro = "SELECT * FROM usuarios";
+        $registros = $conn->query($sql_primeiro_registro) or die("Falha na execução do código SQL: " . $conn->error);
 
-        //echo "oii";
-        /*if(isset($_SESSION['email']) || isset($_POST['senha'])){
-            $email = $_SESSION['email'];
-            $senha = password_hash($_SESSION['senha'], PASSWORD_DEFAULT);
-            //$conn->query("INSERT INTO senha (email, senha, cpf) VALUES('$email','$senha','$cpf')");*/
+        // Verifica se existem registros na tabela 'socios'
+        if ($registros->num_rows == 0) {
+            $msg = "Primeiro Usúario á se cadastrar.";
+            header("refresh: 5; entrar/lib/cadastro_usuario.php");
+        }else{
+            $email = $conn->escape_string($_POST['email']);//$mysqli->escape_string SERVE PARA PROTEGER O ACESSO 
+            $cpf = $conn->escape_string($_POST['email']);
+            $senha = $conn->escape_string($_POST['senha']);
+            //var_dump($_POST);
+
+            //echo "oii";
+            /*if(isset($_SESSION['email']) || isset($_POST['senha'])){
+                $email = $_SESSION['email'];
+                $senha = password_hash($_SESSION['senha'], PASSWORD_DEFAULT);
+                //$conn->query("INSERT INTO senha (email, senha, cpf) VALUES('$email','$senha','$cpf')");*/
 
             $verifica = "SELECT * FROM usuarios WHERE email = '$email' LIMIT 1";
             $sql_verifiva =$conn->query($verifica) or die("Falha na execução do código SQL: " . $conn->error);
@@ -63,12 +71,11 @@
                     //echo $msg;
                 }
             }else{
-                $msg = "O Usúario informado não esta correto ou não está cadastrado!";
-                $conn->close();
-            }
-        //}
+                $msg = "O Usúario informado não esta correto ou não está cadastrado!<a class='Esq-Cri' href='entrar/lib/cadastro_usuario.php'>Cadastre-se.</a>";
+            }            
+        }
     }
-    //$mysqli->close();
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -103,13 +110,20 @@
         </div> 
         <div class="login">
             <form action="" method="POST">
+
+                <span id="msg"><?php echo $msg; ?></span>
+
                 <label>Login</label>
-                <input class="email" id="email" type="email" name="email" placeholder="E-mail" required>
-                <input class="senha" id="senha" type="password" name="senha" placeholder="Senha" required>
+
+                <input class="email" id="email" type="email" name="email" placeholder="E-mail" required 
+                value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>">
+
+                <input class="senha" id="senha" type="password" name="senha" placeholder="Senha" required 
+                value="<?php if(isset($_POST['senha'])) echo $_POST['senha']; ?>">
+
                 <span id="toggleSenha" class="material-symbols-outlined" onclick="toggleSenha()">visibility_off</span>
                 <button class="entrar" type="submit">Entrar</button>
             </form>
-            <span><?php echo $msg; ?></span>
             <p>
                 <a class="Esq-Cri" href="entrar/lib/Recupera_Senha.php">Esqueci minha Senha!</a> 
                 <a class="Esq-Cri" href="entrar/lib/cadastro_usuario.php">Criar Conta.</a>
@@ -119,8 +133,6 @@
     <div class="container">
         <div class="conteudo" id="conteudo">
             <p>Istruções</p>
-            <p>hhhh</p>
-            <p>gggg</p>
         </div>
         <div class="botoes">
             <button>Lotofácil</button>

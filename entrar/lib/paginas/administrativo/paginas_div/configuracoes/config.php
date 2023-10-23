@@ -1,5 +1,5 @@
 <?php
-    include('../../../conexao.php');
+    include('../../../../conexao.php');
 
     if(!isset($_SESSION)){
         session_start(); 
@@ -11,11 +11,11 @@
             $_SESSION['admin']; 
 
             $id = $_SESSION['usuario'];
-            $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+            $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
             $usuario = $sql_query->fetch_assoc(); 
 
             $id = '1';
-            $dados = $mysqli->query("SELECT * FROM config_admin WHERE id = '$id'") or die($mysqli->$error);
+            $dados = $conn->query("SELECT * FROM config_admin WHERE id = '$id'") or die($conn->error);
             $dadosEscolhido = $dados->fetch_assoc();
         
             //$logo = $dadosEscolhido['logo'];
@@ -28,7 +28,7 @@
                     $logo = '../arquivos/IMG-20230811-WA0040.jpg';
                 }
             }
-            $mysqli->close();
+            $conn->close();
         }else{
             session_unset();
             session_destroy();
@@ -42,11 +42,11 @@
             $_SESSION['admin']; 
 
             $id = $_SESSION['usuario'];
-            $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+            $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
             $usuario = $sql_query->fetch_assoc(); 
 
             $id = '1';
-            $dados = $mysqli->query("SELECT * FROM config_admin WHERE id = '$id'") or die($mysqli->$error);
+            $dados = $conn->query("SELECT * FROM config_admin WHERE id = '$id'") or die($conn->error);
             $dadosEscolhido = $dados->fetch_assoc();
         
             //$logo = $dadosEscolhido['logo'];
@@ -54,16 +54,16 @@
                 $logo = $dadosEscolhido['logo'];
                 //echo 'ooi';
                 if($logo == ''){
-                    $logo = '../../arquivos_fixos/IMG-20230811-WA0040.jpg';
+                    $logo = '../../../arquivos_fixos/IMG-20230811-WA0040.jpg';
                 }else{
-                    $logo = '../arquivos/IMG-20230811-WA0040.jpg';
+                    $logo = '../../arquivos/IMG-20230811-WA0040.jpg';
                 }
             }
-            $mysqli->close();
+            $conn->close();
         }else{
             session_unset();
             session_destroy();
-            header("Location: ../admin_logout.php");             
+            header("Location: ../../inicio_admin/admin_logout.php");             
         }
     }
 
@@ -74,14 +74,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="admin_config.css">
+    <link rel="stylesheet" href="config.css">
     <title>Configuração</title>
 </head>
 <body>
 
-    <h1 id="ititulo" >Configurações do Administrador</h1>
+    <h3 id="ititulo" >Configurações do Administrador</h3>
     
-    <form id="meuFormulario" action="admin_altera_dados.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
+    <form id="meuFormulario" action="altera_config.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
         <fieldset class="partes">
             <p>
                 <img class="imagens" id="ilogo" style="max-width: 200px;" src= "<?php echo $logo; ?>" name="logo_antiga" alt=""><br>
@@ -284,11 +284,11 @@
             <p>
                 <span id="imsgAlerta"></span><br>
                 <!-- Link de voltar -->
-                <a href="inicio.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
+                <a href="../../inicio_admin/admin_inicio.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
                 <!--onclick="perguntarSalvar(); return false;"-->
-                <a href="resetar_excluirDados/backup.php"  style="margin-left: 10px; margin-right: 10px;">Backup</a>
-                <a href="resetar_excluirDados/deletar_dados.php"  style="margin-left: 10px; margin-right: 10px;">Excluir Todos os Dados</a>
-                <a href="importar_exportar/importar.php"  style="margin-left: 10px; margin-right: 10px;">Importar/Exportar</a>
+                <a href="../resetar_excluirDados/backup.php"  style="margin-left: 10px; margin-right: 10px;">Backup</a>
+                <a href="../resetar_excluirDados/deletar_dados.php"  style="margin-left: 10px; margin-right: 10px;">Excluir Todos os Dados</a>
+                <a href="../importar_exportar/importar.php"  style="margin-left: 10px; margin-right: 10px;">Importar/Exportar</a>
 
                 <button type="submit">Salvar</button>
             </p>
