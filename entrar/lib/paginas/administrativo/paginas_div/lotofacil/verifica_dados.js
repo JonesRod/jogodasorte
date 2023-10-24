@@ -22,6 +22,33 @@ function validarDezena(input) {
         value = ''; // Define o valor para 25
     }
     input.value = value;
+
+    // Verifica se há números iguais em todos os campos
+    let inputs = document.querySelectorAll('.dez input');
+    let numeros = [];
+    for (let i = 0; i < inputs.length; i++) {
+        let num = parseInt(inputs[i].value, 10);
+        if (!isNaN(num)) {
+            numeros.push(num);
+        }
+    }
+
+    if (numeros.length !== new Set(numeros).size) {
+        alert("Os números não podem ser iguais.");
+        input.value = "";
+    }
+
+    // Ordena os números
+    numeros.sort(function(a, b) {
+        return a - b;
+    });
+
+    // Atualiza os valores dos inputs com os números ordenados
+    for (let i = 0; i < inputs.length; i++) {
+        if (!isNaN(numeros[i])) {
+            inputs[i].value = numeros[i];
+        }
+    }
 }
 
 function validarData(data) {
