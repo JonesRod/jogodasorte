@@ -42,6 +42,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,12 +77,24 @@
         #msg2 h3{
             color: #333;
         }
+        .dados {
+            display: flex;
+            align-items: center;
+        }
 
-        #msg2 label {
+        .dados label {
+            flex: 0 0 auto; /* A label não será flexível e manterá seu tamanho natural */
+            margin-right: 10px; /* Espaço entre a label e o input */
+        }
+
+        .dados input {
+            flex: 1; /* O input será flexível e ocupará o espaço restante disponível */
+        }
+        #msg2 label{
             color: #333;
             font-size: 16px;
             font-weight: bold;
-            display: block;
+            display: flex;
             margin-bottom: 5px;
             text-align: left;
             margin-left: 15px;
@@ -93,8 +108,34 @@
             border-radius: 5px;
             font-size: 16px;
             text-align: left;
-            display: block;
+            display: flex;
             margin-left: 15px;
+        }
+        .dados_acumulado {
+            text-align: center;
+        }
+
+        .dados_acumulado label {
+            display: block;
+        }
+
+        .dados_acumulado input {
+            width: 93%;
+        }
+
+        .conjunto .dez {
+            display: inline-block;
+            margin-right: 3px; /* Adiciona algum espaço entre os elementos */
+        }
+
+        .conjunto .dez label {
+            text-align: center;
+            display: inline-block;
+            width: 55px; /* Ajuste a largura conforme necessário */
+        }
+
+        .conjunto .dez input {
+            width: 40px; /* Ajuste a largura conforme necessário */
         }
 
         button {
@@ -107,7 +148,6 @@
             border-radius: 5px;
             cursor: pointer;
             transition: transform 0.3s, font-size 0.3s; 
-
         }
 
         button:hover {
@@ -116,11 +156,6 @@
         }
 
     </style>
-    <script>
-        function inicio_lotofacil_home() {
-            window.location.href = 'inicio_lotofacil_home.php';
-        }
-    </script>
     <title>Add concurso da lotofacil</title>
 </head>
 <body>
@@ -130,121 +165,216 @@
 
         <?php if(isset($msg_add) && $msg_add !== 0): ?>
             <span id="msg2"><?php echo $msg_add; ?>
-                <form action="" method="post">
+                <form action="add_concurso_lotofacil_salvar.php" method="post" onsubmit="return validarFormulario()">
                     <h3>Preencha o formúlario conforme necessario</h3>
-                    <p>
+                    <p class="dados">
                         <label for="concurso">Concurso:</label>
                         <input required id="concurso" placeholder="0000" 
                         value="<?php if(isset($_POST['concurso'])) echo $_POST['concurso']; ?>" 
-                        name="concurso" type="number"><br>
+                        name="concurso" type="number">
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="data">Data:</label>
                         <input required id="data" placeholder="00/00/0000" 
                         value="<?php if(isset($_POST['data'])) echo $_POST['data']; ?>" 
-                        name="data" type="text"><br>
+                        name="data" type="text" oninput="formatarData(this)" onblur="verificaData()"><br>
                     </p>
-                    <p>
-                        <label for="numeros">Numeros Sorteados:</label>
-                        <input required id="numeros" placeholder="1,11,..." 
-                        value="<?php if(isset($_POST['numeros'])) echo $_POST['numeros']; ?>" 
-                        name="numeros" type="text"><br>
-                    </p>
-                    <p>
+                    <div>
+                        <h4>Numeros Sorteados</h4>
+                        <div class="conjunto">
+                            <p class="dez">
+                                <label for="dez_1">1° dez</label>
+                                <input required id="dez_1" 
+                                value="<?php if(isset($_POST['dez_1'])) echo $_POST['dez_1']; ?>" 
+                                name="dez_1" type="text" oninput="validarDezena(this)">
+                            </p>
+                            <p class="dez">
+                                <label for="dez_2">2° dez</label>
+                                <input required id="dez_2" 
+                                value="<?php if(isset($_POST['dez_2'])) echo $_POST['dez_2']; ?>" 
+                                name="dez_2" type="text" oninput="validarDezena(this)">
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_3">3° dez</label>
+                                <input required id="dez_3" 
+                                value="<?php if(isset($_POST['dez_3'])) echo $_POST['dez_3']; ?>" 
+                                name="dez_3" type="text" oninput="validarDezena(this)">
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_4">4° dez</label>
+                                <input required id="dez_4" 
+                                value="<?php if(isset($_POST['dez_4'])) echo $_POST['dez_4']; ?>" 
+                                name="dez_4" type="text" oninput="validarDezena(this)">
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_5">5° dez</label>
+                                <input required id="dez_5" 
+                                value="<?php if(isset($_POST['dez_5'])) echo $_POST['dez_5']; ?>" 
+                                name="dez_5" type="text" oninput="validarDezena(this)">
+                            </p>                            
+                        </div>
+                        <div class="conjunto">
+                            <p class="dez">
+                                <label for="dez_6">6° dez</label>
+                                <input required id="dez_6" 
+                                value="<?php if(isset($_POST['dez_6'])) echo $_POST['dez_6']; ?>" 
+                                name="dez_6" type="text" oninput="validarDezena(this)"><br>
+                            </p>
+                            <p class="dez">
+                                <label for="dez_7">7° dez</label>
+                                <input required id="dez_7" 
+                                value="<?php if(isset($_POST['dez_7'])) echo $_POST['dez_7']; ?>" 
+                                name="dez_7" type="text" oninput="validarDezena(this)"><br>
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_8">8° dez</label>
+                                <input required id="dez_8" 
+                                value="<?php if(isset($_POST['dez_8'])) echo $_POST['dez_8']; ?>" 
+                                name="dez_8" type="text" oninput="validarDezena(this)"><br>
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_9">9° dez</label>
+                                <input required id="dez_9" 
+                                value="<?php if(isset($_POST['dez_9'])) echo $_POST['dez_9']; ?>" 
+                                name="dez_9" type="text" oninput="validarDezena(this)"><br>
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_10">10° dez</label>
+                                <input required id="dez_10" 
+                                value="<?php if(isset($_POST['dez_10'])) echo $_POST['dez_10']; ?>" 
+                                name="dez_10" type="text" oninput="validarDezena(this)"><br>
+                            </p>                             
+                        </div>
+                        <div class="conjunto">
+                            <p class="dez">
+                                <label for="dez_11">11° dez</label>
+                                <input required id="dez_11" 
+                                value="<?php if(isset($_POST['dez_11'])) echo $_POST['dez_11']; ?>" 
+                                name="dez_11" type="text" oninput="validarDezena(this)"><br>
+                            </p>
+                            <p class="dez">
+                                <label for="dez_12">12° dez</label>
+                                <input required id="dez_12" 
+                                value="<?php if(isset($_POST['dez_12'])) echo $_POST['dez_12']; ?>" 
+                                name="dez_12" type="text" oninput="validarDezena(this)"><br>
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_13">13° dez</label>
+                                <input required id="dez_13" 
+                                value="<?php if(isset($_POST['dez_13'])) echo $_POST['dez_13']; ?>" 
+                                name="dez_13" type="text" oninput="validarDezena(this)"><br>
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_14">14° dez</label>
+                                <input required id="dez_14" 
+                                value="<?php if(isset($_POST['dez_14'])) echo $_POST['dez_14']; ?>" 
+                                name="dez_14" type="text" oninput="validarDezena(this)"><br>
+                            </p> 
+                            <p class="dez">
+                                <label for="dez_15">15° dez</label>
+                                <input required id="dez_15" 
+                                value="<?php if(isset($_POST['dez_15'])) echo $_POST['dez_15']; ?>" 
+                                name="dez_15" type="text" oninput="validarDezena(this)"><br>
+                            </p>                             
+                        </div>   
+                    </div>
+                    <p class="dados">
                         <label for="ganhadores_15_acertos">Ganhadores com 15 acertos:</label>
                         <input required id="ganhadores_15_acertos" placeholder="" 
                         value="<?php if(isset($_POST['ganhadores_15_acertos'])) echo $_POST['ganhadores_15_acertos']; ?>" 
                         name="ganhadores_15_acertos" type="number"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="cidade_uf">Cidade/uf:</label>
                         <input required id="cidade_uf" placeholder="Cidade/uf" 
                         value="<?php if(isset($_POST['cidade_uf'])) echo $_POST['cidade_uf']; ?>" 
-                        name="cidade_uf" type="text" ><br>
+                        name="cidade_uf" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="rateio_15_acertos">Rateio 15 acertos:</label>
                         <input required id="rateio_15_acertos" placeholder="" 
                         value="<?php if(isset($_POST['rateio_15_acertos'])) echo $_POST['rateio_15_acertos']; ?>" 
                         name="rateio_15_acertos" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="ganhadores_14_acertos">Ganhadores com 14 acertos:</label>
                         <input required id="ganhadores_14_acertos" placeholder="" 
                         value="<?php if(isset($_POST['ganhadores_14_acertos'])) echo $_POST['ganhadores_14_acertos']; ?>" 
                         name="ganhadores_14_acertos" type="number"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="rateio_14_acertos">Rateio 14 acertos:</label>
                         <input required id="rateio_14_acertos" placeholder="" 
                         value="<?php if(isset($_POST['rateio_14_acertos'])) echo $_POST['rateio_14_acertos']; ?>" 
-                        name="rateio_14_acertos" type="text" ><br>
+                        name="rateio_14_acertos" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="ganhadores_13_acertos">Ganhadores com 13 acertos:</label>
                         <input required id="ganhadores_13_acertos" placeholder="" 
                         value="<?php if(isset($_POST['ganhadores_13_acertos'])) echo $_POST['ganhadores_13_acertos']; ?>" 
                         name="ganhadores_13_acertos" type="number"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="rateio_13_acertos">Rateio 13 acertos:</label>
                         <input required id="rateio_13_acertos" placeholder="" 
                         value="<?php if(isset($_POST['rateio_13_acertos'])) echo $_POST['rateio_13_acertos']; ?>" 
                         name="rateio_13_acertos" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="ganhadores_12_acertos">Ganhadores com 12 acertos:</label>
                         <input required id="ganhadores_12_acertos" placeholder="" 
                         value="<?php if(isset($_POST['ganhadores_12_acertos'])) echo $_POST['ganhadores_12_acertos']; ?>" 
                         name="ganhadores_12_acertos" type="number"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="rateio_12_acertos">Rateio 12 acertos:</label>
                         <input required id="rateio_12_acertos" placeholder="" 
                         value="<?php if(isset($_POST['rateio_12_acertos'])) echo $_POST['rateio_12_acertos']; ?>" 
                         name="rateio_12_acertos" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="ganhadores_11_acertos">Ganhadores com 11 acertos:</label>
                         <input required id="ganhadores_11_acertos" placeholder="" 
                         value="<?php if(isset($_POST['ganhadores_11_acertos'])) echo $_POST['ganhadores_11_acertos']; ?>" 
                         name="ganhadores_11_acertos" type="number"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="rateio_11_acertos">Rateio 11 acertos:</label>
                         <input required id="rateio_11_acertos" placeholder="" 
                         value="<?php if(isset($_POST['rateio_11_acertos'])) echo $_POST['rateio_11_acertos']; ?>" 
                         name="rateio_11_acertos" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="acumulado_15_acertos">Acumulado 15 acertos:</label>
                         <input required id="acumulado_15_acertos" placeholder="" 
                         value="<?php if(isset($_POST['acumulado_15_acertos'])) echo $_POST['acumulado_15_acertos']; ?>" 
                         name="acumulado_15_acertos" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados">
                         <label for="arrecadacao_total">Arrecadacao total:</label>
                         <input required id="arrecadacao_total" placeholder="" 
                         value="<?php if(isset($_POST['arrecadacao_total'])) echo $_POST['arrecadacao_total']; ?>" 
                         name="arrecadacao_total" type="text"><br>
                     </p>
-                    <p>
+                    <p class="dados_acumulado">
                         <label for="valorAcumuladoConcursoEspecial">Acumulado para Sorteio Especial da Independência:</label>
                         <input required id="valorAcumuladoConcursoEspecial" placeholder="" 
                         value="<?php if(isset($_POST['valorAcumuladoConcursoEspecial'])) echo $_POST['valorAcumuladoConcursoEspecial']; ?>" 
-                        name="valorAcumuladoConcursoEspecial" type="text"><br>
+                        name="valorAcumuladoConcursoEspecial" type="text">
                     </p>
-                    <p>
-                        <label for="valorAcumuladoProximoConcurso">Estimativa de prêmio do próximo concurso:</label>
+                    <p class="dados_acumulado">
+                        <label for="valorAcumuladoProximoConcurso">Estimativa de prêmio do próximo concurso:</label><br>
                         <input required id="valorAcumuladoProximoConcurso" placeholder="" 
                         value="<?php if(isset($_POST['valorAcumuladoProximoConcurso'])) echo $_POST['valorAcumuladoProximoConcurso']; ?>" 
-                        name="valorAcumuladoProximoConcurso" type="text"><br>
+                        name="valorAcumuladoProximoConcurso" type="text">
                     </p>
                     <button onclick="inicio_lotofacil_home()">Inicio</button>
                     <button type="submit">Salvar</button>
+                    
                 </form>
             </span>
         <?php endif; ?>
     </div>  
+    <script src="verifica_dados.js"></script>
 </body>
 </html>
