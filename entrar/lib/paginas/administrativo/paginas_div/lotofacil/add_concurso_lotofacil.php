@@ -186,31 +186,31 @@
                                 <label for="dez_1">1° dez</label>
                                 <input required id="dez_1" 
                                 value="<?php if(isset($_POST['dez_1'])) echo $_POST['dez_1']; ?>" 
-                                name="dez_1" type="text" oninput="validarDezena(this)">
+                                name="dez_1" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p>
                             <p class="dez">
                                 <label for="dez_2">2° dez</label>
                                 <input required id="dez_2" 
                                 value="<?php if(isset($_POST['dez_2'])) echo $_POST['dez_2']; ?>" 
-                                name="dez_2" type="text" oninput="validarDezena(this)">
+                                name="dez_2" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_3">3° dez</label>
                                 <input required id="dez_3" 
                                 value="<?php if(isset($_POST['dez_3'])) echo $_POST['dez_3']; ?>" 
-                                name="dez_3" type="text" oninput="validarDezena(this)">
+                                name="dez_3" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_4">4° dez</label>
                                 <input required id="dez_4" 
                                 value="<?php if(isset($_POST['dez_4'])) echo $_POST['dez_4']; ?>" 
-                                name="dez_4" type="text" oninput="validarDezena(this)">
+                                name="dez_4" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_5">5° dez</label>
                                 <input required id="dez_5" 
                                 value="<?php if(isset($_POST['dez_5'])) echo $_POST['dez_5']; ?>" 
-                                name="dez_5" type="text" oninput="validarDezena(this)">
+                                name="dez_5" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p>                            
                         </div>
                         <div class="conjunto">
@@ -218,31 +218,31 @@
                                 <label for="dez_6">6° dez</label>
                                 <input required id="dez_6" 
                                 value="<?php if(isset($_POST['dez_6'])) echo $_POST['dez_6']; ?>" 
-                                name="dez_6" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_6" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p>
                             <p class="dez">
                                 <label for="dez_7">7° dez</label>
                                 <input required id="dez_7" 
                                 value="<?php if(isset($_POST['dez_7'])) echo $_POST['dez_7']; ?>" 
-                                name="dez_7" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_7" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_8">8° dez</label>
                                 <input required id="dez_8" 
                                 value="<?php if(isset($_POST['dez_8'])) echo $_POST['dez_8']; ?>" 
-                                name="dez_8" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_8" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_9">9° dez</label>
                                 <input required id="dez_9" 
                                 value="<?php if(isset($_POST['dez_9'])) echo $_POST['dez_9']; ?>" 
-                                name="dez_9" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_9" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_10">10° dez</label>
                                 <input required id="dez_10" 
                                 value="<?php if(isset($_POST['dez_10'])) echo $_POST['dez_10']; ?>" 
-                                name="dez_10" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_10" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p>                             
                         </div>
                         <div class="conjunto">
@@ -250,31 +250,31 @@
                                 <label for="dez_11">11° dez</label>
                                 <input required id="dez_11" 
                                 value="<?php if(isset($_POST['dez_11'])) echo $_POST['dez_11']; ?>" 
-                                name="dez_11" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_11" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p>
                             <p class="dez">
                                 <label for="dez_12">12° dez</label>
                                 <input required id="dez_12" 
                                 value="<?php if(isset($_POST['dez_12'])) echo $_POST['dez_12']; ?>" 
-                                name="dez_12" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_12" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_13">13° dez</label>
                                 <input required id="dez_13" 
                                 value="<?php if(isset($_POST['dez_13'])) echo $_POST['dez_13']; ?>" 
-                                name="dez_13" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_13" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_14">14° dez</label>
                                 <input required id="dez_14" 
                                 value="<?php if(isset($_POST['dez_14'])) echo $_POST['dez_14']; ?>" 
-                                name="dez_14" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_14" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p> 
                             <p class="dez">
                                 <label for="dez_15">15° dez</label>
                                 <input required id="dez_15" 
                                 value="<?php if(isset($_POST['dez_15'])) echo $_POST['dez_15']; ?>" 
-                                name="dez_15" type="text" oninput="validarDezena(this)"><br>
+                                name="dez_15" type="text" oninput="validarDezena(this)" onblur="verifi_dez_iguais(this)">
                             </p>                             
                         </div>   
                     </div>

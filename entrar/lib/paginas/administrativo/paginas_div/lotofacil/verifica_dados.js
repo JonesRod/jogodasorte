@@ -7,9 +7,11 @@ function validarFormulario() {
     }
     return true;
 }
+
 function inicio_lotofacil_home() {
     window.location.href = 'inicio_lotofacil_home.php';
 }
+
 function validarDezena(input) {
     let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
 
@@ -22,8 +24,9 @@ function validarDezena(input) {
         value = ''; // Define o valor para 25
     }
     input.value = value;
+}
 
-    // Verifica se há números iguais em todos os campos
+function verifi_dez_iguais(input){
     let inputs = document.querySelectorAll('.dez input');
     let numeros = [];
     for (let i = 0; i < inputs.length; i++) {
@@ -36,19 +39,18 @@ function validarDezena(input) {
     if (numeros.length !== new Set(numeros).size) {
         alert("Os números não podem ser iguais.");
         input.value = "";
+        return; // Removido o "exit;"
     }
 
-    // Ordena os números
     numeros.sort(function(a, b) {
         return a - b;
     });
 
-    // Atualiza os valores dos inputs com os números ordenados
     for (let i = 0; i < inputs.length; i++) {
         if (!isNaN(numeros[i])) {
             inputs[i].value = numeros[i];
         }
-    }
+    }    
 }
 
 function validarData(data) {
@@ -87,6 +89,7 @@ function formatarData(input) {
     } 
     input.value = value;
 }
+
 $(document).ready(function() {
     $('#rateio_15_acertos').inputmask('currency', {
       radixPoint: ',',
