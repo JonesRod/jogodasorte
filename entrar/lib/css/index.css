@@ -62,14 +62,22 @@ label, input, button{
     font-size: 15px;
     border: none;
 }
+.email:focus {
+    outline: none; /* Remove o contorno ao focar no botão */
+}
 .senha{
     width: 100px;
     font-size: 15px;
     border: none;
+    outline: none; /* Remove o contorno ao focar no botão */
+}
+.senha:focus{
+    outline: none; /* Remove o contorno ao focar no botão */
 }
 #eye {
     padding: 5px;
     stroke-width: 5; /* Ajuste a largura da linha conforme necessário */
+    outline: none; /* Remove o contorno ao focar no botão */
 }
 .entrar {
     background-color: #007bff;
@@ -102,7 +110,7 @@ button:hover{
     cursor: pointer;
 }
 .container {
-    /*height: 100vh;*/
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -112,7 +120,6 @@ button:hover{
     display: block;
     justify-content: center;
     align-items: center;
-    height: 100%; 
 }
 
 .botoes button {

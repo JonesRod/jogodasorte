@@ -298,7 +298,7 @@
             background-color: #fff;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.1); /*sombra*/
             font-family: Arial, sans-serif;
         }
         .botoes button {

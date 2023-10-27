@@ -54,6 +54,7 @@
 
             $arrecadacao_total = $conn->escape_string($_POST['arrecadacao_total']);
             $valorAcumuladoConcursoEspecial = $conn->escape_string($_POST['valorAcumuladoConcursoEspecial']);
+            $dataProximoConcurso = $conn->escape_string($_POST['dataProximoConcurso']);
             $valorAcumuladoProximoConcurso = $conn->escape_string($_POST['valorAcumuladoProximoConcurso']);
 
             // Insira o primeiro concurso no banco de dados
@@ -63,14 +64,14 @@
             dez_13, dez_14, dez_15, ganhadores_15_acertos, cidade_uf, 
             rateio_15_acertos, ganhadores_14_acertos, rateio_14_acertos, ganhadores_13_acertos, rateio_13_acertos, 
             ganhadores_12_acertos, rateio_12_acertos, ganhadores_11_acertos, rateio_11_acertos,acumulado_15_acertos, 
-            arrecadacao_total, valorAcumuladoConcursoEspecial, valorAcumuladoProximoConcurso) 
+            arrecadacao_total, valorAcumuladoConcursoEspecial, dataProximoConcurso, valorAcumuladoProximoConcurso) 
             VALUES ('$concurso', '$data', '$numeros', '$dez_1', '$dez_2', 
             '$dez_3', '$dez_4', '$dez_5', '$dez_6', '$dez_7', 
             '$dez_8', '$dez_9', '$dez_10', '$dez_11', '$dez_12', 
             '$dez_13', '$dez_14', '$dez_15', '$ganhadores_15_acertos', '$cidade_uf', 
             '$rateio_15_acertos', '$ganhadores_14_acertos', '$rateio_14_acertos', '$ganhadores_13_acertos', '$rateio_13_acertos', 
             '$ganhadores_12_acertos', '$rateio_12_acertos', '$ganhadores_11_acertos', '$rateio_11_acertos','$acumulado_15_acertos', 
-            '$arrecadacao_total', '$valorAcumuladoConcursoEspecial', '$valorAcumuladoProximoConcurso')";
+            '$arrecadacao_total', '$valorAcumuladoConcursoEspecial', '$dataProximoConcurso', '$valorAcumuladoProximoConcurso')";
 
             if ($conn->query($sql) === TRUE) {
                 $msg = "Concurso registrado com sucesso.";
