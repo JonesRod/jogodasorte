@@ -33,13 +33,6 @@
             $email = $conn->escape_string($_POST['email']);//$mysqli->escape_string SERVE PARA PROTEGER O ACESSO 
             $cpf = $conn->escape_string($_POST['email']);
             $senha = $conn->escape_string($_POST['senha']);
-            //var_dump($_POST);
-
-            //echo "oii";
-            /*if(isset($_SESSION['email']) || isset($_POST['senha'])){
-                $email = $_SESSION['email'];
-                $senha = password_hash($_SESSION['senha'], PASSWORD_DEFAULT);
-                //$conn->query("INSERT INTO senha (email, senha, cpf) VALUES('$email','$senha','$cpf')");*/
 
             $verifica = "SELECT * FROM usuarios WHERE email = '$email' LIMIT 1";
             $sql_verifiva =$conn->query($verifica) or die("Falha na execução do código SQL: " . $conn->error);

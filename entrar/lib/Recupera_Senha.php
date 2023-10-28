@@ -74,7 +74,7 @@ if(isset($_POST['email'])) {
             <label for="">Digite E-mail cadastrado</label>
             <input type="email" name="email" value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>">
         </p>
-        <a style="margin-right:40px;" href="../../index.html">Voltar</a> 
+        <a style="margin-right:40px;" href="../../index.php">Voltar</a> 
         <button type="submit">Enviar</button>
     </form>
 </body>

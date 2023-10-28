@@ -263,7 +263,7 @@
                         value="<?php if(isset($_POST['valorAcumuladoProximoConcurso'])) echo $_POST['valorAcumuladoProximoConcurso']; ?>" 
                         name="valorAcumuladoProximoConcurso" type="text">
                     </p>
-                    <button onclick="inicio_lotofacil_home()">Inicio</button>
+                    <button onclick="config_lotofacil()">Add Depois</button>
                     <button type="submit">Salvar</button>
                     
                 </form>

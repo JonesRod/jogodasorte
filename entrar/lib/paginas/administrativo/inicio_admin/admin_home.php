@@ -149,7 +149,7 @@
 
         // Carregar a página de início ao carregar a página
         window.onload = function() {
-            abrirNaDiv('admin_inicio.php');
+            abrirNaDiv('../configuracoes/lotofacil/inicio_lotofacil_home.php');
         }
         function toggleMenu() {
             $('#menu').toggleClass('aberto');
@@ -167,14 +167,70 @@
         function atualizarPagina() {
             location.reload(); // Recarrega a página
         }
+                // Adicione este script em uma tag <script> após o seu código HTML
+
+                document.addEventListener("DOMContentLoaded", function() {
+            let listaItems = document.querySelectorAll(".lista li");
+
+            listaItems.forEach(function(item) {
+                item.addEventListener("click", function() {
+                    listaItems.forEach(function(item) {
+                        item.classList.remove("selecionada");
+                    });
+                    this.classList.add("selecionada");
+                });
+            });
+        });
+
+        //atualiza a pagian a cada 10 min
+        /*setTimeout(function() {
+            location.reload();
+        }, 100000);*/
+        
+        // Função para carregar o conteúdo na div
+        function abrirNaDiv(pagina) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("conteudo").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", pagina, true);
+            xhttp.send();
+        }
+
+        window.onload = function() {
+            // Selecionar o elemento desejado
+            var elemento = document.getElementById('config_lotofacil'); // Substitua 'seuElementoID' pelo ID do seu elemento
+
+            // Verificar se o elemento foi encontrado
+            if (elemento) {
+                // Disparar um evento de clique no elemento
+                elemento.click();
+                abrirNaDiv('../configuracoes/lotofacil/inicio_lotofacil_home.php');
+            }
+        }
+
+        function abrirNaDiv(link) {
+            var div = document.getElementById('conteudo');
+            div.innerHTML = '<object type="text/html" data="' + link + '" style="width:100%; height:100%;">';
+        }
+        /*document.getElementById('logoutIcon').addEventListener('click', function() {
+            window.location.href = 'usuario_logout.php';
+        });*/
+        function fazerLogout() {
+            window.location.href = 'admin_logout.php';
+        }
+        /*function atualizarPagina() {
+            location.reload(); // Recarrega a página
+        }*/
 
     </script>
     <title>Meu Site</title>
 </head>
 <body>
     <div class="cabecalho">
-        <div id="titulo">
-            <span class="material-symbols-outlined"  id="icoMenu" onclick="toggleMenu();">menu</span>  
+        <div id="titulo"> 
             <H2 onclick="atualizarPagina()">Jogo da Sorte</H2> 
         </div> 
         <div class="usuario">
@@ -186,40 +242,16 @@
             </div>
         </div>
     </div>
-    <div class="menu" id="menu">
+    <div id="divLista">
         <ul id="lista" class="lista">
-            <li><a href="#" onclick="abrirNaDiv('admin_inicio.php');toggleMenu()">Inicío</a></li>
-            <li><a href="#" onclick="abrirNaDiv('../paginas_div/configuracoes/config.php');toggleMenu()">Configurações</a></li> 
+            <li id="config_lotofacil" ><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/inicio_lotofacil_home.php');">Configuração Lotofácil</a></li>
+            <li><a href="#" onclick="abrirNaDiv('../configuracoes/megasena/config_megasena.php');">Configuração Mega Sena</a></li> 
+            <li><a href="#" onclick="abrirNaDiv('../configuracoes/quina/config_quina.php');toggleMenu()">Configuração Quina</a></li>
         </ul> 
-    </div> 
+    </div>
     <div class="container" id="conteudo">
         <!--conteudo á ser carregado-->
     </div>
     <script src="admin_home.js"></script>
 </body>
-    <footer>
-        <div class="container-rodape">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Links Úteis</h3>
-                    <ul>
-                        <li><a href="#">Sobre Nós</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <h3>Redes Sociais</h3>
-                    <ul>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Instagram</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="bottom-bar">
-            <p>&copy; 2023 <?php echo 'Jogo da Sorte';?>. Todos os direitos reservados.</p>
-        </div>
-    </footer>
 </html>

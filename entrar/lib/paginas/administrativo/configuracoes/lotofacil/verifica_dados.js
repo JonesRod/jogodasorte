@@ -20,9 +20,8 @@ function validarFormulario() {
     
 }
 
-
-function inicio_lotofacil_home() {
-    window.location.href = 'inicio_lotofacil_home.php';
+function config_lotofacil() {
+    window.location.href = 'config_lotofacil.php';
 }
 
 function validarDezena(input) {

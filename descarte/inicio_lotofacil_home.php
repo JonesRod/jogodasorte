@@ -38,7 +38,7 @@
             bottom: 0;
             left: 0;
             width: 0;
-            height: 0px;
+            height: 5px;
             background-color: blue;
             transition: width 0.3s ease; /* Transição da largura */
         }
@@ -119,9 +119,9 @@
 <body>
     <div id="divLista">
         <ul id="lista" class="lista">
-            <li><a href="#" onclick="abrirNaDiv('gerar_jogos.php');">Gerar jogos</a></li>
-            <!--<li><a href="#" onclick="abrirNaDiv('../paginas_div/configuracoes/config.php');toggleMenu()">Configurações</a></li> 
-            <li><a href="#" onclick="abrirNaDiv('../paginas_div/configuracoes/config.php');toggleMenu()">Configurações</a></li> -->
+            <li><a href="#" onclick="abrirNaDiv('config_lotofacil.php');">Configuração Lotofácil</a></li>
+            <li><a href="#" onclick="abrirNaDiv('config_megasena.php');toggleMenu()">Configuração Mega Sena</a></li> 
+            <!--<li><a href="#" onclick="abrirNaDiv('../paginas_div/configuracoes/config.php');toggleMenu()">Configurações</a></li> -->
         </ul> 
     </div>
     <div class="container" id="conteudo">

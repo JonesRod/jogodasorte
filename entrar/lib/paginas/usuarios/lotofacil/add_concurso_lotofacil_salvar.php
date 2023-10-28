@@ -76,21 +76,21 @@
             if ($conn->query($sql) === TRUE) {
                 $msg = "Concurso registrado com sucesso.";
                 unset($_POST);
-                header("refresh: 5; add_concurso_lotofacil.php");
+                //header("refresh: 5; add_concurso_lotofacil.php");
             } else {
                 $msg = "Erro ao registrar o concurso: " . $conn->error;
                 unset($_POST);
-                header("refresh: 5; add_concurso_lotofacil.php");
+                //header("refresh: 5; add_concurso_lotofacil.php");
             } 
         } else {
             $msg = 'Este concurso ja foi registrados anteriormente!';
             unset($_POST);
-            header("refresh: 5; add_concurso_lotofacil.php");
+            //header("refresh: 5; add_concurso_lotofacil.php");
         }
     }else{
         $msg = 'Erro ao registrar concurso!';
         unset($_POST);
-        header("refresh: 5; add_concurso_lotofacil.php");
+        //header("refresh: 5; add_concurso_lotofacil.php");
     }
 
 ?>

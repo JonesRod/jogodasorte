@@ -74,12 +74,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="config.css">
+    <link rel="stylesheet" href="config_lotofacil.css">
     <title>Configuração</title>
 </head>
 <body>
+    <div>
+        <form action="">
+            <h3 id="titulo" >Configurações do Administrador</h3>
 
-    <h3 id="ititulo" >Configurações do Administrador</h3>
+            
+        </form>
+    </div>
+    
     
     <form id="meuFormulario" action="altera_config.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
         <fieldset class="partes">

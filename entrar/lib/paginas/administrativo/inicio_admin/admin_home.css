@@ -23,10 +23,7 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-top: 0px;
 }
-#icoMenu{
-    margin-top: 8px;
-    margin-left: 10px;
-}
+
 #titulo h2{
     color: #1e07f5;
     margin-top: 15px;
@@ -44,7 +41,7 @@ body {
 .usuario #sair {
     display: flex; /* Ativa o layout flexível para os elementos filhos */
     align-items: center; /* Alinha os elementos verticalmente no centro */
-    margin-top: -30px;
+    margin-top: 0px;
     margin-left: 90px;
     margin-right: 15px;
 }
@@ -64,52 +61,12 @@ body {
     margin-right: 0; /* Remove a margem à direita do último elemento span */
 }
 
-#menu {
-    position: absolute;
-    top: 30px;
-    right: -300px; /* Inicia fora da tela à esquerda */
-    width: 200px; /* Largura do menu */
-    height: 20%;
-    border-radius: 5px;
-    background-color: #1bd343; /* Cor de fundo do menu */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para o menu */
-    transition: 0.5s; /* Adiciona uma transição suave */
-    z-index: 2; /* Coloca o menu acima do conteúdo */
-}
-
-/*#menu.aberto {
-    background-color: #75ae6a; /* Substitua pela cor desejada */
-    /*margin: 3px;
-    left: 0; /* Remove o valor left */
-    /*right: auto; /* Agora o menu está totalmente visível */
-/*}*/
 .material-symbols-outlined:hover {
     /*background-color: #0c1701; /* Cor azul mais escura ao passar o mouse */
     /*font-size: 25px; /* Tamanho ao passar o mouse */
     transform: translateY(-3px); /* Move o ícone para cima 5 pixels */
 }
-.menu.aberto {
-    background-color: #75ae6a; /* Substitua pela cor desejada */
-    /*right: 10px; /* Move o menu para dentro da tela quando aberto */
-    left: 0;
-    margin: 2px;
-    /*transform: translateY(-3px);*/
-}
-button:hover{
-    margin: 5px;
-    padding: 5px;
-    font-weight: bold;
-    border-radius: 5px;
-    background-color: rgba(244, 164, 6, 0.942);
-    transform: scale(1.2);
-}
-/*.container {
-    display: block;
-    text-align: center;
-    align-items: center;
-    height: 80vh;
-    width: 100%; 
-}*/
+
 .container {
     height: 100vh;
     display: flex;
@@ -117,147 +74,54 @@ button:hover{
     align-items: center;
     flex-direction: column; /* Adicionado para empilhar os elementos verticalmente */
 }
-/*.conteudo {
-    display: block;
-    justify-content: center;
-    align-items: center;
-    height: 100%; 
-}
 
-.botoes button {
-    display: block;
-    width: 150px; /* Define a largura dos botões */
-/*    height: 50px; /* Define a altura dos botões */
-/*    margin: 30px;
-    border: none;
-    background-color: #4CAF50; /* Define a cor de fundo */
-/*    color: white; /* Define a cor do texto */
-/*    font-size: 16px; /* Define o tamanho da fonte */
-/*    border-radius: 5px; /* Adiciona bordas arredondadas */
-/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
-/*}*/
-.botoes button:hover {
-    background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
-    cursor: pointer;
-}
-
-.botoes button:focus {
-    outline: none; /* Remove o contorno ao focar no botão */
-}
 .lista {
-    list-style-type: none; /* Remove os marcadores de lista (pontos) */
-    padding: 0; /* Remove o espaçamento interno padrão da lista */
-    left: auto; /* Remove o valor left */
-    right: 0; /* Agora o menu está totalmente visível */ 
+    height: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    background-color: chartreuse /* Adicione a cor desejada aqui */
 }
-
-.lista li {
-    display: block;
-    max-width: 100%;
-    margin: 3px;
-    justify-content: flex-end; /* Alinha os itens na parte inferior */
+.lista li{
+    list-style-type: none;
+    font-size: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden; /* Esconder qualquer conteúdo que transborde */
 }
-.lista.aberto {
-    background-color: #fff; /* Substitua pela cor desejada */
-}
-
-.lista li a {
-    text-decoration: none; /* Remove o sublinhado dos links */
-    color: #1e07f5; /* Define a cor do texto (pode ser alterada conforme desejado) */
-    padding: 5px 10px; /* Adiciona um espaçamento interno nos links */
-    transition: color 0.3s; /* Adiciona uma transição suave na cor do texto */
-}
-.lista li a:hover {
-    color: #bb0c06; /* Define a cor quando o mouse passa por cima */
-}
-
-
-footer {
-    background: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-}
-
-footer ul {
-    list-style: none;
-    padding: 0;
-}
-
-footer ul li {
-    display: inline;
-    margin-right: 10px;
-}
-
-footer ul li a {
-    color: #fff;
+.lista li a{
+    list-style-type: none;
     text-decoration: none;
 }
 
-.bottom-bar {
-    background: #222;
-    padding: 5px 0;
-    text-align: center;
+.lista li::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 5px;
+    background-color: blue;
+    transition: width 0.3s ease; /* Transição da largura */
 }
 
-.bottom-bar p {
-    margin: 0;
+.lista li:hover::before {
+    width: 100%; /* Aumenta a largura ao passar o mouse */
 }
 
-/* Estilos para Links */
-a {
-    color: #333;
-    text-decoration: none;
+.lista li.selecionada {
+    border-bottom: 5px solid blue; /* Adicione a cor desejada aqui */
+    border-radius: 20px;
 }
 
-a:hover {
-    color: #555;
-}
+
 /* Estilos para notebooks e desktops */
 @media screen and (min-width: 768px) {
-  
 
-    footer {
-        background: #333;
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-    }
-
-    footer ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    footer ul li {
-        display: inline;
-        margin-right: 10px;
-    }
-
-    footer ul li a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .bottom-bar {
-        background: #222;
-        padding: 5px 0;
-        text-align: center;
-    }
-
-    .bottom-bar p {
-        margin: 0;
-    }
-
-    /* Estilos para Links */
-    a {
-        color: #333;
-        text-decoration: none;
-    }
-
-    a:hover {
-        color: #555;
-    }
 }
 /* Estilos para Tablet */
 @media screen and (min-width: 768px) and (max-width: 1024px) {

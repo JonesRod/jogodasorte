@@ -1,12 +1,12 @@
 <?php
     //codigo da sessão
-    include('../../conexao.php');
+    include('../../../conexao.php');
 
     if(!isset($_SESSION))
         session_start();
     
     if(!isset($_SESSION['usuario'])){
-        header("Location: ../../../../index.php");
+        header("Location: ../../../../../index.php");
     }
     if(isset($_SESSION['email'])){
 
@@ -17,7 +17,7 @@
     }
     
     $id = $_SESSION['usuario'];
-    $sql_query = $mysqli->query("SELECT * FROM socios WHERE id = '$id'") or die($mysqli->$error);
+    $sql_query = $mysqli->query("SELECT * FROM usuarios WHERE id = '$id'") or die($mysqli->error);
     $usuario = $sql_query->fetch_assoc();
 
     if(isset($usuario['foto'])) {

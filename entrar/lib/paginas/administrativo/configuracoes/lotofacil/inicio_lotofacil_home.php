@@ -8,7 +8,6 @@
 
     $sql = "SELECT * FROM resultados_lotofacil ORDER BY concurso DESC LIMIT 1";
     $result = $conn->query($sql);
-
     function obterConcursoAtual() {
         $url = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/lotofacil';
         
@@ -80,6 +79,7 @@
             $valorArrecadado = $data['valorArrecadado'];
             $valorAcumuladoConcurso_0_5 = $data['valorAcumuladoConcurso_0_5'];
             $valorAcumuladoConcursoEspecial = $data['valorAcumuladoConcursoEspecial'];
+            $dataProximoConcurso = $data['dataProximoConcurso'];
             $valorAcumuladoProximoConcurso = $data['valorAcumuladoProximoConcurso'];
             $valorEstimadoProximoConcurso = $data['valorEstimadoProximoConcurso'];
             $valorSaldoReservaGarantidora = $data['valorSaldoReservaGarantidora'];
@@ -105,6 +105,7 @@
                 'valorArrecadado' => $valorArrecadado,
                 'valorAcumuladoConcurso_0_5' => $valorAcumuladoConcurso_0_5,
                 'valorAcumuladoConcursoEspecial' => $valorAcumuladoConcursoEspecial,
+                'dataProximoConcurso' => $dataProximoConcurso,
                 'valorAcumuladoProximoConcurso' => $valorAcumuladoProximoConcurso,
                 'valorEstimadoProximoConcurso' => $valorEstimadoProximoConcurso,
                 'valorSaldoReservaGarantidora' => $valorSaldoReservaGarantidora,
@@ -155,39 +156,46 @@
         $valorAcumuladoConcurso_0_5 = $numero_concurso['valorAcumuladoConcurso_0_5'];
         $valorAcumuladoConcursoEspecial = $numero_concurso['valorAcumuladoConcursoEspecial'];
         $valorAcumuladoProximoConcurso = $numero_concurso['valorAcumuladoProximoConcurso'];
+
+        $dataProx= $numero_concurso['dataProximoConcurso'];
+        $dataProxFormatada = DateTime::createFromFormat('d/m/Y', $dataProx);
+        $dataProximoConcurso = $dataProxFormatada->format('Y-m-d');
+
         $valorEstimadoProximoConcurso = $numero_concurso['valorEstimadoProximoConcurso'];
         $valorSaldoReservaGarantidora = $numero_concurso['valorSaldoReservaGarantidora'];
         $valorTotalPremioFaixaUm = $numero_concurso['valorTotalPremioFaixaUm'];
         $observacao = $numero_concurso['observacao'];
 
         if($concurso != $concurso_resultado){
-        // Insira o primeiro concurso no banco de dados
-        $sql = "INSERT INTO resultados_lotofacil (concurso, data, numeros,
-        dez_1, dez_2, dez_3, dez_4, dez_5, dez_6, dez_7, dez_8, dez_9, dez_10, 
-        dez_11, dez_12, dez_13, dez_14, dez_15, ganhadores_15_acertos, cidade_uf, rateio_15_acertos, 
-        ganhadores_14_acertos, rateio_14_acertos, ganhadores_13_acertos, rateio_13_acertos, 
-        ganhadores_12_acertos, rateio_12_acertos, ganhadores_11_acertos, rateio_11_acertos,
-        acumulado_15_acertos, arrecadacao_total, valorAcumuladoConcurso_0_5, valorAcumuladoConcursoEspecial, 
-        valorAcumuladoProximoConcurso, estimativa_premios, valorSaldoReservaGarantidora, 
-        valorTotalPremioFaixaUm, obs) 
-        VALUES ('$concurso_resultado', '$dataConcurso', '$numeros_formatados', '$numeros_array[0]', 
-        '$numeros_array[1]', '$numeros_array[2]', '$numeros_array[3]', '$numeros_array[4]', 
-        '$numeros_array[5]', '$numeros_array[6]', '$numeros_array[7]', '$numeros_array[8]', 
-        '$numeros_array[9]', '$numeros_array[10]', '$numeros_array[11]', '$numeros_array[12]', 
-        '$numeros_array[13]', '$numeros_array[14]', '$numeroDeGanhadores_1', '$cidades_string', 
-        '$valorPremio_1', '$numeroDeGanhadores_2', '$valorPremio_2', '$numeroDeGanhadores_3', 
-        '$valorPremio_3', '$numeroDeGanhadores_4', '$valorPremio_4', '$numeroDeGanhadores_5', '$valorPremio_5',
-        '$acumulado', '$valorArrecadado', '$valorAcumuladoConcurso_0_5', '$valorAcumuladoConcursoEspecial', 
-        '$valorAcumuladoProximoConcurso', '$valorEstimadoProximoConcurso','$valorSaldoReservaGarantidora', 
-        '$valorTotalPremioFaixaUm', '$observacao')";
+            // Insira o primeiro concurso no banco de dados
+            $sql = "INSERT INTO resultados_lotofacil (concurso, data, numeros, dez_1, dez_2, 
+            dez_3, dez_4, dez_5, dez_6, dez_7, 
+            dez_8, dez_9, dez_10, dez_11, dez_12, 
+            dez_13, dez_14, dez_15, ganhadores_15_acertos, cidade_uf, 
+            rateio_15_acertos, ganhadores_14_acertos, rateio_14_acertos, ganhadores_13_acertos, rateio_13_acertos, 
+            ganhadores_12_acertos, rateio_12_acertos, ganhadores_11_acertos, rateio_11_acertos, acumulado_15_acertos, 
+            arrecadacao_total, valorAcumuladoConcurso_0_5, valorAcumuladoConcursoEspecial, dataProximoConcurso, valorAcumuladoProximoConcurso, 
+            estimativa_premios, valorSaldoReservaGarantidora, valorTotalPremioFaixaUm, obs) 
+            VALUES ('$concurso_resultado', '$dataConcurso', '$numeros_formatados', '$numeros_array[0]', '$numeros_array[1]', 
+            '$numeros_array[2]', '$numeros_array[3]', '$numeros_array[4]', '$numeros_array[5]', '$numeros_array[6]', 
+            '$numeros_array[7]', '$numeros_array[8]', '$numeros_array[9]', '$numeros_array[10]', '$numeros_array[11]', 
+            '$numeros_array[12]', '$numeros_array[13]', '$numeros_array[14]', '$numeroDeGanhadores_1', '$cidades_string', 
+            '$valorPremio_1', '$numeroDeGanhadores_2', '$valorPremio_2', '$numeroDeGanhadores_3', '$valorPremio_3', 
+            '$numeroDeGanhadores_4', '$valorPremio_4', '$numeroDeGanhadores_5', '$valorPremio_5','$acumulado', 
+            '$valorArrecadado', '$valorAcumuladoConcurso_0_5', '$valorAcumuladoConcursoEspecial', '$dataProximoConcurso', '$valorAcumuladoProximoConcurso', 
+            '$valorEstimadoProximoConcurso', '$valorSaldoReservaGarantidora', '$valorTotalPremioFaixaUm', '$observacao')";
 
             if ($conn->query($sql) === TRUE) {
-                //$msg = "Concurso registrado com sucesso.";
+                $msg = "Concurso registrado com sucesso.";
+                unset($_POST);
+                header("refresh: 10; url=add_concurso_lotofacil.php");
             } else {
-                $msg = "Erro ao registrar o concurso: " . $conn->error;
+                $msg = "Erro ao registrar o primeiro concurso: " . $conn->error;
             } 
         }else{
-            //$msg = "concurso ja existe no banco!";
+            $msg = "Concurso $concurso_resultado ja existe no banco!";
+            unset($_POST);
+            header("refresh: 10; url=add_concurso_lotofacil.php");
         }
     }else{
         // Obtenha o primeiro concurso através da API (substitua com sua lógica de API)
@@ -219,69 +227,48 @@
         $valorAcumuladoConcurso_0_5 = $numero_concurso['valorAcumuladoConcurso_0_5'];
         $valorAcumuladoConcursoEspecial = $numero_concurso['valorAcumuladoConcursoEspecial'];
         $valorAcumuladoProximoConcurso = $numero_concurso['valorAcumuladoProximoConcurso'];
+
+        $dataProx= $numero_concurso['dataProximoConcurso'];
+        $dataProxFormatada = DateTime::createFromFormat('d/m/Y', $dataProx);
+        $dataProximoConcurso = $dataProxFormatada->format('Y-m-d');
+
         $valorEstimadoProximoConcurso = $numero_concurso['valorEstimadoProximoConcurso'];
         $valorSaldoReservaGarantidora = $numero_concurso['valorSaldoReservaGarantidora'];
         $valorTotalPremioFaixaUm = $numero_concurso['valorTotalPremioFaixaUm'];
         $observacao = $numero_concurso['observacao'];
 
         // Insira o primeiro concurso no banco de dados
-        $sql = "INSERT INTO resultados_lotofacil (concurso, data, numeros,
-        dez_1, dez_2, dez_3, dez_4, dez_5, dez_6, dez_7, dez_8, dez_9, dez_10, 
-        dez_11, dez_12, dez_13, dez_14, dez_15, ganhadores_15_acertos, cidade_uf, rateio_15_acertos, 
-        ganhadores_14_acertos, rateio_14_acertos, ganhadores_13_acertos, rateio_13_acertos, 
-        ganhadores_12_acertos, rateio_12_acertos, ganhadores_11_acertos, rateio_11_acertos,
-        acumulado_15_acertos, arrecadacao_total, valorAcumuladoConcurso_0_5, valorAcumuladoConcursoEspecial, 
-        valorAcumuladoProximoConcurso, estimativa_premios, valorSaldoReservaGarantidora, 
-        valorTotalPremioFaixaUm, obs) 
-        VALUES ('$concurso_resultado', '$dataConcurso', '$numeros_formatados', '$numeros_array[0]', 
-        '$numeros_array[1]', '$numeros_array[2]', '$numeros_array[3]', '$numeros_array[4]', 
-        '$numeros_array[5]', '$numeros_array[6]', '$numeros_array[7]', '$numeros_array[8]', 
-        '$numeros_array[9]', '$numeros_array[10]', '$numeros_array[11]', '$numeros_array[12]', 
-        '$numeros_array[13]', '$numeros_array[14]', '$numeroDeGanhadores_1', '$cidades_string', 
-        '$valorPremio_1', '$numeroDeGanhadores_2', '$valorPremio_2', '$numeroDeGanhadores_3', 
-        '$valorPremio_3', '$numeroDeGanhadores_4', '$valorPremio_4', '$numeroDeGanhadores_5', '$valorPremio_5',
-        '$acumulado', '$valorArrecadado', '$valorAcumuladoConcurso_0_5', '$valorAcumuladoConcursoEspecial', 
-        '$valorAcumuladoProximoConcurso', '$valorEstimadoProximoConcurso','$valorSaldoReservaGarantidora', 
-        '$valorTotalPremioFaixaUm', '$observacao')";
+        $sql = "INSERT INTO resultados_lotofacil (concurso, data, numeros, dez_1, dez_2, 
+        dez_3, dez_4, dez_5, dez_6, dez_7, 
+        dez_8, dez_9, dez_10, dez_11, dez_12, 
+        dez_13, dez_14, dez_15, ganhadores_15_acertos, cidade_uf, 
+        rateio_15_acertos, ganhadores_14_acertos, rateio_14_acertos, ganhadores_13_acertos, rateio_13_acertos, 
+        ganhadores_12_acertos, rateio_12_acertos, ganhadores_11_acertos, rateio_11_acertos, acumulado_15_acertos, 
+        arrecadacao_total, valorAcumuladoConcurso_0_5, valorAcumuladoConcursoEspecial, dataProximoConcurso, valorAcumuladoProximoConcurso, 
+        estimativa_premios, valorSaldoReservaGarantidora, valorTotalPremioFaixaUm, obs) 
+        VALUES ('$concurso_resultado', '$dataConcurso', '$numeros_formatados', '$numeros_array[0]', '$numeros_array[1]', 
+        '$numeros_array[2]', '$numeros_array[3]', '$numeros_array[4]', '$numeros_array[5]', '$numeros_array[6]', 
+        '$numeros_array[7]', '$numeros_array[8]', '$numeros_array[9]', '$numeros_array[10]', '$numeros_array[11]', 
+        '$numeros_array[12]', '$numeros_array[13]', '$numeros_array[14]', '$numeroDeGanhadores_1', '$cidades_string', 
+        '$valorPremio_1', '$numeroDeGanhadores_2', '$valorPremio_2', '$numeroDeGanhadores_3', '$valorPremio_3', 
+        '$numeroDeGanhadores_4', '$valorPremio_4', '$numeroDeGanhadores_5', '$valorPremio_5','$acumulado', 
+        '$valorArrecadado', '$valorAcumuladoConcurso_0_5', '$valorAcumuladoConcursoEspecial', '$dataProximoConcurso', '$valorAcumuladoProximoConcurso', 
+        '$valorEstimadoProximoConcurso', '$valorSaldoReservaGarantidora', '$valorTotalPremioFaixaUm', '$observacao')";
 
         if ($conn->query($sql) === TRUE) {
-            //$msg = "Concurso registrado com sucesso.";
+            $msg = "Concurso registrado com sucesso.";
+            unset($_POST);
+            header("refresh: 10; url=add_concurso_lotofacil.php");
         } else {
             $msg = "Erro ao registrar o primeiro concurso: " . $conn->error;
+            unset($_POST);
+            header("refresh: 10; url=add_concurso_lotofacil.php");
         } 
     }
-    
-    // Consulta SQL para obter os números já registrados no banco de dados
-    $sql = "SELECT concurso FROM resultados_lotofacil";
-    $result = $conn->query($sql);
-    
-    if ($result->num_rows > 0) {
-        $concurso = $row['concurso'];    
 
-        // Defina o intervalo de números que você deseja verificar
-        $primeiro_numero = 1; // Primeiro número do intervalo
-        $ultimo_numero = $concurso; // Último número do intervalo
-
-        // Array para armazenar os números registrados no banco de dados
-        $numeros_registrados = array();
- 
-        while ($row = $result->fetch_assoc()) {
-            $numeros_registrados[] = $row['concurso'];
-        }
-    
-        // Verifica quais números estão faltando dentro do intervalo
-        $numeros_faltando = array_diff(range($primeiro_numero, $ultimo_numero), $numeros_registrados);
-    
-        // Exibe os números faltando
-        $msg_add = "Concurso(s) que precisa(m) ser inecirdo(s) no banco de dados: " . implode(", ", $numeros_faltando) . ".";
-    } else {
-        $msg = "Não há números registrados no banco de dados.";
-    }
-    
     $conn->close();
 
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -289,84 +276,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body{
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
+            margin-top: 100px;
+            color: blueviolet;
         }
-        .conteiner {
-            max-width: 600px;
-            margin: 200px auto;
+        div {
+            max-width: 400px;
+            margin: 50px auto;
             background-color: #fff;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.1); /*sombra*/
-            font-family: Arial, sans-serif;
-        }
-        .botoes button {
-            /*display: block;*/
-            width: 150px; /* Define a largura dos botões */
-            height: 40px; /* Define a altura dos botões */
-            margin: 30px;
-            border: none;
-            background-color: blue; /* Define a cor de fundo */
-            color: white; /* Define a cor do texto */
-            font-size: 16px; /* Define o tamanho da fonte */
-            border-radius: 5px; /* Adiciona bordas arredondadas */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
-            transition: 0.3s;
-        }
-        .botoes button:hover {
-            background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
-            cursor: pointer;
-            transform: translateY(-3px); 
-        }
-
-        .botoes button:focus {
-            outline: none; /* Remove o contorno ao focar no botão */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
         }
     </style>
-    <script>
-        function obterPrimeiroConcurso() {
-            // Suponha que a API de lotofácil tenha um ponto de acesso que retorna o primeiro concurso
-            const apiEndpoint = 'https://api-lotofacil.com/concursos/primeiro';
-            
-            // Faça uma requisição para a API usando o fetch ou outro método
-            return fetch(apiEndpoint)
-                .then(response => response.json())
-                .then(data => {
-                    // Assumindo que a API retorna um objeto com o número do concurso e os números sorteados
-                    return {
-                        concurso: data.numero,
-                        numeros: data.numeros_sorteados
-                    };
-                })
-                .catch(error => {
-                    console.error('Erro ao obter dados da API:', error);
-                    return null; // Retornar null em caso de erro
-                });
-        }
-        function abrirPaginaAddConcursoLotofacil() {
-            window.location.href = 'add_concurso_lotofacil.php';
-        }
-        function inicio_lotofacil_home() {
-            window.location.href = 'inicio_lotofacil_home.php';
-        }
 
-    </script>
-    <title>Lotofácil</title>
+    <title></title>
 </head>
 <body>
-    <div class="conteiner">
-        <h2>Informações Úteis.</h2>
-        <span><?php echo $msg; ?></span>
-
-        <?php if(isset($msg_add) && $msg_add !== 0): ?>
-            <span id="msg"><?php echo $msg_add; ?>
-                <div class="botoes">
-                    <button onclick="abrirPaginaAddConcursoLotofacil()">Adicionar Agora</button>
-                    <button onclick="inicio_lotofacil_home()">Adicionar Depois</button>
-                </div>            
-            </span>
-        <?php endif; ?>
+    <div>
+        <h2><?php echo $msg; ?></h2>
+        <span id="contador"></span>
     </div>
+    <script>
+        // Função para atualizar a contagem regressiva
+        function atualizarContagem(tempo) {
+            var contadorElemento = document.getElementById('contador');
+
+            if (tempo > 0) {
+                contadorElemento.innerHTML = 'Redirecionando em ' + tempo + ' segundos...';
+                setTimeout(function() {
+                    atualizarContagem(tempo - 1);
+                }, 1000);
+            } else {
+                contadorElemento.innerHTML = 'Redirecionando...';
+                // Redirecionar após a contagem regressiva
+                window.location.href = 'add_concurso_lotofacil.php';
+            }
+        }
+
+        // Chame a função para iniciar a contagem regressiva
+        atualizarContagem(10);
+    </script>
 </body>
 </html>
