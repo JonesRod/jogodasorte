@@ -15,9 +15,7 @@ function validarFormulario() {
         document.getElementById("dataProximoConcurso").focus(); // Dá foco ao campo
         return false;
     }
-    return true;
-
-    
+    return true;   
 }
 
 function config_lotofacil() {

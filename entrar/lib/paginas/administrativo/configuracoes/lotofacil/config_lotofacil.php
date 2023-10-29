@@ -1,71 +1,40 @@
 <?php
     include('../../../../conexao.php');
+    
+    session_start(); 
 
-    if(!isset($_SESSION)){
-        session_start(); 
+    if(isset($_SESSION['usuario'])){
+        $usuario = $_SESSION['usuario'];
+        $admin = $_SESSION['admin'];
+        $_SESSION['usuario'];
+        $_SESSION['admin']; 
 
-        if(isset($_SESSION['usuario'])){
-            $usuario = $_SESSION['usuario'];
-            $admin = $_SESSION['admin'];
-            $_SESSION['usuario'];
-            $_SESSION['admin']; 
+        $id = $_SESSION['usuario'];
+        $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
+        $usuario = $sql_query->fetch_assoc(); 
 
-            $id = $_SESSION['usuario'];
-            $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
-            $usuario = $sql_query->fetch_assoc(); 
+        $id = '1';
+        $dados = $conn->query("SELECT * FROM config_lotofacil WHERE id = '$id'") or die($conn->error);
+        $registro = $dados->fetch_assoc();
+        $quantidade = $dados->num_rows;
 
-            $id = '1';
-            $dados = $conn->query("SELECT * FROM config_admin WHERE id = '$id'") or die($conn->error);
-            $dadosEscolhido = $dados->fetch_assoc();
-        
-            //$logo = $dadosEscolhido['logo'];
-            if(isset($dadosEscolhido['logo'])) {
-                $logo = $dadosEscolhido['logo'];
-                
-                if($logo == ''){
-                    $logo = '../../arquivos_fixos/IMG-20230811-WA0040.jpg';
-                }else{
-                    $logo = '../arquivos/IMG-20230811-WA0040.jpg';
-                }
-            }
-            $conn->close();
-        }else{
-            session_unset();
-            session_destroy();
-            header("Location: ../admin_logout.php");             
+        if($quantidade > 0){
+            $valor_15 = $registro['valor_15'];
+            $valor_16 = $registro['valor_16'];
+            $valor_17 = $registro['valor_17'];
+            $valor_18 = $registro['valor_18'];
+            $valor_19 = $registro['valor_19'];
+            $valor_20 = $registro['valor_20'];
+            $qt_concurso_confere = $registro['qt_concurso_confere'];
+            $qt_concurso_salva = $registro['qt_concurso_salva'];
         }
-    }else{    
-        if(isset($_SESSION['usuario'])){
-            $usuario = $_SESSION['usuario'];
-            $admin = $_SESSION['admin'];
-            $_SESSION['usuario'];
-            $_SESSION['admin']; 
-
-            $id = $_SESSION['usuario'];
-            $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
-            $usuario = $sql_query->fetch_assoc(); 
-
-            $id = '1';
-            $dados = $conn->query("SELECT * FROM config_admin WHERE id = '$id'") or die($conn->error);
-            $dadosEscolhido = $dados->fetch_assoc();
-        
-            //$logo = $dadosEscolhido['logo'];
-            if(isset($dadosEscolhido['logo'])) {
-                $logo = $dadosEscolhido['logo'];
-                //echo 'ooi';
-                if($logo == ''){
-                    $logo = '../../../arquivos_fixos/IMG-20230811-WA0040.jpg';
-                }else{
-                    $logo = '../../arquivos/IMG-20230811-WA0040.jpg';
-                }
-            }
-            $conn->close();
-        }else{
-            session_unset();
-            session_destroy();
-            header("Location: ../../inicio_admin/admin_logout.php");             
-        }
+    }else{
+        session_unset();
+        session_destroy();
+        header("Location: ../../../admin_logout.php");             
     }
+
+    $conn->close();
 
 ?>
 <!DOCTYPE html>
@@ -74,218 +43,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="config_lotofacil.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <!--<link rel="stylesheet" href="config_lotofacil.css">-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        .conteiner {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
+
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /*#msg1 {
+            color: blue;
+        }
+        #msg2 {
+            color: blue;
+        }
+        #msg2 h3{
+            color: #333;
+        }*/
+        .moeda {
+            display: flex;
+            align-items: center;
+        }
+        label {
+            flex: 0 0 auto; /* A label não será flexível e manterá seu tamanho natural */
+            margin-right: 0px; /* Espaço entre a label e o input */
+            word-break: break-word; /* Permite que a label quebre a linha se necessário */
+        }
+
+        input {
+            flex: 1; /* O input será flexível e ocupará o espaço restante disponível */
+            min-width: 100px; /* Define uma largura mínima para o input */
+            width: 85%;
+            padding: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: left;
+            display: flex;
+            margin-left: 15px;
+        }
+        #msg2 label{
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            margin-bottom: 5px;
+            text-align: left;
+            margin-left: 15px;
+        }
+
+        /*input{
+
+        }
+/*.dados_acumulado {
+    text-align: center;
+}
+
+.dados_acumulado label {
+    display: block;
+}
+
+.dados_acumulado input {
+    width: 93%;
+}
+
+.conjunto .dez {
+    display: inline-block;
+    margin-right: 3px; /* Adiciona algum espaço entre os elementos */
+/*}
+
+.conjunto .dez label {
+    text-align: center;
+    display: inline-block;
+    width: 55px; /* Ajuste a largura conforme necessário */
+/*}
+
+.conjunto .dez input {
+    width: 40px; /* Ajuste a largura conforme necessário */
+/*}
+
+button {
+    padding: 10px 20px;
+    margin: 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, font-size 0.3s; 
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}*/
+    </style>
     <title>Configuração</title>
 </head>
 <body>
-    <div>
-        <form action="">
+    <div class="conteiner">
+        <form action="" method="post">
             <h3 id="titulo" >Configurações do Administrador</h3>
 
-            
-        </form>
-    </div>
-    
-    
-    <form id="meuFormulario" action="altera_config.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
-        <fieldset class="partes">
-            <p>
-                <img class="imagens" id="ilogo" style="max-width: 200px;" src= "<?php echo $logo; ?>" name="logo_antiga" alt=""><br>
-                <img class="imagens" id="ilogoNova" style="max-width: 200px;" alt=""><br>
-                <label for="imageInput">Alterar Logo</label><br>
-                <input type="file" id="imageInput" name="imageInput" accept=".png, .jpg, .jpeg" onchange="imgLogo(event)">
-                <input type="hidden" name="end_logo" value= "<?php echo $logo; ?>">
-            </p> 
-            <input type="hidden" value="<?php echo $usuario['id']; ?>" name="admin">
-            <p>
-                <label for="irazao">Razão Social:</label><br>
-                <input required name="razao" id="irazao" type="text" value="<?php echo $dadosEscolhido['razao']; ?>">           
+            <p class="moeda">
+                <label for="valor_15">Valor de cada jogo gerado com 15 dezenas: </label>
+                <input required id="valor_15" name="valor_15" type="text">
+            </p>
+            <p class="moeda">
+                <label for="valor_16">Valor de cada jogo gerado com 16 dezenas: </label>
+                <input required id="valor_16"  name="valor_16" type="text">
+            </p>
+            <p class="moeda">
+                <label for="valor_17">Valor de cada jogo gerado com 17 dezenas: </label>
+                <input required id="valor_17" name="valor_17" type="text">
+            </p>
+            <p class="moeda">
+                <label for="valor_18">Valor de cada jogo gerado com 18 dezenas: </label>
+                <input required id="valor_18" name="valor_18" type="text">
+            </p>
+            <p class="moeda">
+                <label for="valor_19">Valor de cada jogo gerado com 19 dezenas: </label>
+                <input required id="valor_19" name="valor_19" type="text">
+            </p>
+            <p class="moeda">
+                <label for="valor_20">Valor de cada jogo gerado com 20 dezenas: </label>
+                <input required id="valor_20" name="valor_20" type="text">
             </p>
             <p>
-                <label for="icnpj">CNPJ:</label><br>
-                <input required name="cnpj" id="icnpj" type="text" oninput="formataCNPJ(this)" onblur="verificaCnpj()" value="<?php echo $dadosEscolhido['cnpj']; ?>">           
-            </p>
-        </fieldset>
-        <fieldset class="partes">
-            <legend>Localização:</legend>
-            <p> 
-                <label for="iuf">Estado: </label><br>
-                <select name="uf" id="iuf">
-                <?php
-                    $estados = array(
-                    'AC' => 'Acre',
-                    'AL' => 'Alagoas',
-                    'AP' => 'Amapá',
-                    'AM' => 'Amazonas',
-                    'BA' => 'Bahia',
-                    'CE' => 'Ceará' ,
-                    'DF' => 'Distrito Federal',
-                    'ES' => 'Espírito Santo',
-                    'GO' => 'Goiás',
-                    'MA' => 'Maranhão',
-                    'MS' => 'Mato Grosso do Sul',
-                    'MT' => 'Mato Grosso',
-                    'MG' => 'Minas Gerais',
-                    'PA' => 'Pará',
-                    'PB' => 'Paraíba',
-                    'PR' => 'Paraná',
-                    'PE' => 'Pernambuco',
-                    'PI' => 'Piauí',
-                    'RJ' => 'Rio de Janeiro',
-                    'RN' => 'Rio Grande do Norte',
-                    'RS' => 'Rio Grande do Sul',
-                    'RO' => 'Rondônia',
-                    'RR' => 'Roraima',
-                    'SC' => 'Santa Catarina',
-                    'SP' => 'São Paulo',
-                    'SE' => 'Sergipe',
-                    'TO' => 'Tocantins'
-                    );
-
-                    $ufSelecionada = $usuario['uf'];
-
-                    echo '<option value="' . $ufSelecionada . '">' . $estados[$ufSelecionada] . '</option>';
-
-                    foreach ($estados as $uf => $estado) {
-                        if ($uf !== $ufSelecionada) {
-                            echo '<option value="' . $uf . '">' . $estado . '</option>';
-                        }
-                    }           
-                ?>
-                <option value="Escolha">---Escolha---</option>
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-                </select>
+                <label for="qt_concurso_confere">Quantidade máxima de concursos que o usuario poderá conferir com os mesmos jogos: </label>
+                <input required value="<?php if(isset($_POST['qt_concurso_confere'])) echo $_POST['qt_concurso_confere']; ?>" 
+                name="qt_concurso_confere" type="number">
             </p>
             <p>
-                <label for="icep">CEP: </label><br>
-                <input required name="cep" value="<?php echo $dadosEscolhido['cep']; ?>" name="cep" id="icep" type="text" maxlength="9" oninput="formatarCEP(this)" onblur="fetchCityByCEP()"><br>
-            </p>
-            <p>
-                <label for="icidade">Cidade Atual: </label><br>
-                <input required name="cid" id="icidade" type="text" value="<?php echo $dadosEscolhido['cid']; ?>"><br>
-            </p>
-            <p>
-                <label for="iendereco">Logradouro: AV/RUA </label><br>
-                <input required name="endereco" id="iendereco" type="text" value="<?php echo $dadosEscolhido['rua']; ?>"><br>
-            </p>
-            <p>
-                <label for="inum">N°: </label><br>
-                <input required name="numero" id="inum" type="text" value="<?php echo $dadosEscolhido['numero']; ?>"><br>
-            </p>
-            <p>
-                <label for="ibairro">Bairro: </label><br>
-                <input required name="bairro" id="ibairro" type="text" value="<?php echo $dadosEscolhido['bairro']; ?>"><br>
-            </p>
-        
-        </fieldset>
-        <fieldset class="partes">
-            <legend>Administrativo:</legend>
-            <p>
-                <label for="inome">Nome do Tesoureiro(Admin):</label><br>
-                <input required name="nome_tesoureiro" id="inome" type="text" value="<?php echo $dadosEscolhido['nome_tesoureiro']; ?>">           
-            </p>            
-            <p>
-                <label for="ipresidente">Nome do Presidente:</label><br>
-                <input required name="presidente" id="ipresidente" type="text" value="<?php echo $dadosEscolhido['presidente']; ?>">           
-            </p>
-            <p>
-                <label for="ivicepresidente">Nome do Vice-Presidente:</label><br>
-                <input required name="vice_presidente" id="ivicepresidente" type="text" value="<?php echo $dadosEscolhido['vice_presidente']; ?>">           
-            </p>
-
-            <p>
-                <label for="iEmailSuporte">E-mail de notificação:</label><br>
-                <input required name="email_suporte" id="iEmailSuporte" type="email" value="<?php echo $dadosEscolhido['email_suporte']; ?>"><br>
-                <label for="iSenha">Senha:</label><br>
-                <input required name="senha" id="iSenha" type="text" value="<?php echo $dadosEscolhido['senha']; ?>">
-            </p>
-        </fieldset>
-        <fieldset class="partes">
-            <legend>Config. Financeira:</legend>
-            <p>
-                <label for="idia">Dia de vencimento das Mensalidades:</label><br>
-                <input required name="dia_fecha_mes" id="idia" type="number" value="<?php echo $dadosEscolhido['dia_fecha_mes']; ?>">  
-            </p>
-            <p>
-                <label for="imensal">Valor das Mensalidades: </label><br>
-                <input required name="valor_mensalidades" id="imensal" type="number" value="<?php echo $dadosEscolhido['valor_mensalidades']; ?>">  
-            </p>
-            <p>
-                <label for="idesc">Desconto na mensalidade se pagar em dia:</label><br>
-                <input required name="desconto_mensalidades" id="idesc" type="number" value="<?php echo $dadosEscolhido['desconto_mensalidades']; ?>">  
-            </p>
-            <p>
-                <label for="imulta">Multa na Mensalidade após vencimento:</label><br>
-                <input required name="multa" id="imulta" type="number" value="<?php echo $dadosEscolhido['multa']; ?>">  
-            </p>
-            <p>
-                <label for="ijoia">Valor da Jóia: </label><br>
-                <input required name="joia" id="ijoia" type="number" value="<?php echo $dadosEscolhido['joia']; ?>">  
-            </p>
-            <p>
-                <label for="iparJoia">Parcelamento máximo da Jóia: </label><br>
-                <input required name="parcela_joia" id="iparJoia" type="number" value="<?php echo $dadosEscolhido['parcela_joia']; ?>">  
-            </p>
-            <p>
-                <label for="imes3">Quantidades de meses em atraso para suspenção das atividades do associado: </label><br>
-                <input required name="meses_vence3" id="imes3" type="number" value="<?php echo $dadosEscolhido['meses_vence3']; ?>">  
-            </p>
-            <p>
-                <label for="imes5">Quantidades de meses em atraso para exclusão do associado: </label><br>
-                <input required name="meses_vence5" id="imes5" type="number" value="<?php echo $dadosEscolhido['meses_vence5']; ?>">  
-            </p>
-        </fieldset>
-        <fieldset class="partes">
-            <legend>Orientações e Regras</legend>
-            <p>
-                <label for="idade">Idade minima para ser um associado: </label><br>
-                <input required name="idade_min" id="idade" type="number" value="<?php echo $dadosEscolhido['idade_minima']; ?>">  
-            </p>
-            <p>
-                <label for="itermos">Termos da Inscrição:</label><br>
-                <textarea required type="text" name="termos_insc" id="itermos" cols="40" rows="10" minlength="10"><?php echo $dadosEscolhido['termos_insc']; ?></textarea><br> 
-            </p>
-            <p>
-                <label for="ivalidade">Tempo de validade da Inscrição:</label><br>
-                <label for="ivalidade">Dias: </label><input required type="number" name="validade_insc" id="ivalidade" value="<?php echo $dadosEscolhido['validade_insc']; ?>"><br> 
-            </p>
-            <p>
-                <label for="iEst">Estatuto interno:</label><br>
-                <input type="hidden" name="estatuto" id="iEst" value="<?php echo $dadosEscolhido['estatuto_int']; ?>">
-                <button type="button" id="ibaixar_estatuto" onclick="baixarArq_estatuto()">Baixar Estatuto Atual</button><br>
-                <input type="file" accept=".pdf, .doc, .docx" name="novo_estatuto" id="inovo_estatuto"></p>
-            </p>
-            <p>
-                <label for="iReg" for="">Regimento interno:</label><br>
-                <input type="hidden" name="regimento" id="iReg" value="<?php echo $dadosEscolhido['reg_int']; ?>">
-                <button type="button" id="ibaixar_regimento" onclick="baixarArq_regimento()">Baixar Regimento Atual</button><br>
-                <input type="file" accept=".pdf, .doc, .docx" name="novo_regimento" id="inovo_regimento"></p>
+                <label for="qt_concurso_salva">Quantidade máxima de ultimos concursos jogados que seram salvos: </label>
+                <input required value="<?php if(isset($_POST['qt_concurso_salva'])) echo $_POST['qt_concurso_salva']; ?>" 
+                name="qt_concurso_salva" type="number">
             </p>
             <p>
                 <span id="imsgAlerta"></span><br>
@@ -297,10 +208,9 @@
                 <a href="../importar_exportar/importar.php"  style="margin-left: 10px; margin-right: 10px;">Importar/Exportar</a>
 
                 <button type="submit">Salvar</button>
-            </p>
-        </fieldset>
-        <script src="admin_verifica.js"></script>
-    </form>
-
+            </p>   
+        </form>
+    </div>
+    <script src="config_moeda.js"></script> 
 </body>
 </html>

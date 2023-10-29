@@ -1,43 +1,108 @@
 body {
     font-family: Arial, sans-serif;
-    /*margin: 0;*/
-    background-color: #f8f8f8;
-    align-items: center;
-    margin-bottom: 10px;
+    text-align: center;
+    background-color: #f4f4f4;
 }
 
-#ititulo {
-    /*align-items: center;*/
-    text-align: center;
+.conteiner {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
+
 }
-form {
+
+h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#msg1 {
+    color: blue;
+}
+#msg2 {
+    color: blue;
+}
+#msg2 h3{
+    color: #333;
+}
+.moeda {
     display: flex;
-    /*justify-content: center;*/
     align-items: center;
-    /*height: 100vh; /* Isso garante que o formulário ocupe toda a altura da tela */
-    flex-direction: column; /* Organiza os elementos verticalmente */
-    margin-bottom: 10px;
 }
-.partes{
-    width: 70%;
+
+.moeda label {
+    flex: 0 0 auto; /* A label não será flexível e manterá seu tamanho natural */
+    margin-right: 10px; /* Espaço entre a label e o input */
+}
+
+.moeda input {
+    flex: 1; /* O input será flexível e ocupará o espaço restante disponível */
+}
+#msg2 label{
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    margin-bottom: 5px;
+    text-align: left;
+    margin-left: 15px;
+}
+
+input{
+    width: 85%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: flex;
+    margin-left: 15px;
+}
+.dados_acumulado {
     text-align: center;
-    margin-bottom: 10px;
 }
-.partes input{
-    width: 200px;
+
+.dados_acumulado label {
+    display: block;
+}
+
+.dados_acumulado input {
+    width: 93%;
+}
+
+.conjunto .dez {
+    display: inline-block;
+    margin-right: 3px; /* Adiciona algum espaço entre os elementos */
+}
+
+.conjunto .dez label {
     text-align: center;
+    display: inline-block;
+    width: 55px; /* Ajuste a largura conforme necessário */
 }
-.partes input[type="number"] {
-    width: 60px; /* Defina o tamanho desejado */
-    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+
+.conjunto .dez input {
+    width: 40px; /* Ajuste a largura conforme necessário */
 }
-.partes #iuf{
-    width: 200px;
-    text-align: center;
+
+button {
+    padding: 10px 20px;
+    margin: 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, font-size 0.3s; 
 }
-.partes #ijoia{
-    width: 60px;
-}
-button{
-    margin: 5px;
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
 }

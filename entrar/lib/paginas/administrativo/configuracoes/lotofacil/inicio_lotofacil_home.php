@@ -2,6 +2,53 @@
 
     include('../../../../conexao.php');
 
+    if(!isset($_SESSION)){
+        session_start(); 
+
+        if(isset($_SESSION['usuario'])){
+
+            if (isset($_POST["tipoLogin"])) {
+                $usuario_sessao = $_SESSION['usuario'];
+                $valorSelecionado = $_POST["tipoLogin"];
+                $admin = $valorSelecionado;
+
+                if($admin != 1){
+                    header("Location: ../../../usuarios/usuario_home.php");      
+                } else {
+                    $_SESSION['usuario'];
+                    $_SESSION['admin'];  
+                }
+            }  
+
+        } else {
+            session_unset();
+            session_destroy(); 
+            header("Location: ../../inicio_admin/admin_logout.php");  
+        }
+    } else {
+        if(isset($_SESSION['usuario'])){
+
+            if (isset($_POST["tipoLogin"])) {
+                $usuario_sessao = $_SESSION['usuario'];
+                $valorSelecionado = $_POST["tipoLogin"];
+                $admin = $valorSelecionado;
+
+                if($admin != 1){
+                    header("Location: ../../../usuarios/usuario_home.php");      
+                } else {
+                    $_SESSION['usuario'];
+                    $_SESSION['admin'];  
+                }
+            }  
+
+        } else {
+            session_unset();
+            session_destroy(); 
+            header("Location: ../../inicio_admin/admin_logout.php");  
+        }
+
+    }
+
     // Verifique se o último resultado foi registrado
     $resultado_existe = false;
     $msg =false;
@@ -188,14 +235,14 @@
             if ($conn->query($sql) === TRUE) {
                 $msg = "Concurso registrado com sucesso.";
                 unset($_POST);
-                header("refresh: 10; url=add_concurso_lotofacil.php");
+                header("refresh: 5; url=add_concurso_lotofacil.php");
             } else {
                 $msg = "Erro ao registrar o primeiro concurso: " . $conn->error;
             } 
         }else{
             $msg = "Concurso $concurso_resultado ja existe no banco!";
             unset($_POST);
-            header("refresh: 10; url=add_concurso_lotofacil.php");
+            header("refresh: 5; url=add_concurso_lotofacil.php");
         }
     }else{
         // Obtenha o primeiro concurso através da API (substitua com sua lógica de API)
@@ -258,11 +305,11 @@
         if ($conn->query($sql) === TRUE) {
             $msg = "Concurso registrado com sucesso.";
             unset($_POST);
-            header("refresh: 10; url=add_concurso_lotofacil.php");
+            header("refresh: 5; url=add_concurso_lotofacil.php");
         } else {
             $msg = "Erro ao registrar o primeiro concurso: " . $conn->error;
             unset($_POST);
-            header("refresh: 10; url=add_concurso_lotofacil.php");
+            header("refresh: 5; url=add_concurso_lotofacil.php");
         } 
     }
 
@@ -316,7 +363,7 @@
         }
 
         // Chame a função para iniciar a contagem regressiva
-        atualizarContagem(10);
+        atualizarContagem(5);
     </script>
 </body>
 </html>
