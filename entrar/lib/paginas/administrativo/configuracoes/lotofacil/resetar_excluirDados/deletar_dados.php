@@ -2,7 +2,6 @@
 
     include('../../../../../conexao.php');
 
-    if(!isset($_SESSION)){
         session_start(); 
 
         if(isset($_SESSION['usuario'])){
@@ -25,29 +24,6 @@
             session_destroy(); 
             header("Location: ../../inicio_admin/admin_logout.php");  
         }
-    } else {
-        if(isset($_SESSION['usuario'])){
-
-            if (isset($_POST["tipoLogin"])) {
-                $usuario_sessao = $_SESSION['usuario'];
-                $valorSelecionado = $_POST["tipoLogin"];
-                $admin = $valorSelecionado;
-
-                if($admin != 1){
-                    header("Location: ../../../usuarios/usuario_home.php");      
-                } else {
-                    $_SESSION['usuario'];
-                    $_SESSION['admin'];  
-                }
-            }  
-
-        } else {
-            session_unset();
-            session_destroy(); 
-            header("Location: ../../inicio_admin/admin_logout.php");  
-        }
- 
-    }
 
     $msg1= false;
     $msg2= false;
@@ -71,86 +47,47 @@
             if(($quantidade ) >= 1) {
 
                 if(password_verify($senha_usuario, $usuario_sessao['senha'])) {
-                    //pega os Nomes dos dados de acesso do banco
-                    $localhost = $conn->real_escape_string($host);
-                    $usuario_log = $conn->real_escape_string($usuario);
-                    $senha_log = $conn->real_escape_string($senha);
-                    $database = $conn->real_escape_string($banco);
 
-                    // Defina as credenciais do banco de dados
-                    //$host = "localhost";
-                    //$usuario = "root";
-                    //$senha = "";
-                    //$banco = "associacao_40ribas";
-
-                    $conn = new mysqli($localhost, $usuario_log, $senha_log, $database);
-
-                    if ($conn->connect_error) {
-                        die("Falha na conexão: " . $conn->connect_error);
-                    }
-
-                    $backupFile = 'backup_' . date('Y-m-d') . '.sql';
-                    $database = $conn->real_escape_string($banco);
-
-                    //var_dump($usuario);
-                    //var_dump($senha);
-                    //var_dump($host);
-                    //var_dump($database);
-                    //var_dump($backupFile); 
-
-                    // Defina o caminho para o mysqldump (escolha um dos dois caminhos disponíveis)
-                    $mysqldump_path = 'C:\xampp\mysql\bin\mysqldump.exe';
-                    //$mysqldump_path = 'C:\Program Files\MySQL\MySQL Server 8.1\bin\mysqldump.exe';
+                    $tabela = 'resultados_lotofacil';
+                    // Caminho e nome do arquivo de backup
+                    $arquivo_backup = 'backup/backup_concursos_lotofacil' . date('Y-m-d') . '.sql';
                     
-                    // Defina o caminho e nome do arquivo de backup
-                    $backupFile = 'backup/backup_' . date('Y-m-d') . '.sql';
-                    
-                    // Comando para realizar o backup
-                    $commandBackup = "$mysqldump_path --user=$usuario_log --password=$senha_log --host=$localhost $database > $backupFile";
-                    
-                    // Executa o comando de backup
-                    exec($commandBackup, $output, $return);
-                    
-                    if ($return === 0) {
-                        // Excluir todos os dados das tabelas
-                        $tables = $conn->query("SHOW TABLES");
+                    // Verifica se existem dados na tabela
+                    $verificar_query = "SELECT COUNT(*) as total FROM $tabela";
+                    $result = $conn->query($verificar_query);
+                    $row = $result->fetch_assoc();
+                    $total_registros = $row['total'];
 
-                        while ($row = $tables->fetch_row()) {
-                            $table = $row[0];
-                            $conn->query("DELETE FROM $table");
-                            $conn->query("ALTER TABLE $table AUTO_INCREMENT = 1");
-                        }
-
-                        $msg1 = "Backup criado e todos os dados foram excluídos e os IDs foram reiniciados.";
-                        $msg2 = "";                     
+                    if ($total_registros > 0) {
                         
-                        // Encerrar sessão
-                        session_unset();
-                        session_destroy();
+                        // Comando SQL para exportar a tabela
+                        //$query = "SELECT * INTO OUTFILE '$arquivo_backup' FROM $tabela";
+                        
+                        //if ($conn->query($query) === TRUE) {
+                            // Excluir todos os dados da tabela e resetar o AUTO_INCREMENT
+                            $conn->query("DELETE FROM $tabela");
+                            $conn->query("ALTER TABLE $tabela AUTO_INCREMENT = 1");
+                        
+                            $msg1 = "Backup da tabela $tabela realizado com sucesso e todos os concursos da Lotofacil foram excluídos.";
+                            $msg2 = '<script>atualizarContagem(5);</script>';    
+                            // Chame a função JavaScript para iniciar a contagem regressiva
 
-                        //header("refresh: 5;");  
-                        echo '<script>
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 5000);
-                            </script>';
-
-                        //header("refresh: 5;../inicio.php"); 
-
+                        /*} else {
+                            $msg1 = '';
+                            $msg2 = "Erro ao fazer o backup da tabela: " . $conn->error;
+                        }*/
                     } else {
-                        $msg1 = ""; 
-                        $msg2 = "Erro ao realizar o backup.";
-                        header("refresh: 5;../../inicio_admin/admin_inicio.php"); 
+                        $msg1 = '';
+                        $msg2 = "Não há dados na tabela $tabela para fazer backup.";
                     }
-
                 }else{
                     $msg1 = "";
                     $msg2 = "Senaha inválida!";   
                     //echo $msg;
                 }
             }else{
-                $msg = "";  
-                //echo 'oii';
+                $msg1 = "";  
+                $msg2 = "";  
                 // Fecha a conexão
                 $conn->close();
             }
@@ -179,11 +116,26 @@
                 toggleSenha.textContent = 'visibility_off';
             }
         }
+        // Função para atualizar a contagem regressiva
+        function atualizarContagem(tempo) {
+            var contadorElemento = document.getElementById('contador');
+
+            if (tempo > 0) {
+                contadorElemento.innerHTML = 'Redirecionando em ' + tempo + ' segundos...';
+                setTimeout(function() {
+                    atualizarContagem(tempo - 1);
+                }, 1000);
+            } else {
+                contadorElemento.innerHTML = 'Redirecionando...';
+                // Redirecionar após a contagem regressiva
+                window.location.href = '../config_lotofacil.php';
+            }
+        }
     </script>
 </head>
 <body>
     <form id ="iform" action="" method="POST" >
-        <h1 id="ititulo">Excluir todos os dados</h1>
+        <h1 id="ititulo">Excluir todos os Concursos</h1>
         <p>
             Você realmente deseja excluir todos os dados armazenado?
         </p>
@@ -192,6 +144,7 @@
         </p>
         <span id="msg1"><?php echo $msg1; ?></span>
         <span id="msg2"><?php echo $msg2; ?></span>
+        <span id="contador"></span>
         <p>
             <div id="senhaInputContainer">
                 <label for="">Senha do admin: </label>
@@ -200,9 +153,9 @@
             </div>
         </p>
         <p>
-            <button type="submit" name="excluir_dados">Excluir Todos os Dados</button>
+            <button type="submit" name="excluir_dados">Excluir Todos os Concursos</button>
         </p>
     </form>
-    <a href="../configuracoes/config.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
+    <a href="../config_lotofacil.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
 </body>
 </html>

@@ -27,6 +27,15 @@
             $valor_20 = $registro['valor_20'];
             $qt_concurso_confere = $registro['qt_concurso_confere'];
             $qt_concurso_salva = $registro['qt_concurso_salva'];
+        }else{
+            $valor_15 = '';
+            $valor_16 = '';
+            $valor_17 = '';
+            $valor_18 = '';
+            $valor_19 = '';
+            $valor_20 = '';
+            $qt_concurso_confere = '';
+            $qt_concurso_salva = '';
         }
     }else{
         session_unset();
@@ -90,7 +99,7 @@
         input {
             flex: 1; /* O input será flexível e ocupará o espaço restante disponível */
             min-width: 100px; /* Define uma largura mínima para o input */
-            width: 85%;
+            width: 95%;
             padding: 5px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
@@ -99,6 +108,9 @@
             text-align: left;
             display: flex;
             margin-left: 15px;
+        }
+        input:focus {
+            outline: none; /* Remove o contorno ao focar no botão */
         }
         #msg2 label{
             color: #333;
@@ -138,7 +150,7 @@
 
 .conjunto .dez input {
     width: 40px; /* Ajuste a largura conforme necessário */
-/*}
+/*}*/
 
 button {
     padding: 10px 20px;
@@ -155,57 +167,55 @@ button {
 button:hover {
     background-color: #0056b3;
     transform: translateY(-3px);
-}*/
+}
     </style>
     <title>Configuração</title>
 </head>
 <body>
     <div class="conteiner">
-        <form action="" method="post">
+        <form action="altera_config_lotofacil.php" method="post">
             <h3 id="titulo" >Configurações do Administrador</h3>
+
+            <input type="hidden" name="id_usuario" id="" value="<?php echo $usuario['id']; ?>">
 
             <p class="moeda">
                 <label for="valor_15">Valor de cada jogo gerado com 15 dezenas: </label>
-                <input required id="valor_15" name="valor_15" type="text">
+                <input required id="valor_15" name="valor_15" type="text" value="<?php echo $valor_15; ?>">
             </p>
             <p class="moeda">
                 <label for="valor_16">Valor de cada jogo gerado com 16 dezenas: </label>
-                <input required id="valor_16"  name="valor_16" type="text">
+                <input required id="valor_16"  name="valor_16" type="text" value="<?php echo $valor_16; ?>">
             </p>
             <p class="moeda">
                 <label for="valor_17">Valor de cada jogo gerado com 17 dezenas: </label>
-                <input required id="valor_17" name="valor_17" type="text">
+                <input required id="valor_17" name="valor_17" type="text" value="<?php echo $valor_17; ?>">
             </p>
             <p class="moeda">
                 <label for="valor_18">Valor de cada jogo gerado com 18 dezenas: </label>
-                <input required id="valor_18" name="valor_18" type="text">
+                <input required id="valor_18" name="valor_18" type="text" value="<?php echo $valor_18; ?>">
             </p>
             <p class="moeda">
                 <label for="valor_19">Valor de cada jogo gerado com 19 dezenas: </label>
-                <input required id="valor_19" name="valor_19" type="text">
+                <input required id="valor_19" name="valor_19" type="text" value="<?php echo $valor_19; ?>">
             </p>
             <p class="moeda">
                 <label for="valor_20">Valor de cada jogo gerado com 20 dezenas: </label>
-                <input required id="valor_20" name="valor_20" type="text">
+                <input required id="valor_20" name="valor_20" type="text" value="<?php echo $valor_20; ?>">
             </p>
             <p>
                 <label for="qt_concurso_confere">Quantidade máxima de concursos que o usuario poderá conferir com os mesmos jogos: </label>
-                <input required value="<?php if(isset($_POST['qt_concurso_confere'])) echo $_POST['qt_concurso_confere']; ?>" 
+                <input required value="<?php echo $qt_concurso_confere; ?>"
                 name="qt_concurso_confere" type="number">
             </p>
             <p>
                 <label for="qt_concurso_salva">Quantidade máxima de ultimos concursos jogados que seram salvos: </label>
-                <input required value="<?php if(isset($_POST['qt_concurso_salva'])) echo $_POST['qt_concurso_salva']; ?>" 
+                <input required value="<?php echo $qt_concurso_salva; ?>"
                 name="qt_concurso_salva" type="number">
             </p>
             <p>
-                <span id="imsgAlerta"></span><br>
-                <!-- Link de voltar -->
-                <a href="../../inicio_admin/admin_inicio.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
-                <!--onclick="perguntarSalvar(); return false;"-->
-                <a href="../resetar_excluirDados/backup.php"  style="margin-left: 10px; margin-right: 10px;">Backup</a>
-                <a href="../resetar_excluirDados/deletar_dados.php"  style="margin-left: 10px; margin-right: 10px;">Excluir Todos os Dados</a>
-                <a href="../importar_exportar/importar.php"  style="margin-left: 10px; margin-right: 10px;">Importar/Exportar</a>
+                <a href="resetar_excluirDados/backup.php"  style="margin-left: 10px; margin-right: 10px;">Backup dos concursos da lotofácil</a>
+                <a href="resetar_excluirDados/deletar_dados.php"  style="margin-left: 10px; margin-right: 10px;">Excluir Todos os concursos da Lotofácil</a>
+                <a href="importar_exportar/importar.php"  style="margin-left: 10px; margin-right: 10px;">Importar/Exportar dados da Lotofácil</a>
 
                 <button type="submit">Salvar</button>
             </p>   
