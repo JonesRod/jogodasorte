@@ -144,18 +144,18 @@
     <title>Meu Perfil</title>
 </head>
 <body>
-    <form id="iform" action="alterar_dados_perfil.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
+    <form id="form" action="alterar_dados_perfil.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
         
         <input id="" value="<?php echo $usuario['id']; ?>" name="id" type="hidden">
         <fieldset class="dados">
             <legend>Meus Dados</legend>
             <p>
+                <label for="primeiro_nome" >Primeiro nome ou Apelido: </label>
+                <input required id="primeiro_nome" value="<?php echo $usuario['primeiro_nome']; ?>" name="primeiro_nome" type="text"><br>
+            </p>            
+            <p>
                 <label for="nome_completo" >Nome Completo: </label>
                 <input required id="nome_completo" value="<?php echo $usuario['nome_completo']; ?>" name="nome_completo" type="text"><br>
-            </p>
-            <p>
-                <label for="primeiro_nome" >Apelido: </label>
-                <input required id="primeiro_nome" value="<?php echo $usuario['primeiro_nome']; ?>" name="primeiro_nome" type="text"><br>
             </p>
             <p>
                 <label for="cpf" >CPF: </label>
@@ -170,29 +170,14 @@
                     // Formate a data para o formato brasileiro (dd/mm/yyyy)
                     $dataNascimentoFormatada = date('d/m/Y', strtotime($dataNascimento));
                 ?>
-                <input required id="nascimento" value="<?php echo $dataNascimentoFormatada; ?>" name="nascimento" type="text"  oninput="formatarData(this)" onblur="verificaData()"><br>
-            </p>
-        </fieldset>
-        <fieldset class="sexo">
-            <legend>Sexo</legend>
-            <p>
-                <?php
-                    // Suponha que $usuario seja um array contendo os dados do banco de dados, incluindo o campo "sexo"
-                    $sexoMasculino = ($usuario['sexo'] == 'MASCULINO') ? 'checked' : '';
-                    $sexoFeminino = ($usuario['sexo'] == 'FEMININO') ? 'checked' : '';
-                    $sexoOutro = ($usuario['sexo'] == 'OUTROS') ? 'checked' : '';
-                ?>
-                <input type="radio" name="sexo" id="masc" value="MASCULINO" <?php echo $sexoMasculino; ?>><label for="masc">Masculino</label> 
-                <input type="radio" name="sexo" id="femi" value="FEMININO" <?php echo $sexoFeminino; ?>><label for="femi">Feminino</label> 
-                <input type="radio" name="sexo" id="out" value="OUTROS" <?php echo $sexoOutro; ?>><label for="out">Outros</label>
-
+                <input required id="nascimento" value="<?php echo $dataNascimentoFormatada; ?>" name="nascimento" type="text"  oninput="formatarData(this)" onblur="validarData()"><br>
             </p>
         </fieldset>
         <fieldset class="endereco">
             <legend>Região</legend>
             <p> 
-                <label for="uf_atual">Estado Atual: </label>
-                <select required name="uf_atual" id="uf_atual" value="">
+                <label for="uf">Estado Atual: </label>
+                <select required name="uf" id="uf" value="">
                     <?php
                         $estados = array(
                         'AC' => 'Acre',
@@ -243,19 +228,15 @@
                 <input required value="<?php echo $usuario['cep']; ?>" name="cep" id="cep" type="text" maxlength="9" oninput="formatarCEP(this)" onblur="fetchCityByCEP()"><br>
             </p>
             <p>
-                <label id="" for="cid_atual">Cidade Atual: </label><br>
-                <input required value="<?php echo $usuario['cid_atual']; ?>" name="cid_atual" id="cid_atual" type="text"><br>
+                <label id="" for="cidade">Cidade Atual: </label><br>
+                <input required value="<?php echo $usuario['cidade']; ?>" name="cidade" id="cidade" type="text"><br>
             </p>
         </fieldset>
         <fieldset class="contatos">
             <legend>Contatos</legend>
             <p>
-                <label id="" for="celular1">Celular 1: </label><br>
-                <input required value="<?php echo $usuario['celular1']; ?>" name="celular1" id="celular1" type="text" placeholder="(00) 00000-0000" size="" oninput="formatarCelular1(this)" onblur="verificaCelular1()"><br>
-            </p>
-            <p>
-                <label id="" for="celular2">Celular 2: Opcional </label><br>
-                <input value="<?php echo $usuario['celular2']; ?>" name="celular2" id="celular2" type="text" placeholder="(00) 00000-0000" size="" oninput="formatarCelular2(this)" onblur="verificaCelular2()"><br>
+                <label id="" for="celular">Celular: </label><br>
+                <input required value="<?php echo $usuario['celular']; ?>" name="celular" id="celular" type="text" placeholder="(00) 00000-0000" size="" oninput="formatarCelular(this)" onblur="verificaCelular()"><br>
             </p>
             <p>
                 <label id="" for="email">E-mail:</label><br>
@@ -263,8 +244,8 @@
             </p>
         </fieldset>
         <p>
-            <span id="imgAlerta"></span><br>
-            <span id="imgAlerta2" type="hidden"></span><br>
+            <span id="msg"></span><br>
+            <span id="msg2" type="hidden"></span><br>
             <a href="inicio.php" style="margin-left: 10px; margin-right: 10px;">Voltar</a><a href="../../redefinir_senha.php" style="margin-left: 10px; margin-right: 10px;">Redefinir Senha</a>
             <button id="" type="submit" style="margin-left: 10px;">Salvar</button>
         </p>

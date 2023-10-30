@@ -244,11 +244,12 @@
     </div>
     <div id="divLista">
         <ul id="lista" class="lista">
+            <li><a href="#" onclick="abrirNaDiv('../configuracoes/config_gerais/config_gerais.php');">Cofigurações Gerais</a></li> 
             <li id="config_lotofacil" ><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/inicio_lotofacil_home.php');">Configuração Lotofácil</a></li>
             <li><a href="#" onclick="abrirNaDiv('../configuracoes/megasena/config_megasena.php');">Configuração Mega Sena</a></li> 
             <li><a href="#" onclick="abrirNaDiv('../configuracoes/quina/config_quina.php');toggleMenu()">Configuração Quina</a></li>
-            <!--<li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/resetar_excluirDados/backup.php');">Backup</a></li> 
-            <li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/resetar_excluirDados/deletar_dados.php');toggleMenu()">Excluir Todos os dados</a></li>
+            
+            <!--<li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/resetar_excluirDados/deletar_dados.php');toggleMenu()">Excluir Todos os dados</a></li>
             <li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/importar_exportar/importar.php');toggleMenu()">Importar/Exportar</a></li>-->
         </ul> 
     </div>

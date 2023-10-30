@@ -15,7 +15,7 @@
         // Se não houver uma sessão de usuário, redirecione para a página de login
         session_unset();
         session_destroy(); 
-        header("Location: ../../../../index.php");  
+        header("Location: usuario_logout.php");  
         exit(); // Importante adicionar exit() após o redirecionamento
     }
 
