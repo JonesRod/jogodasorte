@@ -101,18 +101,17 @@
                     exec($commandBackup, $output, $return);
                     
                     if ($return === 0) {
+                        // Chame a função JavaScript para iniciar a contagem regressiva
                         $msg1 = "Backup realizado com sucesso.";
                         $msg2 = '<script>atualizarContagem(5);</script>';
                         //header("refresh: 5;../config_lotofacil.php"); 
-                        // Chame a função JavaScript para iniciar a contagem regressiva
                         
-
                     } else {
+                        // Chame a função JavaScript para iniciar a contagem regressiva
                         $msg1 = '<script>atualizarContagem(5);</script>';
                         $msg2 = "Erro ao realizar o backup.";
                         //header("refresh: 5;../config_lotofacil.php"); 
-                        // Chame a função JavaScript para iniciar a contagem regressiva
-                        
+                            
                     }
                     //die();  
 
@@ -263,14 +262,8 @@
 </head>
 <body>
     <form id ="iform" action="" method="POST" >
-        <h1 id="ititulo">Confirmação para Resetar</h1>
+        <h1 id="ititulo">Confirmação para Backup</h1>
         <span id="contador"></span>
-        <p>
-            Você realmente deseja resetar e excluir todos os dados armazenado da Lotofácil?
-        </p>
-        <p>
-            Caso click em 'Reset': Os dados serão todos apagados, mas estarão disponiveis no Backup.
-        </p>
         <span id="msg1"><?php echo $msg1; ?></span>
         <span id="msg2"><?php echo $msg2; ?></span>
         <p>

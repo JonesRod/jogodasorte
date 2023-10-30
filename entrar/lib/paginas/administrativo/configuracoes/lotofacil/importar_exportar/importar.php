@@ -50,7 +50,7 @@ session_start(); // Iniciar a sessão
         <form method="POST" action="processa.php" enctype="multipart/form-data">
             <label>Arquivo: </label>
             <input type="file" name="arquivo" id="arquivo" accept="text/csv"><br><br>
-            <a href="../configuracoes/config.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
+            <a href="../config_lotofacil.php"  style="margin-left: 10px; margin-right: 10px;">Voltar</a>
             <input type="submit" value="Enviar">
         </form>            
     </div>

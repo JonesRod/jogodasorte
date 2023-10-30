@@ -49,37 +49,36 @@
                 if(password_verify($senha_usuario, $usuario_sessao['senha'])) {
 
                     $tabela = 'resultados_lotofacil';
-                    // Caminho e nome do arquivo de backup
-                    $arquivo_backup = 'backup/backup_concursos_lotofacil' . date('Y-m-d') . '.sql';
+                    $arquivo_backup = 'backup/backup_concursos_lotofacil';
                     
-                    // Verifica se existem dados na tabela
-                    $verificar_query = "SELECT COUNT(*) as total FROM $tabela";
-                    $result = $conn->query($verificar_query);
-                    $row = $result->fetch_assoc();
-                    $total_registros = $row['total'];
-
-                    if ($total_registros > 0) {
-                        
-                        // Comando SQL para exportar a tabela
-                        //$query = "SELECT * INTO OUTFILE '$arquivo_backup' FROM $tabela";
-                        
-                        //if ($conn->query($query) === TRUE) {
-                            // Excluir todos os dados da tabela e resetar o AUTO_INCREMENT
-                            $conn->query("DELETE FROM $tabela");
-                            $conn->query("ALTER TABLE $tabela AUTO_INCREMENT = 1");
-                        
-                            $msg1 = "Backup da tabela $tabela realizado com sucesso e todos os concursos da Lotofacil foram excluídos.";
-                            $msg2 = '<script>atualizarContagem(5);</script>';    
-                            // Chame a função JavaScript para iniciar a contagem regressiva
-
-                        /*} else {
-                            $msg1 = '';
-                            $msg2 = "Erro ao fazer o backup da tabela: " . $conn->error;
-                        }*/
+                    $sql = "SELECT * FROM $tabela";
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $file_name = $arquivo_backup . "_" . date('Y-m-d') . ".csv"; 
+                            
+                            // Abre o arquivo CSV
+                            $file = fopen($file_name, 'w');
+                    
+                            // Escreve os dados no arquivo CSV
+                            fputcsv($file, $row);
+                    
+                            // Fecha o arquivo CSV
+                            fclose($file);
+                        }
+                    
+                        // Excluir todos os dados da tabela e resetar o AUTO_INCREMENT
+                        $conn->query("DELETE FROM $tabela");
+                        $conn->query("ALTER TABLE $tabela AUTO_INCREMENT = 1");
+                    
+                        $msg1 = "Backup da tabela $tabela realizado com sucesso e todos os concursos da Lotofacil foram excluídos.";
+                        $msg2 = '<script>atualizarContagem(5);</script>';    
                     } else {
-                        $msg1 = '';
+                        $msg1 = '<script>atualizarContagem(5);</script>';
                         $msg2 = "Não há dados na tabela $tabela para fazer backup.";
                     }
+                    
                 }else{
                     $msg1 = "";
                     $msg2 = "Senaha inválida!";   
@@ -136,6 +135,7 @@
 <body>
     <form id ="iform" action="" method="POST" >
         <h1 id="ititulo">Excluir todos os Concursos</h1>
+        <span id="contador"></span>
         <p>
             Você realmente deseja excluir todos os dados armazenado?
         </p>
@@ -144,7 +144,7 @@
         </p>
         <span id="msg1"><?php echo $msg1; ?></span>
         <span id="msg2"><?php echo $msg2; ?></span>
-        <span id="contador"></span>
+        
         <p>
             <div id="senhaInputContainer">
                 <label for="">Senha do admin: </label>

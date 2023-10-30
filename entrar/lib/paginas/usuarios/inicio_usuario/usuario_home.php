@@ -89,7 +89,7 @@
     </div>
     <div class="menu" id="menu">
         <ul id="lista" class="lista">
-            <li><a href="#" onclick="abrirNaDiv('inicio.php');toggleMenu()">Inicío </a></li> 
+            <li><a href="#" onclick="abrirNaDiv('usuario_inicio.php');toggleMenu()">Inicío </a></li> 
             <li><a href="#" onclick="abrirNaDiv('../meu_perfil/perfil.php');toggleMenu()">Meu Perfil </a></li>              
         </ul> 
     </div> 

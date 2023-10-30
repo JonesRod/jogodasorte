@@ -174,32 +174,33 @@ button:hover {
 <body>
     <div class="conteiner">
         <form action="altera_config_lotofacil.php" method="post">
-            <h3 id="titulo" >Configurações do Administrador</h3>
+            <h3 id="titulo" >Configurações de valores por cada jogo da Lotofácil</h3>
 
             <input type="hidden" name="id_usuario" id="" value="<?php echo $usuario['id']; ?>">
 
             <p class="moeda">
                 <label for="valor_15">Valor de cada jogo gerado com 15 dezenas: </label>
-                <input required id="valor_15" name="valor_15" type="text" value="<?php echo $valor_15; ?>">
+                <input required id="valor_15" name="valor_15" type="text" value="<?php echo $valor_15; ?>"
+                oninput="calcularValores()">
             </p>
             <p class="moeda">
-                <label for="valor_16">Valor de cada jogo gerado com 16 dezenas: </label>
+                <label for="valor_16">Valor de cada jogo gerado com 16 dezenas(16): </label>
                 <input required id="valor_16"  name="valor_16" type="text" value="<?php echo $valor_16; ?>">
             </p>
             <p class="moeda">
-                <label for="valor_17">Valor de cada jogo gerado com 17 dezenas: </label>
+                <label for="valor_17">Valor de cada jogo gerado com 17 dezenas(136): </label>
                 <input required id="valor_17" name="valor_17" type="text" value="<?php echo $valor_17; ?>">
             </p>
             <p class="moeda">
-                <label for="valor_18">Valor de cada jogo gerado com 18 dezenas: </label>
+                <label for="valor_18">Valor de cada jogo gerado com 18 dezenas(816): </label>
                 <input required id="valor_18" name="valor_18" type="text" value="<?php echo $valor_18; ?>">
             </p>
             <p class="moeda">
-                <label for="valor_19">Valor de cada jogo gerado com 19 dezenas: </label>
+                <label for="valor_19">Valor de cada jogo gerado com 19 dezenas(3.876): </label>
                 <input required id="valor_19" name="valor_19" type="text" value="<?php echo $valor_19; ?>">
             </p>
             <p class="moeda">
-                <label for="valor_20">Valor de cada jogo gerado com 20 dezenas: </label>
+                <label for="valor_20">Valor de cada jogo gerado com 20 dezenas(15.504): </label>
                 <input required id="valor_20" name="valor_20" type="text" value="<?php echo $valor_20; ?>">
             </p>
             <p>
@@ -215,7 +216,7 @@ button:hover {
             <p>
                 <a href="resetar_excluirDados/backup.php"  style="margin-left: 10px; margin-right: 10px;">Backup dos concursos da lotofácil</a>
                 <a href="resetar_excluirDados/deletar_dados.php"  style="margin-left: 10px; margin-right: 10px;">Excluir Todos os concursos da Lotofácil</a>
-                <a href="importar_exportar/importar.php"  style="margin-left: 10px; margin-right: 10px;">Importar/Exportar dados da Lotofácil</a>
+                <a href="importar_exportar/importar.php"  style="margin-left: 10px; margin-right: 10px;">Importar</a>
 
                 <button type="submit">Salvar</button>
             </p>   
