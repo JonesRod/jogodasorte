@@ -21,6 +21,8 @@
             $creditos = $conn->escape_string($_POST['creditos']);
             $termos = $conn->escape_string($_POST['termos']);
 
+            $valor_numerico = preg_replace('/[^0-9,.]/', '', $creditos);
+
             $sql_code = "UPDATE config_admin
             SET 
             id_admin = '$id_admin',
@@ -35,7 +37,7 @@
             celular = '$celular',
             email = '$email',
             termos = '$termos',
-            credito_cadastro = '$creditos'
+            credito_cadastro = '$valor_numerico'
             WHERE id = '1'";
 
             $conn->query($sql_code) or die($conn->error);
@@ -43,7 +45,7 @@
             $historico_config_admin = "INSERT INTO historico_config_admin (id_admin, data_alteracao, 
             primeiro_nome, fantazia, razao, cnpj, uf, cep, cidade, celular, email, termos, credito_cadastro) 
             VALUES('$id_admin', NOW(), '$primeiro_nome', '$fantazia', '$razao', '$cnpj','$uf', '$cep', 
-            '$cidade', '$celular', '$email', '$termos', '$creditos')";
+            '$cidade', '$celular', '$email', '$termos', '$valor_numerico')";
 
             $deu_certo = $conn->query($historico_config_admin) or die($conn->error);
             

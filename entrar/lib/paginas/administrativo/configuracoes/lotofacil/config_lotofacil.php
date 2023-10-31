@@ -77,15 +77,6 @@
             margin-bottom: 20px;
         }
 
-        /*#msg1 {
-            color: blue;
-        }
-        #msg2 {
-            color: blue;
-        }
-        #msg2 h3{
-            color: #333;
-        }*/
         .moeda {
             display: flex;
             align-items: center;

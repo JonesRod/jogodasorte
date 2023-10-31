@@ -10,10 +10,12 @@
         $id = $_SESSION['usuario'];
         $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
         $usuario = $sql_query->fetch_assoc(); 
-        $saldo = $usuario ["creditos"];
-        
-        // Formata o saldo em moeda
-        $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
+        $saldo_str = $usuario ["creditos"];
+// Substitui ',' por '.' e converte para float
+$saldo = (float) str_replace(',', '.', $saldo_str);
+
+// Formata o saldo em moeda
+$saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
     } else {
         // Se não houver uma sessão de usuário, redirecione para a página de login
         session_unset();
@@ -46,7 +48,11 @@
         .usuario #saldo{
             display: flex; /* Ativa o layout flexível para os elementos filhos */
             align-items: center; /* Alinha os elementos verticalmente no centro */
-            margin: -40px 15px 10px 10px
+            margin: -40px 15px 10px 10px;
+            color: green; 
+        }
+        .usuario #saldo a{
+            color: blue; 
         }
         .usuario #ola{
             display: flex; /* Ativa o layout flexível para os elementos filhos */

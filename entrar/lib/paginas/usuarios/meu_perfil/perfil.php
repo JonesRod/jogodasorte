@@ -224,7 +224,8 @@
         <p class="dados">
             <span id="msg"></span><br>
             <span id="msg2" type="hidden"></span><br>
-            <a href="inicio.php" style="margin-left: 10px; margin-right: 10px;">Voltar</a><a href="../../redefinir_senha.php" style="margin-left: 10px; margin-right: 10px;">Redefinir Senha</a>
+            <a href="inicio.php" style="margin-left: 10px; margin-right: 10px;">Voltar</a>
+            <a href="../../../redefinir_senha.php" style="margin-left: 10px; margin-right: 10px;">Redefinir Senha</a>
             <button id="" type="submit" style="margin-left: 10px;">Salvar</button>
         </p>
         <script src="perfil_verifica_dados.js"></script>
