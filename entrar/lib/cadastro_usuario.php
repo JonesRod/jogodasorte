@@ -95,9 +95,14 @@
                 }else{
                     $senha = $_POST['confSenha'];
                     $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
+
+                    $sql_creditos = $conn->query("SELECT * FROM config_admin WHERE id = '1'");
+                    $dados = $sql_creditos->fetch_assoc();
+                    //$registro = $sql_query->num_rows;
+                    $creditos = $dados["credito_cadastro"];
                         
-                    $sql_usuario = "INSERT INTO usuarios (data, primeiro_nome, nome_completo, data_nascimento, email, senha) 
-                    VALUES(NOW(), '$nome', '$nome_completo', '$nasc', '$email','$senha_criptografada')";
+                    $sql_usuario = "INSERT INTO usuarios (data, primeiro_nome, nome_completo, data_nascimento, email, senha, creditos) 
+                    VALUES(NOW(), '$nome', '$nome_completo', '$nasc', '$email','$senha_criptografada', '$creditos')";
                     $deu_certo = $conn->query($sql_usuario) or die($conn->error);
 
                     if($deu_certo){

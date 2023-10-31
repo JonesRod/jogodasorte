@@ -14,7 +14,7 @@ button:hover{
     width: 100%; 
 }*/
 .container {
-    /*height: 100vh;*/
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;

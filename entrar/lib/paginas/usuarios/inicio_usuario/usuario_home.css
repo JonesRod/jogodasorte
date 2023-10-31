@@ -35,19 +35,6 @@ body {
 #titulo h2:hover{
     cursor: pointer;
 }
-.usuario #ola{
-    display: flex; /* Ativa o layout flexível para os elementos filhos */
-    align-items: center; /* Alinha os elementos verticalmente no centro */
-    margin: -40px 30px 10px 10px
-}
-
-.usuario #sair {
-    display: flex; /* Ativa o layout flexível para os elementos filhos */
-    align-items: center; /* Alinha os elementos verticalmente no centro */
-    margin-top: -30px;
-    margin-left: 90px;
-    margin-right: 15px;
-}
 
 .material-symbols-outlined {
     margin: 0px 20px 0px 20px; /* Adiciona algum espaço entre os elementos span */

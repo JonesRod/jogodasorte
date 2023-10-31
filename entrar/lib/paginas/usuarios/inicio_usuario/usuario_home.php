@@ -10,7 +10,10 @@
         $id = $_SESSION['usuario'];
         $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
         $usuario = $sql_query->fetch_assoc(); 
-
+        $saldo = $usuario ["creditos"];
+        
+        // Formata o saldo em moeda
+        $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
     } else {
         // Se não houver uma sessão de usuário, redirecione para a página de login
         session_unset();
@@ -30,6 +33,33 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="usuario_home.css">
+    <style>
+        .usuario {
+            display: flex; /* Define um layout flexível */
+            justify-content: center; /* Centraliza os itens ao longo do eixo principal (horizontal) */
+            align-items: center; /* Centraliza os itens ao longo do eixo transversal (vertical) */
+        }
+
+        .usuario div {
+            margin: 0 10px; /* Adiciona um pequeno espaço entre os elementos */
+        }
+        .usuario #saldo{
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+            margin: -40px 15px 10px 10px
+        }
+        .usuario #ola{
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+            margin: -40px 15px 10px 10px
+        }
+
+        .usuario #sair {
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+            margin: -40px 15px 10px 10px
+        }
+    </style>
     <script>
         //atualiza a pagian a cada 10 min
         /*setTimeout(function() {
@@ -81,6 +111,9 @@
         <div class="usuario">
             <div id="ola">
                 <a><strong> Olá, <?php echo $usuario['primeiro_nome']; ?></strong></a>          
+            </div>
+            <div id="saldo">
+                <a><strong> Saldo <?php echo $saldo_formatado; ?></strong></a>       
             </div>
             <div id="sair">
                 <span class="material-symbols-outlined" id="logoutIcon" onclick="fazerLogout()">logout</span>              

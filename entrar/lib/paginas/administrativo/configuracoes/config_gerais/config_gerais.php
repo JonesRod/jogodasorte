@@ -91,6 +91,9 @@
             display: flex;
             margin-left: 15px;
         }
+        input:focus {
+            outline: none; /* Remove a borda de foco padrão */
+        }
         select{
             width: 85%;
             padding: 5px;
@@ -123,7 +126,7 @@
     <title>Meu Perfil</title>
 </head>
 <body>
-    <form id="form" action="alterar_dados_perfil.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
+    <form id="form" action="alterar_config_geraris.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
         <h3>Cofiguração inicial</h3>
         <input id="" value="<?php echo $usuario['id']; ?>" name="id" type="hidden">
         <input required id="primeiro_nome" value="<?php echo $usuario['primeiro_nome']; ?>" name="primeiro_nome" type="hidden">         
@@ -213,7 +216,7 @@
         <p>
             <span id="msg"></span>
             <span id="msg2" type="hidden"></span>
-            <a href="inicio.php" style="margin-left: 10px; margin-right: 10px;">Voltar</a>
+            <!--<a href="inicio.php" style="margin-left: 10px; margin-right: 10px;">Voltar</a>-->
 
             <button id="" type="submit" style="margin-left: 10px;">Salvar</button>
         </p>
