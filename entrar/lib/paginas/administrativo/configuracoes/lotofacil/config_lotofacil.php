@@ -122,36 +122,6 @@
             margin-left: 15px;
         }
 
-        /*input{
-
-        }
-/*.dados_acumulado {
-    text-align: center;
-}
-
-.dados_acumulado label {
-    display: block;
-}
-
-.dados_acumulado input {
-    width: 93%;
-}
-
-.conjunto .dez {
-    display: inline-block;
-    margin-right: 3px; /* Adiciona algum espaço entre os elementos */
-/*}
-
-.conjunto .dez label {
-    text-align: center;
-    display: inline-block;
-    width: 55px; /* Ajuste a largura conforme necessário */
-/*}
-
-.conjunto .dez input {
-    width: 40px; /* Ajuste a largura conforme necessário */
-/*}*/
-
 button {
     padding: 10px 20px;
     margin: 20px;

@@ -12,6 +12,7 @@
         $id = '1';
         $sql_config = $conn->query("SELECT * FROM config_admin WHERE id = '$id'") or die($conn->error);
         $dados = $sql_config->fetch_assoc();
+
     }
 
 ?>
@@ -21,140 +22,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
     <style>
-        body h2{
+        body {
+            font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f4f4f4;
         }
-        body form{
-            text-align: center;
-            border: 1px solid black;
-            width: 95%;
-            /*position: absolute;*/
-            /*top: 50%;
-            left: 50%;
-            /*transform: translate(-50%, -50%);*/
-            padding: 15px;
-        }
-        img{
-            width: 50%;
-            /*text-align: center;*/
+
+        #form {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
             border-radius: 10px;
-        }
-        form label{
-            margin: 10px;
-            /*padding: 50px;*/
-        }
-        /*form label,*/
-        form input {
-            margin-bottom: 10px;
-            max-width: 50%;
-        }
-        form .dados label {
-            display: inline-block;
-            width: 100%; /* Faz a label ocupar 100% da largura do contêiner pai */
-            max-width: 20%; /* Define a largura máxima desejada */
-            box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
-        }
-        form .dados input {
-            width: 50%;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        form .dados select {
-            width: 25%;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        form .endereco label {
-            display: inline-block;
-            width: 100%; /* Faz a label ocupar 100% da largura do contêiner pai */
-            max-width: 20%; /* Define a largura máxima desejada */
-            box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
-        }
-        form .endereco input {
-            width: 50%;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        form .endereco select {
-            width: 25%;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
+
         }
 
-        form .contatos label {
-            display: inline-block;
-            width: 100%; /* Faz a label ocupar 100% da largura do contêiner pai */
-            max-width: 20%; /* Define a largura máxima desejada */
-            box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
+        h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
         }
-        form .contatos input {
-            width: 50%;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+        #msg {
+            color:red;
         }
+        #msg1 {
+            color: blue;
+        }
+        #msg2 {
+            color: blue;
+        }
+        #msg2 h3{
+            color: #333;
+        }
+        .dados {
+            display: flex;
+            align-items: center;
+        }
+
+        .dados label {
+            flex: 0 0 auto; /* A label não será flexível e manterá seu tamanho natural */
+            margin-right: 10px; /* Espaço entre a label e o input */
+        }
+
+        .dados input {
+            flex: 1; /* O input será flexível e ocupará o espaço restante disponível */
+        }
+        #msg2 label{
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            margin-bottom: 5px;
+            text-align: left;
+            margin-left: 15px;
+        }
+
         input{
-            margin: 5px;
+            width: 85%;
+            padding: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: left;
+            display: flex;
+            margin-left: 15px;
         }
-        textarea {
-            width: 95%; /* Define a largura do textarea */
-            height: 150px; /* Define a altura do textarea */
-            padding: 10px; /* Adiciona preenchimento interno */
-            font-size: 16px; /* Define o tamanho da fonte */
-            border: 1px solid #ccc; /* Adiciona uma borda de 1 pixel sólida com cor cinza */
-            border-radius: 5px; /* Adiciona bordas arredondadas */
-            background-color: #f8f8f8; /* Define a cor de fundo */
-            color: #333; /* Define a cor do texto */
+        select{
+            width: 85%;
+            padding: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: left;
+            display: flex;
+            margin-left: 15px;
         }
 
-        textarea:focus {
-            outline: none; /* Remove a borda de foco padrão */
-            border-color: #007bff; /* Define a cor da borda quando em foco */
+        button {
+            padding: 10px 20px;
+            margin: 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, font-size 0.3s; 
         }
-        /* Estilize o container do rádio */
-        input[type="radio"]{
-            
-            margin-bottom: 0px;
-            margin: 0;
-        }
-        label .radio{
-            margin-left: 0px;
-        }
-        a{
-            margin-left: 100px; 
-            margin-right: 40px;
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
         }
     </style>
     <title>Meu Perfil</title>
 </head>
 <body>
     <form id="form" action="alterar_dados_perfil.php" method="POST" enctype="multipart/form-data" autocomplete="on" onsubmit="return validateForm()">
-        
+        <h3>Cofiguração inicial</h3>
         <input id="" value="<?php echo $usuario['id']; ?>" name="id" type="hidden">
-        <input required id="primeiro_nome" value="<?php echo $usuario['primeiro_nome']; ?>" name="primeiro_nome" type="hidden"><br>           
-        <p>
+        <input required id="primeiro_nome" value="<?php echo $usuario['primeiro_nome']; ?>" name="primeiro_nome" type="hidden">         
+        <p class="dados">
             <label for="fantazia" >Nome Fantazia: </label>
-            <input required id="fantazia" value="<?php echo $fantazia; ?>" name="fantazia" type="text"><br>
+            <input required id="fantazia" value="<?php echo $dados['fantazia']; ?>" name="fantazia" type="text">
         </p>
-        <p>
+        <p class="dados">
             <label for="razao" >Razão: </label>
-            <input required id="razao" value="<?php echo $razao; ?>" name="razao" type="text"><br>
+            <input required id="razao" value="<?php echo $dados['razao']; ?>" name="razao" type="text">
         </p>
-        <p>
+        <p class="dados">
             <label for="cnpj" >CNPJ: </label>
-            <input required id="cnpj" value="<?php echo $dados['cnpj']; ?>" name="cnpj" type="text" oninput="formatcnpj(this)" onblur="verificacnpj()"><br>
+            <input required id="cnpj" value="<?php echo $dados['cnpj']; ?>" name="cnpj" type="text" oninput="formatcnpj(this)" onblur="verificacnpj()">
         </p>
-        <p> 
+        <p class="dados"> 
             <label for="uf">Estado Atual: </label>
             <select required name="uf" id="uf" value="">
                 <?php
@@ -201,29 +186,38 @@
 
             </select>
         </p>
-        <p>
-            <label id="" for="cep">CEP: </label><br>
-            <input required value="<?php echo $dados['cep']; ?>" name="cep" id="cep" type="text" maxlength="9" oninput="formatarCEP(this)" onblur="fetchCityByCEP()"><br>
+        <p class="dados">
+            <label id="" for="cep">CEP: </label>
+            <input required value="<?php echo $dados['cep']; ?>" name="cep" id="cep" type="text" maxlength="9" oninput="formatarCEP(this)" onblur="fetchCityByCEP()">
         </p>
-        <p>
-            <label id="" for="cidade">Cidade Atual: </label><br>
-            <input required value="<?php echo $dados['cidade']; ?>" name="cidade" id="cidade" type="text"><br>
+        <p class="dados">
+            <label id="" for="cidade">Cidade Atual: </label>
+            <input required value="<?php echo $dados['cidade']; ?>" name="cidade" id="cidade" type="text">
         </p>
-        <p>
-            <label id="" for="celular">Celular: </label><br>
+        <p class="dados">
+            <label id="" for="celular">Celular: </label>
             <input required value="<?php echo $dados['celular']; ?>" name="celular" id="celular" type="text" placeholder="(00) 00000-0000" size="" oninput="formatarCelular(this)" onblur="verificaCelular()"><br>
         </p>
-        <p>
-            <label id="" for="email">E-mail:</label><br>
-            <input required value="<?php echo $dados['email']; ?>" name="email" id="email" type="email"><br>
+        <p class="dados">
+            <label id="" for="email">E-mail:</label>
+            <input required value="<?php echo $dados['email']; ?>" name="email" id="email" type="email">
+        </p>
+        <p class="dados">
+            <label id="" for="creditos">Crédito por cadastro:</label>
+            <input required name="creditos" id="creditos" type="text" value="<?php echo $dados['credito_cadastro']; ?>">
+        </p>     
+        <p class="dados">
+            <label id="" for="termos">Termos: </label>
+            <input required value="<?php echo $dados['termos']; ?>" name="termos" id="termos" type="text">
         </p>
         <p>
-            <span id="msg"></span><br>
-            <span id="msg2" type="hidden"></span><br>
-            <a href="inicio.php" style="margin-left: 10px; margin-right: 10px;">Voltar</a><a href="../../redefinir_senha.php" style="margin-left: 10px; margin-right: 10px;">Redefinir Senha</a>
+            <span id="msg"></span>
+            <span id="msg2" type="hidden"></span>
+            <a href="inicio.php" style="margin-left: 10px; margin-right: 10px;">Voltar</a>
+
             <button id="" type="submit" style="margin-left: 10px;">Salvar</button>
         </p>
-        <script src="perfil_verifica_dados.js"></script>
+        <script src="verifica_dados.js"></script>
     </form>
 </body>
 </html>
