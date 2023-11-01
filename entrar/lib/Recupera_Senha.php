@@ -59,21 +59,96 @@ if(isset($_POST['email'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body{
+        body {
+            font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        form {
+            max-width: 300px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /*sombra*/
+
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 50px;
+        }
+
+        #msg1 {
+            color: red;
+        }
+        #msg2 {
+            color: green;
+        }
+        .input-container {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.placeholder {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    color: #555;
+    pointer-events: none;
+    transition: top 0.3s, font-size 0.3s, color 0.3s;
+}
+
+input:focus + .placeholder, input:not(:placeholder-shown) + .placeholder {
+    top: 0;
+    font-size: 12px;
+    color: #555;
+}
+
+
+
+
+
+        button {
+            padding: 10px 20px;
+            margin: 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, font-size 0.3s; 
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
         }
     </style>
     <title>Recuperar Senha</title>
 </head>
 <body>
-    <h1>Recupere sua Senha.</h1>
-    <span style="color: green;"><?php echo $msg2; ?></span>
-    <span style="color: red;"><?php echo $msg1; ?></span>
     <form action="" method="POST">
-        <p>  
-            <label for="">Digite E-mail cadastrado</label>
-            <input type="email" name="email" value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>">
-        </p>
+        <h1>Recupere sua Senha.</h1>
+        <span style="color: green;"><?php echo $msg2; ?></span>
+        <span style="color: red;"><?php echo $msg1; ?></span>
+    
+        <div class="input-container">
+            <input type="email" name="email" id="email" value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>">
+            <label for="email" class="placeholder">E-mail cadastrado</label>
+        </div>
         <a style="margin-right:40px;" href="../../index.php">Voltar</a> 
         <button type="submit">Enviar</button>
     </form>

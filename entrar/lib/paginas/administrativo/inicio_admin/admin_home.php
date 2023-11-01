@@ -169,7 +169,7 @@
         }
                 // Adicione este script em uma tag <script> após o seu código HTML
 
-                document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function() {
             let listaItems = document.querySelectorAll(".lista li");
 
             listaItems.forEach(function(item) {

@@ -32,10 +32,76 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="usuario_home.css">
+    <!--<link rel="stylesheet" href="usuario_home.css">-->
     <style>
+        @charset "UTF-8";
+        /* Estilos para todos os dispositivos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #fff;
+            /*height: 60vh; /* Isso garante que o corpo ocupa 100% da altura da tela */
+        }
+
+        .cabecalho {
+            background-color: chartreuse;
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            justify-content: space-between; /* Distribui o espaço entre os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+        }
+
+        #titulo {
+            flex: 1; /* Ocupa o espaço disponível restante */
+            background-color: chartreuse;
+            float: left; /* Faz com que a div "titulo" flutue à esquerda */
+            margin-top: 0px; /* Adicione margens conforme necessário */
+            /*color: rgb(11, 141, 4);*/
+            /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
+            padding-top: 0px;
+        }
+
+        #titulo h2{
+            color: #1e07f5;
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+        #titulo h2:hover{
+            cursor: pointer;
+        }
+        .usuario #ola{
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+            /*margin: -40px 30px 10px 10px*/
+            
+        }
+
+        .usuario #sair {
+            display: flex; /* Ativa o layout flexível para os elementos filhos */
+            align-items: center; /* Alinha os elementos verticalmente no centro */
+            margin-top: 0px;
+            margin-left: 10px;
+            margin-right: 15px;
+        }
+
+        .material-symbols-outlined {
+            margin: 0px 20px 0px 20px; /* Adiciona algum espaço entre os elementos span */
+            cursor: pointer; /* Define o cursor para parecer um link clicável */
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+            transition: transform 0.3s, font-size 0.3s;           
+        }
+
+        .material-symbols-outlined:last-child {
+            margin-right: 0; /* Remove a margem à direita do último elemento span */
+        }
+
+        .material-symbols-outlined:hover {
+            transform: translateY(-3px); /* Move o ícone para cima 5 pixels */
+        }
         .usuario {
             display: flex; /* Define um layout flexível */
             justify-content: center; /* Centraliza os itens ao longo do eixo principal (horizontal) */
@@ -48,7 +114,7 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
         .usuario #saldo{
             display: flex; /* Ativa o layout flexível para os elementos filhos */
             align-items: center; /* Alinha os elementos verticalmente no centro */
-            margin: -40px 15px 10px 10px;
+            /*margin: -40px 15px 10px 10px;*/
             color: green; 
         }
         .usuario #saldo a{
@@ -57,13 +123,67 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
         .usuario #ola{
             display: flex; /* Ativa o layout flexível para os elementos filhos */
             align-items: center; /* Alinha os elementos verticalmente no centro */
-            margin: -40px 15px 10px 10px
+           /* margin: -40px 15px 10px 10px*/
+           text-decoration: none;
+        }
+        a{
+            text-decoration: none;
         }
 
         .usuario #sair {
             display: flex; /* Ativa o layout flexível para os elementos filhos */
             align-items: center; /* Alinha os elementos verticalmente no centro */
-            margin: -40px 15px 10px 10px
+            /*margin: -40px 15px 10px 10px*/
+        }
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Adicionado para empilhar os elementos verticalmente */
+        }
+
+        .lista {
+            height: 40px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            list-style-type: none;
+            display: flex;
+            flex-direction: row;
+            background-color: chartreuse /* Adicione a cor desejada aqui */
+        }
+        .lista li{
+            list-style-type: none;
+            font-size: 15px;
+            margin-right: 20px;
+            padding: 10px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden; /* Esconder qualquer conteúdo que transborde */
+        }
+        .lista li a{
+            list-style-type: none;
+            text-decoration: none;
+        }
+
+        .lista li::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 5px;
+            background-color: blue;
+            transition: width 0.3s ease; /* Transição da largura */
+        }
+
+        .lista li:hover::before {
+            width: 100%; /* Aumenta a largura ao passar o mouse */
+        }
+
+        .lista li.selecionada {
+            border-bottom: 5px solid blue; /* Adicione a cor desejada aqui */
+            border-radius: 20px;
         }
     </style>
     <script>
@@ -104,19 +224,32 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
         function atualizarPagina() {
             location.reload(); // Recarrega a página
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            let listaItems = document.querySelectorAll(".lista li");
+
+            listaItems.forEach(function(item) {
+                item.addEventListener("click", function() {
+                    listaItems.forEach(function(item) {
+                        item.classList.remove("selecionada");
+                    });
+                    this.classList.add("selecionada");
+                });
+            });
+        });
 
     </script>
     <title>Meu Site</title>
 </head>
 <body>
     <div class="cabecalho">
-        <div id="titulo">
-            <span class="material-symbols-outlined"  id="icoMenu" onclick="toggleMenu();">menu</span>  
+        <div id="titulo"> 
             <H2 onclick="atualizarPagina()">Jogo da Sorte</H2> 
         </div> 
         <div class="usuario">
             <div id="ola">
-                <a><strong> Olá, <?php echo $usuario['primeiro_nome']; ?></strong></a>          
+                <a href="#" onclick="abrirNaDiv('../meu_perfil/perfil.php');toggleMenu()">
+                    <strong> Olá, <?php echo $usuario['primeiro_nome']; ?></strong>
+                </a>          
             </div>
             <div id="saldo">
                 <a><strong> Saldo <?php echo $saldo_formatado; ?></strong></a>       
@@ -126,12 +259,17 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
             </div>
         </div>
     </div>
-    <div class="menu" id="menu">
+    <div id="divLista">
         <ul id="lista" class="lista">
-            <li><a href="#" onclick="abrirNaDiv('usuario_inicio.php');toggleMenu()">Inicío </a></li> 
-            <li><a href="#" onclick="abrirNaDiv('../meu_perfil/perfil.php');toggleMenu()">Meu Perfil </a></li>              
+            <li><a href="#" onclick="abrirNaDiv('usuario_inicio.php');toggleMenu()">Inicio</a></li> 
+            <li id="config_lotofacil" ><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/inicio_lotofacil_home.php');">Configuração Lotofácil</a></li>
+            <li><a href="#" onclick="abrirNaDiv('../configuracoes/megasena/config_megasena.php');">Configuração Mega Sena</a></li> 
+            <li><a href="#" onclick="abrirNaDiv('../configuracoes/quina/config_quina.php');toggleMenu()">Configuração Quina</a></li>
+            
+            <!--<li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/resetar_excluirDados/deletar_dados.php');toggleMenu()">Excluir Todos os dados</a></li>
+            <li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/importar_exportar/importar.php');toggleMenu()">Importar/Exportar</a></li>-->
         </ul> 
-    </div> 
+    </div>
     <div class="container" id="conteudo">
         <!--conteudo á ser carregado-->
     </div>
