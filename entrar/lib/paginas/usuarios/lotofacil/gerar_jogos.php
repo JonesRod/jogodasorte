@@ -15,6 +15,11 @@
 
         // Existe um resultado no banco de dados
         $concurso = $row['concurso'];
+        $data = $row['data']; // 2023/11/02
+
+        // Converte a data para o formato brasileiro
+        $data_formatada = date('d/m/Y', strtotime($data));
+
 
     }
 
@@ -184,7 +189,7 @@
                     iguais os concursos anteriores ja sorteados e permitindo repetidos apenas com 14 dezenas 
                     apontando as melheres ou conforme sua configuraçao para gerar seus jogos.
                 </p>
-                <label id="ultimoconcurso" for="">Ultimo concurso: <?php echo $concurso; ?></label>
+                <label id="ultimoconcurso" for="">Ultimo concurso: <?php echo $concurso . " - " . $data_formatada; ?></label>
                 <h3>Configure o estilo de seu(s) jogos</h3>
 
                 <button id="config_padrao">Configuração padrão</button>

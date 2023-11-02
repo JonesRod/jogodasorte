@@ -1,6 +1,6 @@
 <?php
 
-    include('../../../../conexao.php');
+    include('../../../conexao.php');
 
     // Verifique se o último resultado foi registrado
     $resultado_existe = false;
@@ -247,7 +247,7 @@
         if ($conn->query($sql) === TRUE) {
             //$msg = "Concurso registrado com sucesso.";
         } else {
-            $msg = "Erro ao registrar o primeiro concurso: " . $conn->error;
+            //$msg = "Erro ao registrar o primeiro concurso: " . $conn->error;
         } 
     }
     
@@ -273,100 +273,11 @@
         $numeros_faltando = array_diff(range($primeiro_numero, $ultimo_numero), $numeros_registrados);
     
         // Exibe os números faltando
-        $msg_add = "Concurso(s) que precisa(m) ser inecirdo(s) no banco de dados: " . implode(", ", $numeros_faltando) . ".";
+        //$msg_add = "Concurso(s) que precisa(m) ser inecirdo(s) no banco de dados: " . implode(", ", $numeros_faltando) . ".";
     } else {
-        $msg = "Não há números registrados no banco de dados.";
+        //$msg = "Não há números registrados no banco de dados.";
     }
     
     $conn->close();
-
+    header("Location: gerar_jogos.php");  
 ?>
-
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .conteiner {
-            max-width: 600px;
-            margin: 200px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.1); /*sombra*/
-            font-family: Arial, sans-serif;
-        }
-        .botoes button {
-            /*display: block;*/
-            width: 150px; /* Define a largura dos botões */
-            height: 40px; /* Define a altura dos botões */
-            margin: 30px;
-            border: none;
-            background-color: blue; /* Define a cor de fundo */
-            color: white; /* Define a cor do texto */
-            font-size: 16px; /* Define o tamanho da fonte */
-            border-radius: 5px; /* Adiciona bordas arredondadas */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
-            transition: 0.3s;
-        }
-        .botoes button:hover {
-            background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
-            cursor: pointer;
-            transform: translateY(-3px); 
-        }
-
-        .botoes button:focus {
-            outline: none; /* Remove o contorno ao focar no botão */
-        }
-    </style>
-    <script>
-        function obterPrimeiroConcurso() {
-            // Suponha que a API de lotofácil tenha um ponto de acesso que retorna o primeiro concurso
-            const apiEndpoint = 'https://api-lotofacil.com/concursos/primeiro';
-            
-            // Faça uma requisição para a API usando o fetch ou outro método
-            return fetch(apiEndpoint)
-                .then(response => response.json())
-                .then(data => {
-                    // Assumindo que a API retorna um objeto com o número do concurso e os números sorteados
-                    return {
-                        concurso: data.numero,
-                        numeros: data.numeros_sorteados
-                    };
-                })
-                .catch(error => {
-                    console.error('Erro ao obter dados da API:', error);
-                    return null; // Retornar null em caso de erro
-                });
-        }
-        function abrirPaginaAddConcursoLotofacil() {
-            window.location.href = 'add_concurso_lotofacil.php';
-        }
-        function inicio_lotofacil_home() {
-            window.location.href = 'inicio_lotofacil_home.php';
-        }
-
-    </script>
-    <title>Lotofácil</title>
-</head>
-<body>
-    <div class="conteiner">
-        <h2>Informações Úteis.</h2>
-        <span><?php echo $msg; ?></span>
-
-        <?php if(isset($msg_add) && $msg_add !== 0): ?>
-            <span id="msg"><?php echo $msg_add; ?>
-                <div class="botoes">
-                    <button onclick="abrirPaginaAddConcursoLotofacil()">Adicionar Agora</button>
-                    <button onclick="inicio_lotofacil_home()">Adicionar Depois</button>
-                </div>            
-            </span>
-        <?php endif; ?>
-    </div>
-</body>
-</html>

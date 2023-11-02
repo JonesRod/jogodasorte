@@ -125,6 +125,12 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
             align-items: center; /* Alinha os elementos verticalmente no centro */
            /* margin: -40px 15px 10px 10px*/
            text-decoration: none;
+        } 
+        .usuario #ola a{
+            transition: transform 0.3s, font-size 0.3s;
+        }           
+        .usuario #ola a:hover{
+            transform: translateY(-3px); /* Move o ícone para cima 5 pixels */
         }
         a{
             text-decoration: none;
@@ -184,6 +190,47 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
         .lista li.selecionada {
             border-bottom: 5px solid blue; /* Adicione a cor desejada aqui */
             border-radius: 20px;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .bottom-bar {
+            background: #222;
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        .bottom-bar p {
+            margin: 0;
+        }
+
+        /* Estilos para Links */
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #555;
         }
     </style>
     <script>
@@ -262,9 +309,9 @@ $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
     <div id="divLista">
         <ul id="lista" class="lista">
             <li><a href="#" onclick="abrirNaDiv('usuario_inicio.php');toggleMenu()">Inicio</a></li> 
-            <li id="config_lotofacil" ><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/inicio_lotofacil_home.php');">Configuração Lotofácil</a></li>
-            <li><a href="#" onclick="abrirNaDiv('../configuracoes/megasena/config_megasena.php');">Configuração Mega Sena</a></li> 
-            <li><a href="#" onclick="abrirNaDiv('../configuracoes/quina/config_quina.php');toggleMenu()">Configuração Quina</a></li>
+            <li id="config_lotofacil" ><a href="#" onclick="abrirNaDiv('../lotofacil/lotofacil_home.php');">Lotofácil</a></li>
+            <li><a href="#" onclick="abrirNaDiv('../megasena/megasena_home.php');">Mega Sena</a></li> 
+            <li><a href="#" onclick="abrirNaDiv('');toggleMenu()">Quina</a></li>
             
             <!--<li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/resetar_excluirDados/deletar_dados.php');toggleMenu()">Excluir Todos os dados</a></li>
             <li><a href="#" onclick="abrirNaDiv('../configuracoes/lotofacil/importar_exportar/importar.php');toggleMenu()">Importar/Exportar</a></li>-->
