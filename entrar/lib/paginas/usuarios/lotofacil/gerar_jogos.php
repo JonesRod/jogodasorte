@@ -126,7 +126,8 @@
             font-weight: bold;
             border-radius: 5px;
             background-color: rgba(244, 164, 6, 0.942);
-            transform: scale(1.2);
+            /*transform: scale(1.1);*/
+            cursor: pointer;
         }
         #config_padrao button:hover {
             background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
@@ -135,13 +136,21 @@
 
         #config_padrao:focus {
             outline: none; /* Remove o contorno ao focar no botão */
+            
+        }
+        #config_padrao:active {
+            /* Estilos quando o botão é clicado */
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
         }
         #instrucao_final{
+            display: flex;
             font-weight: bold; /* Deixa o texto em negrito */
             text-align: center;
+            align-items: center;
+            justify-content: center;
             color: blue;
-            /*margin: 0px 10px 20px 20px;*/
-            padding-bottom: 20px;
+            margin-top: 30px;
+            padding-bottom: 30px;
         }
 
         .tooltip {
@@ -175,24 +184,73 @@
         .tooltip:hover::after {
             opacity: 1;
         }
+        #gerar_jogo{
+            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 10px;
+            /*display: block;*/
+            width: 250px; /* Define a largura dos botões */
+            height: 50px; /* Define a altura dos botões */
+            margin: 5px;
+            margin-bottom: 20px;
+            border: none;
+            background-color: #4CAF50; /* Define a cor de fundo */
+            color: white; /* Define a cor do texto */
+            font-size: 16px; /* Define o tamanho da fonte */
+            border-radius: 5px; /* Adiciona bordas arredondadas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
+        }
+        #gerar_jogo:hover{
+            margin: 5px;
+            padding: 5px;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: rgba(244, 164, 6, 0.942);
+            /*transform: scale(1.1);*/
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        #gerar_jogo button:hover {
+            background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
+            cursor: pointer;
+        }
+
+        #gerar_jogo:focus {
+            outline: none; /* Remove o contorno ao focar no botão */
+        }
+        #gerar_jogo:active {
+            /* Estilos quando o botão é clicado */
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
+        }
+        #dezenas{
+            min-width: 150px; /* Define uma largura mínima para o input */
+        }
  
     </style>
+    <script>
+        function config_padrao(){
+            document.getElementById('inicio_jogo').value = '1';
+            document.getElementById('final_jogo').value = '25';
+            document.getElementById('dez_excluidas').value = '0';
+            document.getElementById('qt_dezenas').value = '15';
+        }
+    </script>
 
     <title>Gerador Lotofácil</title>
 </head>
-<body>
+<body onload="config_padrao()">
     <div class="conteiner">
         <div class="geradorJogos_listaMeusJogos">
             <div id="geradorJogos">
                 <h3>Siga as instruções de como fazer seus jogos</h3>
                 <p id="primeirainstrucao">Os jogos seram gerados conforme o ultimo concurso sorteado e não será gerado jogos ja sorteados 
                     iguais os concursos anteriores ja sorteados e permitindo repetidos apenas com 14 dezenas 
-                    apontando as melheres ou conforme sua configuraçao para gerar seus jogos.
+                    apontando as melheres jogadas ou conforme sua configuraçao para gerar seus jogos.
                 </p>
                 <label id="ultimoconcurso" for="">Ultimo concurso: <?php echo $concurso . " - " . $data_formatada; ?></label>
                 <h3>Configure o estilo de seu(s) jogos</h3>
 
-                <button id="config_padrao">Configuração padrão</button>
+                <button id="config_padrao" onclick="config_padrao()">Configuração padrão</button>
                 <span class="tooltip" value="Adiciona a configuração pedrão. Essa configuração inclui todos os tipos de jogadas ainda não sorteadas">i</span>
                 <p>
                     <label for="inicio_jogo">Escolha a dezena inicial para geração do(s) seu(s) jogo(s). (Opcional)</label>
@@ -215,14 +273,25 @@
                     <input id="qt_dezenas" type="number"> 
                     <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>                   
                 </p>
-                <p id="instrucao_final">
+                <div id="instrucao_final">
                     As demais configurações existente ja estam incluidas na configuração padrão.
-                </p>
+                </div>
+                <button id="gerar_jogo" onclick="gerar_jogo()">Gerar Jogo</button>
+                <div class="consultar">
+                    
+                    <p>
+                        <label for="dezenas">Escolha de 15 á 20 dezenas.</label>
+                        <input id="dezenas" type="text"> 
+                        <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>                   
+                    </p>
+                    <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button>
+                </div>            
             </div>
             <div id="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>
                 <label for="">Concurso</label><input type="text"><button>Carregar</button>
             </div>
+
         </div>
         <div class="listaResultados">
             <h3>Lista de resultados do concurso escolhido</h3>
