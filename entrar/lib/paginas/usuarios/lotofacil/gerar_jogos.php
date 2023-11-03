@@ -30,6 +30,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body{
             font-family: Arial, sans-serif;
@@ -92,6 +93,9 @@
             box-sizing: border-box;
             min-width: 50px; /* Define uma largura mínima para o input */
             margin-right: 5px;
+        }
+        input:focus {
+            outline: none; /* Remove a borda de foco padrão */
         }
 
         #listaMeusJogos{
@@ -225,6 +229,39 @@
         #dezenas{
             min-width: 150px; /* Define uma largura mínima para o input */
         }
+        .consultar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .consultar p {
+        display: flex;
+        align-items: center;
+    }
+
+    .consultar p label {
+        order: 2;
+        margin-right: 5px;
+    }
+
+    .consultar p input[type="number"] {
+        order: 3;
+    }
+
+    .consultar p button {
+        order: 4;
+    }
+
+    .consultar input[type="text"] {
+        width: 100%;
+        order: 6;
+    }
+
+    .consultar .tooltip {
+        order: 5;
+    }
+
  
     </style>
     <script>
@@ -234,6 +271,21 @@
             document.getElementById('dez_excluidas').value = '0';
             document.getElementById('qt_dezenas').value = '15';
         }
+
+        function validarDezena(input) {
+    let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
+    if (value.length > 2) {
+        value = value.substr(0, 2);    
+    }
+    // Verifica se o valor é maior que 25
+    if (value > 25) {
+        alert("O valor máximo permitido é 25.");
+        value = ''; // Define o valor para 25
+    }
+    input.value = value;
+}
+        
     </script>
 
     <title>Gerador Lotofácil</title>
@@ -278,14 +330,15 @@
                 </div>
                 <button id="gerar_jogo" onclick="gerar_jogo()">Gerar Jogo</button>
                 <div class="consultar">
-                    
                     <p>
-                        <label for="dezenas">Escolha de 15 á 20 dezenas.</label>
-                        <input id="dezenas" type="text"> 
-                        <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>                   
+                        <label for="dezenas">Escolha de 15 a 20 dezenas.</label>
+                        <input id="incluir" type="number" oninput="validarDezena(this)">
+                        <button>Incluir</button>
+                        <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>
                     </p>
+                    <input id="dezenas" type="text">
                     <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button>
-                </div>            
+                </div>          
             </div>
             <div id="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>

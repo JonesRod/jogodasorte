@@ -87,6 +87,7 @@ if(isset($_POST['email'])) {
         #msg2 {
             color: green;
         }
+
         .input-container {
         position: relative;
         margin-bottom: 20px;
@@ -115,10 +116,6 @@ input:focus + .placeholder, input:not(:placeholder-shown) + .placeholder {
     font-size: 12px;
     color: #555;
 }
-
-
-
-
 
         button {
             padding: 10px 20px;
