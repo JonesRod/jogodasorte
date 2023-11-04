@@ -226,42 +226,57 @@
             /* Estilos quando o botão é clicado */
             box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
         }
-        #dezenas{
-            min-width: 150px; /* Define uma largura mínima para o input */
+
+        .consultar p {
+            display: flex;
+            align-items: center;
+            margin: 0px 10px 5px 10px;
+            flex-wrap: wrap; /* Permite a quebra de linha se necessário */
         }
-        .consultar {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+        
+        .consultar label {
+            margin-right: 20px;
+            /*flex-shrink: 0; /* Não deve encolher (não deve ocupar espaço extra) */
+           /* width: auto;
+            display: inline-block;
+            /*box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
+            word-break: break-word; /* Permite que a label quebre a linha se necessário */
+        }
+        .consultar input {
+            /*flex: 1; /* Deve ocupar todo o espaço disponível */
+            width: 20px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            min-width: 20px; /* Define uma largura mínima para o input */
+            margin-right: 5px;
+            max-width: 40px;
+        }
+        .consultar button {
+            /*flex: 1; /* Deve ocupar todo o espaço disponível */
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            min-width: 20px; /* Define uma largura mínima para o input */
+            margin-right: 10px;
+            margin-left: 20px;
+        }
+        .consultar .tooltip {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
 
-    .consultar p {
-        display: flex;
-        align-items: center;
-    }
+        .consultar #dezenas{
+            min-width: 300px; /* Define uma largura mínima para o input */
+            width: 500px;
+        }
+        .consultar{
+            text-align: center;
 
-    .consultar p label {
-        order: 2;
-        margin-right: 5px;
-    }
-
-    .consultar p input[type="number"] {
-        order: 3;
-    }
-
-    .consultar p button {
-        order: 4;
-    }
-
-    .consultar input[type="text"] {
-        width: 100%;
-        order: 6;
-    }
-
-    .consultar .tooltip {
-        order: 5;
-    }
-
+        }
  
     </style>
     <script>
@@ -331,14 +346,15 @@
                 <button id="gerar_jogo" onclick="gerar_jogo()">Gerar Jogo</button>
                 <div class="consultar">
                     <p>
-                        <label for="dezenas">Escolha de 15 a 20 dezenas.</label>
+                        <label for="incluir">Escolha de 15 a 20 dezenas.</label>
                         <input id="incluir" type="number" oninput="validarDezena(this)">
                         <button>Incluir</button>
                         <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>
                     </p>
                     <input id="dezenas" type="text">
-                    <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button>
-                </div>          
+                    <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button> 
+                </div>
+         
             </div>
             <div id="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>
