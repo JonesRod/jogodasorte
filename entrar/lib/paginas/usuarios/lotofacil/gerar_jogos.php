@@ -59,6 +59,7 @@
             text-align: center;
             border-radius: 10px;
             box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2);
+            padding-bottom: 1px;
         }
         #geradorJogos h3{
             margin: 0px 10px 20px 10px;
@@ -275,9 +276,44 @@
         }
         .consultar{
             text-align: center;
+            flex: 1;
+            background-color: #45a049;
+            margin: 50px;
+            padding: 20px;
+            border-radius: 10px;
+            
+        }
+        .numeros button {
+            width: 40px;
+            height: 40px;
+            margin: 0px;
+            box-sizing: border-box;
+            border-radius: 50px;
+            
+        }
+
+        #dezenas{
+            margin-top: 30px;
+            margin-bottom: 30px;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+
 
         }
- 
+        .numeros {
+            padding-left: 5%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            justify-content: center;
+        }
+        .numeros button.selecionado {
+            background-color: #FFD700; /* Cor de fundo quando selecionado */
+        }
+        .numeros button.active {
+            background-color: #FFD700;
+        }
     </style>
     <script>
         function config_padrao(){
@@ -287,19 +323,7 @@
             document.getElementById('qt_dezenas').value = '15';
         }
 
-        function validarDezena(input) {
-    let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
 
-    if (value.length > 2) {
-        value = value.substr(0, 2);    
-    }
-    // Verifica se o valor é maior que 25
-    if (value > 25) {
-        alert("O valor máximo permitido é 25.");
-        value = ''; // Define o valor para 25
-    }
-    input.value = value;
-}
         
     </script>
 
@@ -345,16 +369,42 @@
                 </div>
                 <button id="gerar_jogo" onclick="gerar_jogo()">Gerar Jogo</button>
                 <div class="consultar">
-                    <p>
-                        <label for="incluir">Escolha de 15 a 20 dezenas.</label>
-                        <input id="incluir" type="number" oninput="validarDezena(this)">
-                        <button>Incluir</button>
-                        <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>
-                    </p>
-                    <input id="dezenas" type="text">
+                    <h3>Escolha de 15 a 20 dezenas.</h3>
+                    <div class="numeros">
+                        <button onclick="removerDezena(1)">1</button>
+                        <button onclick="removerDezena(2)">2</button>
+                        <button onclick="removerDezena(3)">3</button>
+                        <button onclick="removerDezena(4)">4</button>
+                        <button onclick="removerDezena(5)">5</button>
+
+                        <button onclick="removerDezena(6)">6</button>
+                        <button onclick="removerDezena(7)">7</button>
+                        <button onclick="removerDezena(8)">8</button>
+                        <button onclick="removerDezena(9)">9</button>
+                        <button onclick="removerDezena(10)">10</button>
+
+                        <button onclick="removerDezena(11)">11</button>
+                        <button onclick="removerDezena(12)">12</button>
+                        <button onclick="removerDezena(13)">13</button>
+                        <button onclick="removerDezena(14)">14</button>
+                        <button onclick="removerDezena(15)">15</button>
+
+                        <button onclick="removerDezena(16)">16</button>
+                        <button onclick="removerDezena(17)">17</button>
+                        <button onclick="removerDezena(18)">18</button>
+                        <button onclick="removerDezena(19)">19</button>
+                        <button onclick="removerDezena(20)">20</button>
+
+                        <button onclick="removerDezena(21)">21</button>
+                        <button onclick="removerDezena(22)">22</button>
+                        <button onclick="removerDezena(23)">23</button>
+                        <button onclick="removerDezena(24)">24</button>
+                        <button onclick="removerDezena(25)">25</button>
+                    </div>
+                    <input readonly id="dezenas" type="text">
+                    <div id="contador"></div>
                     <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button> 
                 </div>
-         
             </div>
             <div id="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>
@@ -367,5 +417,6 @@
             <label for="">Concurso</label><input type="number"><button>Carregar</button>
         </div>
     </div>
+    <script src="inclurir_dezenas.js"></script>
 </body>
 </html>
