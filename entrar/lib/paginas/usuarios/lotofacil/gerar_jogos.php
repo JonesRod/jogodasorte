@@ -16,6 +16,7 @@
         // Existe um resultado no banco de dados
         $concurso = $row['concurso'];
         $data = $row['data']; // 2023/11/02
+        $numeros = $row['numeros']; 
 
         // Converte a data para o formato brasileiro
         $data_formatada = date('d/m/Y', strtotime($data));
@@ -68,8 +69,11 @@
         }
         #ultimoconcurso{
             font-weight: bold; /* Deixa o texto em negrito */
+            margin-bottom: 50px;
         }
-
+        #numeros{
+            font-weight: bold; /* Deixa o texto em negrito */
+        }
         #geradorJogos p {
             display: flex;
             align-items: center;
@@ -283,13 +287,42 @@
             border-radius: 10px;
             
         }
+        .excluir button {
+            width: 40px;
+            height: 40px;
+            margin-right: 0px;
+            margin-left: 20px;
+            box-sizing: border-box;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 20px;
+            border: 1px solid #ccc;
+        }
+        .excluir {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px; 
+            margin: 40px;
+            border-radius: 10px;
+            background-color: #45a049;
+            padding: 30px;
+
+        }
+        .excluir button.selecionado {
+            background-color: #FFD700; /* Cor de fundo quando selecionado */
+        }
+        .excluir button.active {
+            background-color: #FFD700;
+        }
         .numeros button {
             width: 40px;
             height: 40px;
-            margin: 0px;
+            margin-right: 0px;
+            margin-left: 20px;
             box-sizing: border-box;
             border-radius: 50px;
-            
+            font-weight: bold;
+            font-size: 20px;
         }
 
         #dezenas{
@@ -298,15 +331,14 @@
             width: 100%;
             text-align: center;
             box-sizing: border-box;
-
+            font-weight: bold;
 
         }
         .numeros {
-            padding-left: 5%;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            justify-content: center;
+            gap: 10px; 
+
         }
         .numeros button.selecionado {
             background-color: #FFD700; /* Cor de fundo quando selecionado */
@@ -314,17 +346,23 @@
         .numeros button.active {
             background-color: #FFD700;
         }
+        #contador{
+            font-weight: bold;
+            color: blue;
+            margin-bottom: 20px;
+        }
     </style>
     <script>
         function config_padrao(){
-            document.getElementById('inicio_jogo').value = '1';
-            document.getElementById('final_jogo').value = '25';
+            // Configura o número de dezenas excluídas entre 0 e 5
             document.getElementById('dez_excluidas').value = '0';
+            document.getElementById('dez_excluidas').setAttribute('max', '5');
+
+            // Configura a quantidade de dezenas entre 15 e 20
             document.getElementById('qt_dezenas').value = '15';
+            document.getElementById('qt_dezenas').setAttribute('min', '15');
+            document.getElementById('qt_dezenas').setAttribute('max', '20');
         }
-
-
-        
     </script>
 
     <title>Gerador Lotofácil</title>
@@ -338,27 +376,48 @@
                     iguais os concursos anteriores ja sorteados e permitindo repetidos apenas com 14 dezenas 
                     apontando as melheres jogadas ou conforme sua configuraçao para gerar seus jogos.
                 </p>
-                <label id="ultimoconcurso" for="">Ultimo concurso: <?php echo $concurso . " - " . $data_formatada; ?></label>
+                <label id="ultimoconcurso" for="">Ultimo concurso: <?php echo $concurso . " - " . $data_formatada; ?></label><br>
+                <h4 id="numeros" for=""><?php echo $numeros ?></h4>
                 <h3>Configure o estilo de seu(s) jogos</h3>
 
                 <button id="config_padrao" onclick="config_padrao()">Configuração padrão</button>
                 <span class="tooltip" value="Adiciona a configuração pedrão. Essa configuração inclui todos os tipos de jogadas ainda não sorteadas">i</span>
                 <p>
-                    <label for="inicio_jogo">Escolha a dezena inicial para geração do(s) seu(s) jogo(s). (Opcional)</label>
-                    <input id="inicio_jogo" type="number">
-                    <span class="tooltip" value="Determina a dezena inicial para geração do(s) seus jogos. Você pode escolher do 1 ao 7.">i</span>   
-                <p>
-                <p>
-                    <label for="final_jogo">Escolha a dezena final para geração do(s) seu(s) jogo(s). (Opcional)</label>
-                    <input id="final_jogo" type="number">
-                    <span class="tooltip" value="Determina a dezena final para geração do(s) seus jogos. Você pode escolher do 19 ao 25.">i</span>   
-                <p>
-                <p>
                     <label for="dez_excluidas">Escolha quais dezenas você gostaria que não saissem no(s) jogo(s) (Opcional)</label>
                     <input id="dez_excluidas" type="number" placeholder="1,2,3,...">
-                    <span class="tooltip" value="Você pode escolher até 7 dezenas para não sairem em seus jogos.">i</span>   
-                <p>
+                    <span class="tooltip" value="Você pode escolher até 5 dezenas para não sairem em seus jogos.">i</span>   
                 </p>
+                <div class="excluir">
+                    <button onclick="removerDezena(1)">1</button>
+                    <button onclick="removerDezena(2)">2</button>
+                    <button onclick="removerDezena(3)">3</button>
+                    <button onclick="removerDezena(4)">4</button>
+                    <button onclick="removerDezena(5)">5</button>
+
+                    <button onclick="removerDezena(6)">6</button>
+                    <button onclick="removerDezena(7)">7</button>
+                    <button onclick="removerDezena(8)">8</button>
+                    <button onclick="removerDezena(9)">9</button>
+                    <button onclick="removerDezena(10)">10</button>
+
+                    <button onclick="removerDezena(11)">11</button>
+                    <button onclick="removerDezena(12)">12</button>
+                    <button onclick="removerDezena(13)">13</button>
+                    <button onclick="removerDezena(14)">14</button>
+                    <button onclick="removerDezena(15)">15</button>
+
+                    <button onclick="removerDezena(16)">16</button>
+                    <button onclick="removerDezena(17)">17</button>
+                    <button onclick="removerDezena(18)">18</button>
+                    <button onclick="removerDezena(19)">19</button>
+                    <button onclick="removerDezena(20)">20</button>
+
+                    <button onclick="removerDezena(21)">21</button>
+                    <button onclick="removerDezena(22)">22</button>
+                    <button onclick="removerDezena(23)">23</button>
+                    <button onclick="removerDezena(24)">24</button>
+                    <button onclick="removerDezena(25)">25</button>
+                </div>
                 <p>
                     <label for="qt_dezenas">Escolha com quantas dezenas você gostaria de gerar seu(s) jogo(s)? (Opcional)</label>
                     <input id="qt_dezenas" type="number"> 
