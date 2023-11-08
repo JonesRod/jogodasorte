@@ -3,9 +3,9 @@ function toggleButton(button) {
     button.classList.toggle('active');
 }
 
-function removerDezena2(numero) {
+function removerDezena1(numero) {
 
-    let inputDezenas = document.getElementById('dezenas');
+    let inputDezenas = document.getElementById('dezenas_excluidas');
     let valorAtual = inputDezenas.value.trim();
 
     let dezenas = valorAtual.split('-').filter(Boolean).map(Number);
@@ -20,12 +20,10 @@ function removerDezena2(numero) {
             inputDezenas.value = '';
         }
     }
-
-    atualizarContador2();
+    atualizarContador1();
 }
-
-function adicionarDezena(numero) {
-    let inputDezenas = document.getElementById('dezenas');
+function DezenasExcluidas(numero) {
+    let inputDezenas = document.getElementById('dezenas_excluidas');
     let valorAtual = inputDezenas.value.trim();
 
     if (valorAtual === '') {
@@ -38,30 +36,29 @@ function adicionarDezena(numero) {
             inputDezenas.value = dezenas.join('-');
         }
     }
-
-    atualizarContador2();
+    atualizarContador1();
 }
 
-function atualizarContador2() {
-    let inputDezenas = document.getElementById('dezenas');
+function atualizarContador1() {
+
+    let inputDezenas = document.getElementById('dezenas_excluidas');
     let contador = inputDezenas.value.split('-').filter(Boolean).length;
 
-    document.getElementById('contador2').textContent = contador + ' dezenas marcadas';
-    
+    document.getElementById('contador1').textContent = contador + ' dezenas marcadas';
 }
 
-document.querySelectorAll('.numeros button').forEach(button => {
+document.querySelectorAll('.excluir button').forEach(button => {
     button.addEventListener('click', () => {
         let numero = button.textContent;
         if (button.classList.contains('active')) {
             toggleButton(button);
-            let inputDezenas = document.getElementById('dezenas');
+            let inputDezenas = document.getElementById('dezenas_excluidas');
             inputDezenas.value = inputDezenas.value.replace(numero, '').replace('--', '-').trim();
-            atualizarContador2();
+            atualizarContador1();
         } else {
-            if (document.querySelectorAll('.numeros button.active').length < 20) {
+            if (document.querySelectorAll('.excluir button.active').length < 5) {
                 toggleButton(button);
-                adicionarDezena(button.textContent);
+                DezenasExcluidas(button.textContent);
             }
         }
     });
@@ -69,8 +66,9 @@ document.querySelectorAll('.numeros button').forEach(button => {
     button.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         let numero = button.textContent;
-        removerDezena(numero);
+        removerDezena1(numero);
     });
+    
 });
 
 function gerar_jogo() {

@@ -6,6 +6,43 @@
     $resultado_existe = false;
     $msg =false;
 
+    if(!isset($_SESSION)){
+        session_start(); 
+    }
+
+    if(isset($_SESSION['usuario'])){
+        $usuario = $_SESSION['usuario'];
+        $id = $_SESSION['usuario'];
+        $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
+        $usuario = $sql_query->fetch_assoc(); 
+        $saldo_str = $usuario ["creditos"];
+        // Substitui ',' por '.' e converte para float
+        $saldo = (float) str_replace(',', '.', $saldo_str);
+
+        // Formata o saldo em moeda
+        $saldo_formatado = number_format($saldo, 2, ',', '.');
+        echo $saldo_formatado;
+
+        $sql_config_lotofacil = $conn->query("SELECT * FROM config_lotofacil WHERE id = '1'") or die($conn->error);
+        $valor = $sql_config_lotofacil->fetch_assoc();
+        
+        $valor_15 = $valor['valor_15'];
+        $valor_16 = $valor['valor_16'];
+        $valor_17 = $valor['valor_17'];
+        $valor_18 = $valor['valor_18'];
+        $valor_19 = $valor['valor_19'];
+        $valor_20 = $valor['valor_20'];
+        $qt_concurso_confere = $valor['qt_concurso_confere'];
+        $qt_concurso_salva = $valor['qt_concurso_salva'];
+
+    } else {
+        // Se não houver uma sessão de usuário, redirecione para a página de login
+        session_unset();
+        session_destroy(); 
+        header("Location: usuario_logout.php");  
+        exit(); // Importante adicionar exit() após o redirecionamento
+    }
+
     $sql = "SELECT * FROM resultados_lotofacil ORDER BY concurso DESC LIMIT 1";
     $result = $conn->query($sql);
 
@@ -20,8 +57,6 @@
 
         // Converte a data para o formato brasileiro
         $data_formatada = date('d/m/Y', strtotime($data));
-
-
     }
 
 
@@ -32,336 +67,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-        }
-        .conteiner{
-            margin: 10px;
-            display: flex;
-        }  
-        .geradorJogos_listaMeusJogos, .listaResultados {
-            flex: 1; /* Ambos os elementos ocupam o mesmo espaço disponível */
-        }
-        .geradorJogos_listaMeusJogos {
-            /*margin-top: -18px;*/
-            margin-right: 8px;
-            /*padding: 0px; /* Adicionando margem para espaçamento */
-            /*display: flex;
-            align-items: center;*/
-        }       
-        .listaResultados{
-            text-align: center;
-            margin-left: 8px;
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2);
-        }        
-        #geradorJogos {
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2);
-            padding-bottom: 1px;
-        }
-        #geradorJogos h3{
-            margin: 0px 10px 20px 10px;
-            padding-top: 18px;
-
-        }
-        #ultimoconcurso{
-            font-weight: bold; /* Deixa o texto em negrito */
-            margin-bottom: 50px;
-        }
-        #numeros{
-            font-weight: bold; /* Deixa o texto em negrito */
-        }
-        #geradorJogos p {
-            display: flex;
-            align-items: center;
-            margin: 0px 10px 5px 10px;
-            flex-wrap: wrap; /* Permite a quebra de linha se necessário */
-        }
-        
-        #geradorJogos label {
-            margin-right: 5px;
-            /*flex-shrink: 0; /* Não deve encolher (não deve ocupar espaço extra) */
-           /* width: auto;
-            display: inline-block;
-            /*box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
-            word-break: break-word; /* Permite que a label quebre a linha se necessário */
-        }
-        #geradorJogos input {
-            flex: 1; /* Deve ocupar todo o espaço disponível */
-            width: auto;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            min-width: 50px; /* Define uma largura mínima para o input */
-            margin-right: 5px;
-        }
-        input:focus {
-            outline: none; /* Remove a borda de foco padrão */
-        }
-
-        #listaMeusJogos{
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2);
-        }
-        #primeirainstrucao{
-            font-weight: bold; /* Deixa o texto em negrito */
-            text-align: center;
-            color: blue;
-            /*margin: 0px 10px 20px 20px;*/
-            padding-bottom: 20px;
-        }
-        #config_padrao{
-            margin-bottom: 20px;
-            border-radius: 10px;
-            padding: 10px;
-            /*display: block;*/
-            width: 250px; /* Define a largura dos botões */
-            height: 50px; /* Define a altura dos botões */
-            margin: 5px;
-            border: none;
-            background-color: #4CAF50; /* Define a cor de fundo */
-            color: white; /* Define a cor do texto */
-            font-size: 16px; /* Define o tamanho da fonte */
-            border-radius: 5px; /* Adiciona bordas arredondadas */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
-        }
-        #config_padrao:hover{
-            margin: 5px;
-            padding: 5px;
-            font-weight: bold;
-            border-radius: 5px;
-            background-color: rgba(244, 164, 6, 0.942);
-            /*transform: scale(1.1);*/
-            cursor: pointer;
-        }
-        #config_padrao button:hover {
-            background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
-            cursor: pointer;
-        }
-
-        #config_padrao:focus {
-            outline: none; /* Remove o contorno ao focar no botão */
-            
-        }
-        #config_padrao:active {
-            /* Estilos quando o botão é clicado */
-            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
-        }
-        #instrucao_final{
-            display: flex;
-            font-weight: bold; /* Deixa o texto em negrito */
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            color: blue;
-            margin-top: 30px;
-            padding-bottom: 30px;
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block; /* Permite que o botão e a mensagem fiquem na mesma linha */
-            width: 15px;
-            height: 15px;
-            text-align: center;
-            align-items: center;
-            border: 1px solid #000; /* Adiciona uma borda de 2 pixels */
-            border-radius: 50%; /* Torna o elemento redondo */
-            font-weight: bold; /* Deixa o texto em negrito */
-            line-height: 15px; /* Alinha verticalmente o texto */
-            cursor: help; /* Muda o cursor para indicar que há uma dica ao passar o mouse */
-        }
-
-        .tooltip::after {
-            content: attr(value);
-            background-color: #333;
-            color: #fff;
-            border-radius: 4px;
-            padding: 4px 8px;
-            position: absolute;
-            top: 30%;
-            left: 100%;
-            transform: translateY(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            width: 250px; /* Define a largura máxima */
-        }
-        .tooltip:hover::after {
-            opacity: 1;
-        }
-        #gerar_jogo{
-            margin-bottom: 20px;
-            border-radius: 10px;
-            padding: 10px;
-            /*display: block;*/
-            width: 250px; /* Define a largura dos botões */
-            height: 50px; /* Define a altura dos botões */
-            margin: 5px;
-            margin-bottom: 20px;
-            border: none;
-            background-color: #4CAF50; /* Define a cor de fundo */
-            color: white; /* Define a cor do texto */
-            font-size: 16px; /* Define o tamanho da fonte */
-            border-radius: 5px; /* Adiciona bordas arredondadas */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
-        }
-        #gerar_jogo:hover{
-            margin: 5px;
-            padding: 5px;
-            font-weight: bold;
-            border-radius: 5px;
-            background-color: rgba(244, 164, 6, 0.942);
-            /*transform: scale(1.1);*/
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-        #gerar_jogo button:hover {
-            background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
-            cursor: pointer;
-        }
-
-        #gerar_jogo:focus {
-            outline: none; /* Remove o contorno ao focar no botão */
-        }
-        #gerar_jogo:active {
-            /* Estilos quando o botão é clicado */
-            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
-        }
-
-        .consultar p {
-            display: flex;
-            align-items: center;
-            margin: 0px 10px 5px 10px;
-            flex-wrap: wrap; /* Permite a quebra de linha se necessário */
-        }
-        
-        .consultar label {
-            margin-right: 20px;
-            /*flex-shrink: 0; /* Não deve encolher (não deve ocupar espaço extra) */
-           /* width: auto;
-            display: inline-block;
-            /*box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
-            word-break: break-word; /* Permite que a label quebre a linha se necessário */
-        }
-        .consultar input {
-            /*flex: 1; /* Deve ocupar todo o espaço disponível */
-            width: 20px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            min-width: 20px; /* Define uma largura mínima para o input */
-            margin-right: 5px;
-            max-width: 40px;
-        }
-        .consultar button {
-            /*flex: 1; /* Deve ocupar todo o espaço disponível */
-            width: 100px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            min-width: 20px; /* Define uma largura mínima para o input */
-            margin-right: 10px;
-            margin-left: 20px;
-        }
-        .consultar .tooltip {
-            margin-right: 10px;
-            margin-left: 10px;
-        }
-
-        .consultar #dezenas{
-            min-width: 300px; /* Define uma largura mínima para o input */
-            width: 500px;
-        }
-        .consultar{
-            text-align: center;
-            flex: 1;
-            background-color: #45a049;
-            margin: 50px;
-            padding: 20px;
-            border-radius: 10px;
-            
-        }
-        .excluir button {
-            width: 40px;
-            height: 40px;
-            margin-right: 0px;
-            margin-left: 20px;
-            box-sizing: border-box;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 20px;
-            border: 1px solid #ccc;
-        }
-        .excluir {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px; 
-            margin: 40px;
-            border-radius: 10px;
-            background-color: #45a049;
-            padding: 30px;
-
-        }
-        .excluir button.selecionado {
-            background-color: #FFD700; /* Cor de fundo quando selecionado */
-        }
-        .excluir button.active {
-            background-color: #FFD700;
-        }
-        .numeros button {
-            width: 40px;
-            height: 40px;
-            margin-right: 0px;
-            margin-left: 20px;
-            box-sizing: border-box;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        #dezenas{
-            margin-top: 30px;
-            margin-bottom: 30px;
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
-            font-weight: bold;
-
-        }
-        .numeros {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px; 
-
-        }
-        .numeros button.selecionado {
-            background-color: #FFD700; /* Cor de fundo quando selecionado */
-        }
-        .numeros button.active {
-            background-color: #FFD700;
-        }
-        #contador{
-            font-weight: bold;
-            color: blue;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="gerar_jogos.css">
     <script>
         function config_padrao(){
-            // Configura o número de dezenas excluídas entre 0 e 5
-            document.getElementById('dez_excluidas').value = '0';
-            document.getElementById('dez_excluidas').setAttribute('max', '5');
 
             // Configura a quantidade de dezenas entre 15 e 20
             document.getElementById('qt_dezenas').value = '15';
             document.getElementById('qt_dezenas').setAttribute('min', '15');
             document.getElementById('qt_dezenas').setAttribute('max', '20');
+            document.getElementById('qt_jogos').value = '1';
+
+            calcular();
         }
     </script>
 
@@ -382,86 +98,99 @@
 
                 <button id="config_padrao" onclick="config_padrao()">Configuração padrão</button>
                 <span class="tooltip" value="Adiciona a configuração pedrão. Essa configuração inclui todos os tipos de jogadas ainda não sorteadas">i</span>
-                <p>
-                    <label for="dez_excluidas">Escolha quais dezenas você gostaria que não saissem no(s) jogo(s) (Opcional)</label>
-                    <input id="dez_excluidas" type="number" placeholder="1,2,3,...">
-                    <span class="tooltip" value="Você pode escolher até 5 dezenas para não sairem em seus jogos.">i</span>   
-                </p>
-                <div class="excluir">
-                    <button onclick="removerDezena(1)">1</button>
-                    <button onclick="removerDezena(2)">2</button>
-                    <button onclick="removerDezena(3)">3</button>
-                    <button onclick="removerDezena(4)">4</button>
-                    <button onclick="removerDezena(5)">5</button>
+                <div class="esc_excluir">
+                    <h4 for="dez_excluidas">Escolha até 5 dezenas que você gostaria que não saissem no(s) jogo(s) (Opcional)</h4>
+                    <div class="excluir">
+                        <button onclick="removerDezena1(1)">1</button>
+                        <button onclick="removerDezena1(2)">2</button>
+                        <button onclick="removerDezena1(3)">3</button>
+                        <button onclick="removerDezena1(4)">4</button>
+                        <button onclick="removerDezena1(5)">5</button>
 
-                    <button onclick="removerDezena(6)">6</button>
-                    <button onclick="removerDezena(7)">7</button>
-                    <button onclick="removerDezena(8)">8</button>
-                    <button onclick="removerDezena(9)">9</button>
-                    <button onclick="removerDezena(10)">10</button>
+                        <button onclick="removerDezena1(6)">6</button>
+                        <button onclick="removerDezena1(7)">7</button>
+                        <button onclick="removerDezena1(8)">8</button>
+                        <button onclick="removerDezena1(9)">9</button>
+                        <button onclick="removerDezena1(10)">10</button>
 
-                    <button onclick="removerDezena(11)">11</button>
-                    <button onclick="removerDezena(12)">12</button>
-                    <button onclick="removerDezena(13)">13</button>
-                    <button onclick="removerDezena(14)">14</button>
-                    <button onclick="removerDezena(15)">15</button>
+                        <button onclick="removerDezena1(11)">11</button>
+                        <button onclick="removerDezena1(12)">12</button>
+                        <button onclick="removerDezena1(13)">13</button>
+                        <button onclick="removerDezena1(14)">14</button>
+                        <button onclick="removerDezena1(15)">15</button>
 
-                    <button onclick="removerDezena(16)">16</button>
-                    <button onclick="removerDezena(17)">17</button>
-                    <button onclick="removerDezena(18)">18</button>
-                    <button onclick="removerDezena(19)">19</button>
-                    <button onclick="removerDezena(20)">20</button>
+                        <button onclick="removerDezena1(16)">16</button>
+                        <button onclick="removerDezena1(17)">17</button>
+                        <button onclick="removerDezena1(18)">18</button>
+                        <button onclick="removerDezena1(19)">19</button>
+                        <button onclick="removerDezena1(20)">20</button>
 
-                    <button onclick="removerDezena(21)">21</button>
-                    <button onclick="removerDezena(22)">22</button>
-                    <button onclick="removerDezena(23)">23</button>
-                    <button onclick="removerDezena(24)">24</button>
-                    <button onclick="removerDezena(25)">25</button>
+                        <button onclick="removerDezena1(21)">21</button>
+                        <button onclick="removerDezena1(22)">22</button>
+                        <button onclick="removerDezena1(23)">23</button>
+                        <button onclick="removerDezena1(24)">24</button>
+                        <button onclick="removerDezena1(25)">25</button>
+                    </div>
+                    <input readonly id="dezenas_excluidas" type="text">
+                    <div id="contador1"></div>
+                    <p>
+                        <label for="qt_dezenas">Escolha com quantas dezenas você gostaria de gerar seu(s) jogo(s)? (Opcional)</label>
+                        <input id="qt_dezenas" type="number"> 
+                        <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>                         
+                    </p>
+                    <p>
+                        <label for="qt_jogos">Quantos jogos você gostaria de fazer?</label>
+                        <input id="qt_jogos" type="number">                         
+                    </p>
+                    <div id="instrucao_final">
+                        As demais configurações existente ja estam incluidas na configuração padrão.
+                    </div>
+
+                    <input type="text" id="valor_15" value="<?php echo $valor_15 ;?>">
+                    <input type="hidden" id="valor_16" value="<?php echo $valor_16 ;?>">
+                    <input type="hidden" id="valor_17" value="<?php echo $valor_17 ;?>">
+                    <input type="hidden" id="valor_18" value="<?php echo $valor_18 ;?>">
+                    <input type="hidden" id="valor_19" value="<?php echo $valor_19 ;?>">
+                    <input type="hidden" id="valor_20" value="<?php echo $valor_20 ;?>">
+
+                    <H3 id="valor"></H3>
+                    <button id="gerar_jogo" onclick="gerar_jogo()">Gerar Jogo</button>
                 </div>
-                <p>
-                    <label for="qt_dezenas">Escolha com quantas dezenas você gostaria de gerar seu(s) jogo(s)? (Opcional)</label>
-                    <input id="qt_dezenas" type="number"> 
-                    <span class="tooltip" value="Você pode escolher entre 16 e 20 dezenas.">i</span>                   
-                </p>
-                <div id="instrucao_final">
-                    As demais configurações existente ja estam incluidas na configuração padrão.
-                </div>
-                <button id="gerar_jogo" onclick="gerar_jogo()">Gerar Jogo</button>
                 <div class="consultar">
                     <h3>Escolha de 15 a 20 dezenas.</h3>
                     <div class="numeros">
-                        <button onclick="removerDezena(1)">1</button>
-                        <button onclick="removerDezena(2)">2</button>
-                        <button onclick="removerDezena(3)">3</button>
-                        <button onclick="removerDezena(4)">4</button>
-                        <button onclick="removerDezena(5)">5</button>
+                        <button onclick="removerDezena2(1)">1</button>
+                        <button onclick="removerDezena2(2)">2</button>
+                        <button onclick="removerDezena2(3)">3</button>
+                        <button onclick="removerDezena2(4)">4</button>
+                        <button onclick="removerDezena2(5)">5</button>
 
-                        <button onclick="removerDezena(6)">6</button>
-                        <button onclick="removerDezena(7)">7</button>
-                        <button onclick="removerDezena(8)">8</button>
-                        <button onclick="removerDezena(9)">9</button>
-                        <button onclick="removerDezena(10)">10</button>
+                        <button onclick="removerDezena2(6)">6</button>
+                        <button onclick="removerDezena2(7)">7</button>
+                        <button onclick="removerDezena2(8)">8</button>
+                        <button onclick="removerDezena2(9)">9</button>
+                        <button onclick="removerDezena2(10)">10</button>
 
-                        <button onclick="removerDezena(11)">11</button>
-                        <button onclick="removerDezena(12)">12</button>
-                        <button onclick="removerDezena(13)">13</button>
-                        <button onclick="removerDezena(14)">14</button>
-                        <button onclick="removerDezena(15)">15</button>
+                        <button onclick="removerDezena2(11)">11</button>
+                        <button onclick="removerDezena2(12)">12</button>
+                        <button onclick="removerDezena2(13)">13</button>
+                        <button onclick="removerDezena2(14)">14</button>
+                        <button onclick="removerDezena2(15)">15</button>
 
-                        <button onclick="removerDezena(16)">16</button>
-                        <button onclick="removerDezena(17)">17</button>
-                        <button onclick="removerDezena(18)">18</button>
-                        <button onclick="removerDezena(19)">19</button>
-                        <button onclick="removerDezena(20)">20</button>
+                        <button onclick="removerDezena2(16)">16</button>
+                        <button onclick="removerDezena2(17)">17</button>
+                        <button onclick="removerDezena2(18)">18</button>
+                        <button onclick="removerDezena2(19)">19</button>
+                        <button onclick="removerDezena2(20)">20</button>
 
-                        <button onclick="removerDezena(21)">21</button>
-                        <button onclick="removerDezena(22)">22</button>
-                        <button onclick="removerDezena(23)">23</button>
-                        <button onclick="removerDezena(24)">24</button>
-                        <button onclick="removerDezena(25)">25</button>
+                        <button onclick="removerDezena2(21)">21</button>
+                        <button onclick="removerDezena2(22)">22</button>
+                        <button onclick="removerDezena2(23)">23</button>
+                        <button onclick="removerDezena2(24)">24</button>
+                        <button onclick="removerDezena2(25)">25</button>
                     </div>
                     <input readonly id="dezenas" type="text">
-                    <div id="contador"></div>
+                    <div id="contador2"></div>
                     <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button> 
                 </div>
             </div>
@@ -476,6 +205,54 @@
             <label for="">Concurso</label><input type="number"><button>Carregar</button>
         </div>
     </div>
+    <script>
+        document.getElementById('qt_dezenas').addEventListener('input', function() {
+            if (this.value < 15) {
+                this.value = 15;
+            }
+            if (this.value > 20) {
+                this.value = 20;
+            }
+        });
+        document.getElementById('qt_jogos').addEventListener('input', function() {
+            if (this.value < 1) {
+                this.value = 1;
+            }
+        });
+        
+        document.getElementById('qt_dezenas').addEventListener('input', calcular);
+        document.getElementById('qt_jogos').addEventListener('input', calcular);
+
+        function calcular() {
+            var qt_dezenas = parseFloat(document.getElementById('qt_dezenas').value);
+            var qt_jogos = parseFloat(document.getElementById('qt_jogos').value);
+            var valor_15 = parseFloat(document.getElementById('valor_15').value.replace(',', '.'));
+            var valor_16 = parseFloat(document.getElementById('valor_16').value.replace(',', '.'));
+            var valor_17 = parseFloat(document.getElementById('valor_17').value.replace(',', '.'));
+            var valor_18 = parseFloat(document.getElementById('valor_18').value.replace(',', '.'));
+            var valor_19 = parseFloat(document.getElementById('valor_19').value.replace(',', '.'));
+            var valor_20 = parseFloat(document.getElementById('valor_20').value.replace(',', '.'));
+
+            var resultado;
+
+            if (qt_dezenas == 15) {
+                resultado = (valor_15 * qt_jogos).toFixed(2);
+            } else if (qt_dezenas == 16) {
+                resultado = (valor_16 * qt_jogos).toFixed(2);
+            } else if (qt_dezenas == 17) {
+                resultado = (valor_17 * qt_jogos).toFixed(2);
+            } else if (qt_dezenas == 18) {
+                resultado = (valor_18 * qt_jogos).toFixed(2);
+            } else if (qt_dezenas == 19) {
+                resultado = (valor_19 * qt_jogos).toFixed(2);
+            } else if (qt_dezenas == 20) {
+                resultado = (valor_20 * qt_jogos).toFixed(2);
+            }
+
+            document.getElementById('valor').textContent = 'R$ '+ resultado;
+        }
+    </script>
+    <script src="excluir_dezenas.js"></script>
     <script src="inclurir_dezenas.js"></script>
 </body>
 </html>

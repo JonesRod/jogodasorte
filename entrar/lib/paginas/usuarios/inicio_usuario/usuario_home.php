@@ -11,11 +11,11 @@
         $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
         $usuario = $sql_query->fetch_assoc(); 
         $saldo_str = $usuario ["creditos"];
-// Substitui ',' por '.' e converte para float
-$saldo = (float) str_replace(',', '.', $saldo_str);
+        // Substitui ',' por '.' e converte para float
+        $saldo = (float) str_replace(',', '.', $saldo_str);
 
-// Formata o saldo em moeda
-$saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
+        // Formata o saldo em moeda
+        $saldo_formatado = 'R$ ' . number_format($saldo, 2, ',', '.');
     } else {
         // Se não houver uma sessão de usuário, redirecione para a página de login
         session_unset();

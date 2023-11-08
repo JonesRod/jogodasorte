@@ -1,0 +1,336 @@
+body{
+    font-family: Arial, sans-serif;
+}
+.conteiner{
+    margin: 10px;
+    display: flex;
+}  
+.geradorJogos_listaMeusJogos, .listaResultados {
+    flex: 1; /* Ambos os elementos ocupam o mesmo espaço disponível */
+}
+.geradorJogos_listaMeusJogos {
+    /*margin-top: -18px;*/
+    margin-right: 8px;
+    /*padding: 0px; /* Adicionando margem para espaçamento */
+    /*display: flex;
+    align-items: center;*/
+}       
+.listaResultados{
+    text-align: center;
+    margin-left: 8px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2);
+}        
+#geradorJogos {
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2);
+    padding-bottom: 1px;
+}
+#geradorJogos h3{
+    margin: 0px 10px 20px 10px;
+    padding-top: 18px;
+
+}
+#ultimoconcurso{
+    font-weight: bold; /* Deixa o texto em negrito */
+    margin-bottom: 50px;
+}
+#numeros{
+    font-weight: bold; /* Deixa o texto em negrito */
+}
+#geradorJogos p {
+    display: flex;
+    align-items: center;
+    margin: 0px 10px 5px 10px;
+    flex-wrap: wrap; /* Permite a quebra de linha se necessário */
+}
+
+#geradorJogos label {
+    margin-right: 5px;
+    /*flex-shrink: 0; /* Não deve encolher (não deve ocupar espaço extra) */
+   /* width: auto;
+    display: inline-block;
+    /*box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
+    word-break: break-word; /* Permite que a label quebre a linha se necessário */
+}
+#geradorJogos input {
+    flex: 1; /* Deve ocupar todo o espaço disponível */
+    width: auto;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-width: 50px; /* Define uma largura mínima para o input */
+    margin-right: 5px;
+}
+input:focus {
+    outline: none; /* Remove a borda de foco padrão */
+}
+
+#listaMeusJogos{
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2), 0 0 8px rgba(0,0,0,0.2);
+}
+#primeirainstrucao{
+    font-weight: bold; /* Deixa o texto em negrito */
+    text-align: center;
+    color: blue;
+    /*margin: 0px 10px 20px 20px;*/
+    padding-bottom: 20px;
+}
+#config_padrao{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    /*display: block;*/
+    width: 250px; /* Define a largura dos botões */
+    height: 50px; /* Define a altura dos botões */
+    margin: 5px;
+    border: none;
+    background-color: #4CAF50; /* Define a cor de fundo */
+    color: white; /* Define a cor do texto */
+    font-size: 16px; /* Define o tamanho da fonte */
+    border-radius: 5px; /* Adiciona bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
+}
+#config_padrao:hover{
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: rgba(244, 164, 6, 0.942);
+    /*transform: scale(1.1);*/
+    cursor: pointer;
+}
+#config_padrao button:hover {
+    background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
+    cursor: pointer;
+}
+
+#config_padrao:focus {
+    outline: none; /* Remove o contorno ao focar no botão */
+    
+}
+#config_padrao:active {
+    /* Estilos quando o botão é clicado */
+    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
+}
+#instrucao_final{
+    display: flex;
+    font-weight: bold; /* Deixa o texto em negrito */
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: blue;
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block; /* Permite que o botão e a mensagem fiquem na mesma linha */
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    align-items: center;
+    border: 1px solid #000; /* Adiciona uma borda de 2 pixels */
+    border-radius: 50%; /* Torna o elemento redondo */
+    font-weight: bold; /* Deixa o texto em negrito */
+    line-height: 15px; /* Alinha verticalmente o texto */
+    cursor: help; /* Muda o cursor para indicar que há uma dica ao passar o mouse */
+}
+
+.tooltip::after {
+    content: attr(value);
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+    padding: 4px 8px;
+    position: absolute;
+    top: 30%;
+    left: 100%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: 250px; /* Define a largura máxima */
+}
+.tooltip:hover::after {
+    opacity: 1;
+}
+#gerar_jogo{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    /*display: block;*/
+    width: 250px; /* Define a largura dos botões */
+    height: 50px; /* Define a altura dos botões */
+    margin: 5px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: #4CAF50; /* Define a cor de fundo */
+    color: white; /* Define a cor do texto */
+    font-size: 16px; /* Define o tamanho da fonte */
+    border-radius: 5px; /* Adiciona bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
+}
+#gerar_jogo:hover{
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: rgba(244, 164, 6, 0.942);
+    /*transform: scale(1.1);*/
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+#gerar_jogo button:hover {
+    background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
+    cursor: pointer;
+}
+
+#gerar_jogo:focus {
+    outline: none; /* Remove o contorno ao focar no botão */
+}
+#gerar_jogo:active {
+    /* Estilos quando o botão é clicado */
+    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
+}
+
+.consultar p {
+    display: flex;
+    align-items: center;
+    margin: 0px 10px 5px 10px;
+    flex-wrap: wrap; /* Permite a quebra de linha se necessário */
+}
+
+.consultar label {
+    margin-right: 20px;
+    /*flex-shrink: 0; /* Não deve encolher (não deve ocupar espaço extra) */
+   /* width: auto;
+    display: inline-block;
+    /*box-sizing: border-box; /* Inclui a largura da borda e o preenchimento na largura total */
+    word-break: break-word; /* Permite que a label quebre a linha se necessário */
+}
+.consultar input {
+    /*flex: 1; /* Deve ocupar todo o espaço disponível */
+    width: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-width: 20px; /* Define uma largura mínima para o input */
+    margin-right: 5px;
+    max-width: 40px;
+}
+.consultar button {
+    /*flex: 1; /* Deve ocupar todo o espaço disponível */
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-width: 20px; /* Define uma largura mínima para o input */
+    margin-right: 10px;
+    margin-left: 20px;
+}
+.consultar .tooltip {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.consultar #dezenas{
+    min-width: 300px; /* Define uma largura mínima para o input */
+    width: 500px;
+}
+.consultar{
+    text-align: center;
+    flex: 1;
+    background-color: #45a049;
+    margin: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    
+}
+.esc_excluir{
+    text-align: center;
+    flex: 1;
+    background-color: #45a049;
+    margin: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    
+}
+.excluir button {
+    width: 40px;
+    height: 40px;
+    margin-right: 0px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 20px;
+    border: 1px solid #ccc;
+}
+.excluir {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; 
+}
+.excluir button.selecionado {
+    background-color: #FFD700; /* Cor de fundo quando selecionado */
+}
+.excluir button.active {
+    background-color: #FFD700;
+}
+#dezenas_excluidas{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #45a049;
+
+}
+.numeros button {
+    width: 40px;
+    height: 40px;
+    margin-right: 0px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#dezenas{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: bold;
+    background-color: #45a049;
+
+}
+.numeros {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; 
+
+}
+.numeros button.selecionado {
+    background-color: #FFD700; /* Cor de fundo quando selecionado */
+}
+.numeros button.active {
+    background-color: #FFD700;
+}
+#contador1{
+    font-weight: bold;
+    color: blue;
+    margin-bottom: 20px;
+}
+#contador2{
+    font-weight: bold;
+    color: blue;
+    margin-bottom: 20px;
+}
