@@ -79,7 +79,7 @@ function calcular_consulta() {
         resultado = (valor_20 * 1).toFixed(2);
     }
 
-    document.getElementById('valor_consulta').textContent = 'R$ '+ resultado;
+    document.getElementById('valor_consulta').textContent = 'R$ '+ resultado.replace('.', ',');
 
 }
 document.querySelectorAll('.numeros button').forEach(button => {
@@ -105,6 +105,6 @@ document.querySelectorAll('.numeros button').forEach(button => {
     });
 });
 
-function gerar_jogo() {
+function consultar_jogo() {
     // Coloque aqui a função para gerar o jogo
 }

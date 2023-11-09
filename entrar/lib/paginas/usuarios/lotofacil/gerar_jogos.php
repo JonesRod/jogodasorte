@@ -77,7 +77,7 @@
             document.getElementById('qt_dezenas').setAttribute('max', '20');
             document.getElementById('qt_jogos').value = '1';
 
-            //calcular();
+            calcular();
         }
     </script>
 
@@ -96,7 +96,7 @@
                 <h4 id="numeros" for=""><?php echo $numeros ?></h4>
                 <h3>Configure o estilo de seu(s) jogos</h3>
 
-                <button id="config_padrao" onclick="config_padrao()">Configuração padrão</button>
+                <button id="config_padrao" onclick="config_padrao(), calcular()">Configuração padrão</button>
                 <span class="tooltip" value="Adiciona a configuração pedrão. Essa configuração inclui todos os tipos de jogadas ainda não sorteadas">i</span>
                 <div class="esc_excluir">
                     <h4 for="dez_excluidas">Escolha até 5 dezenas que você gostaria que não saissem no(s) jogo(s) (Opcional)</h4>
@@ -152,8 +152,10 @@
                     <input type="hidden" id="valor_18" value="<?php echo $valor_18 ;?>">
                     <input type="hidden" id="valor_19" value="<?php echo $valor_19 ;?>">
                     <input type="hidden" id="valor_20" value="<?php echo $valor_20 ;?>">
+                    <input type="hidden" id="saldo_formatado" value="<?php echo $saldo_formatado ;?>">
 
                     <H3 id="valor"></H3>
+                    <span id="alerta"></span>
                     <button id="gerar_jogo" onclick="gerar_jogo()">Gerar Jogo</button>
                 </div>
                 <div class="consultar">
@@ -251,7 +253,7 @@
                 resultado = (valor_20 * qt_jogos).toFixed(2);
             }
 
-            document.getElementById('valor').textContent = 'R$ '+ resultado;
+            document.getElementById('valor').textContent = 'R$ '+ resultado.replace('.', ',');
         }
 
     </script>

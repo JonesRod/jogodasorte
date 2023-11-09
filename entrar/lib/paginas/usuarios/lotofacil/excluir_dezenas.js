@@ -72,5 +72,26 @@ document.querySelectorAll('.excluir button').forEach(button => {
 });
 
 function gerar_jogo() {
-    // Coloque aqui a função para gerar o jogo
+
+    var valorTexto = document.getElementById('valor').textContent;
+    var valor = parseFloat(valorTexto.replace('R$ ', '').replace(',', '.')); // Remove o "R$" e substitui a vírgula por ponto
+    var saldo_formatado = parseFloat(document.getElementById('saldo_formatado').value.replace(',', '.'));
+        
+    // Garantir que os valores tenham sempre duas casas decimais
+    valor = valor.toFixed(2);
+    saldo_formatado = saldo_formatado.toFixed(2);
+
+    console.log('valor:', valor);
+    console.log('saldo_formatado:', saldo_formatado);
+
+    if (!isNaN(valor) && !isNaN(saldo_formatado)) {
+        if (valor <= saldo_formatado) {
+            document.getElementById('alerta').value = 'Jogo gerado.';
+            // gera jogo
+        } else {
+            document.getElementById('alerta').textContent = 'Seu saldo é de R$ ' + saldo_formatado.replace('.', ',') + ' e está abaixo do custo a ser gerado: R$ ' + valor.replace('.', ',') + '.';
+        }
+    } else {
+        document.getElementById('alerta').textContent = 'Valores inválidos';
+    }
 }
