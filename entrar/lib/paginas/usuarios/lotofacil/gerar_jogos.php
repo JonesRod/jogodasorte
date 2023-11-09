@@ -35,13 +35,13 @@
         $qt_concurso_confere = $valor['qt_concurso_confere'];
         $qt_concurso_salva = $valor['qt_concurso_salva'];
 
-    } else {
+    }/* else {
         // Se não houver uma sessão de usuário, redirecione para a página de login
         session_unset();
         session_destroy(); 
         header("Location: usuario_logout.php");  
         exit(); // Importante adicionar exit() após o redirecionamento
-    }
+    }*/
 
     $sql = "SELECT * FROM resultados_lotofacil ORDER BY concurso DESC LIMIT 1";
     $result = $conn->query($sql);
@@ -77,7 +77,7 @@
             document.getElementById('qt_dezenas').setAttribute('max', '20');
             document.getElementById('qt_jogos').value = '1';
 
-            calcular();
+            //calcular();
         }
     </script>
 
@@ -146,7 +146,7 @@
                         As demais configurações existente ja estam incluidas na configuração padrão.
                     </div>
 
-                    <input type="text" id="valor_15" value="<?php echo $valor_15 ;?>">
+                    <input type="hidden" id="valor_15" value="<?php echo $valor_15 ;?>">
                     <input type="hidden" id="valor_16" value="<?php echo $valor_16 ;?>">
                     <input type="hidden" id="valor_17" value="<?php echo $valor_17 ;?>">
                     <input type="hidden" id="valor_18" value="<?php echo $valor_18 ;?>">
@@ -191,6 +191,8 @@
                     </div>
                     <input readonly id="dezenas" type="text">
                     <div id="contador2"></div>
+                    <input id="qt_contador" type="hidden"></input>
+                    <h3 id="valor_consulta"></h3>
                     <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button> 
                 </div>
             </div>
@@ -251,6 +253,7 @@
 
             document.getElementById('valor').textContent = 'R$ '+ resultado;
         }
+
     </script>
     <script src="excluir_dezenas.js"></script>
     <script src="inclurir_dezenas.js"></script>

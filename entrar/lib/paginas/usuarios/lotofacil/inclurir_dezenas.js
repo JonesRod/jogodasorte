@@ -47,9 +47,41 @@ function atualizarContador2() {
     let contador = inputDezenas.value.split('-').filter(Boolean).length;
 
     document.getElementById('contador2').textContent = contador + ' dezenas marcadas';
-    
-}
+    document.getElementById('qt_contador').value = contador;
 
+    calcular_consulta();
+}
+function calcular_consulta() {
+
+    var qt_dezenas = parseFloat(document.getElementById('qt_contador').value);
+    var valor_15 = parseFloat(document.getElementById('valor_15').value.replace(',', '.'));
+    var valor_16 = parseFloat(document.getElementById('valor_16').value.replace(',', '.'));
+    var valor_17 = parseFloat(document.getElementById('valor_17').value.replace(',', '.'));
+    var valor_18 = parseFloat(document.getElementById('valor_18').value.replace(',', '.'));
+    var valor_19 = parseFloat(document.getElementById('valor_19').value.replace(',', '.'));
+    var valor_20 = parseFloat(document.getElementById('valor_20').value.replace(',', '.'));
+
+    var resultado;
+
+    if (qt_dezenas < 15) {
+        resultado = (0 * 1).toFixed(2);
+    } else if (qt_dezenas == 15) {
+        resultado = (valor_15 * 1).toFixed(2);
+    } else if (qt_dezenas == 16) {
+        resultado = (valor_16 * 1).toFixed(2);
+    } else if (qt_dezenas == 17) {
+        resultado = (valor_17 * 1).toFixed(2);
+    } else if (qt_dezenas == 18) {
+        resultado = (valor_18 * 1).toFixed(2);
+    } else if (qt_dezenas == 19) {
+        resultado = (valor_19 * 1).toFixed(2);
+    } else if (qt_dezenas == 20) {
+        resultado = (valor_20 * 1).toFixed(2);
+    }
+
+    document.getElementById('valor_consulta').textContent = 'R$ '+ resultado;
+
+}
 document.querySelectorAll('.numeros button').forEach(button => {
     button.addEventListener('click', () => {
         let numero = button.textContent;
