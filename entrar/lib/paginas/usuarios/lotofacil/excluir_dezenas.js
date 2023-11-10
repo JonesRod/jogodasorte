@@ -73,23 +73,32 @@ document.querySelectorAll('.excluir button').forEach(button => {
 
 function gerar_jogo() {
 
-    var valorTexto = document.getElementById('valor').textContent;
-    var valor = parseFloat(valorTexto.replace('R$ ', '').replace(',', '.')); // Remove o "R$" e substitui a vírgula por ponto
-    var saldo_formatado = parseFloat(document.getElementById('saldo_formatado').value.replace(',', '.'));
-        
+    let valor = document.getElementById('valor_sem_formatacao').value;
+    //console.log(valor);
+
+    let saldo = parseFloat(document.getElementById('saldo_formatado').value.replace(',', '.'));
+
     // Garantir que os valores tenham sempre duas casas decimais
-    valor = valor.toFixed(2);
-    saldo_formatado = saldo_formatado.toFixed(2);
+    //valor = valor.toFixed(2);
+    saldo = saldo.toFixed(2);
 
-    console.log('valor:', valor);
-    console.log('saldo_formatado:', saldo_formatado);
+    console.log(valor);
+    console.log(saldo);
 
-    if (!isNaN(valor) && !isNaN(saldo_formatado)) {
-        if (valor <= saldo_formatado) {
+    if (!isNaN(valor) && !isNaN(saldo)) {
+        if (valor <= saldo) {
             document.getElementById('alerta').value = 'Jogo gerado.';
             // gera jogo
         } else {
-            document.getElementById('alerta').textContent = 'Seu saldo é de R$ ' + saldo_formatado.replace('.', ',') + ' e está abaixo do custo a ser gerado: R$ ' + valor.replace('.', ',') + '.';
+
+            let saldo_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(saldo);
+            //console.log(saldo_formatado);
+
+            let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(valor);
+            //console.log(valor_formatado);
+            
+            document.getElementById('alerta').textContent = 'Seu saldo é de R$ ' + saldo_formatado + ' e está abaixo do custo a ser gerado: R$ ' + valor_formatado;
+
         }
     } else {
         document.getElementById('alerta').textContent = 'Valores inválidos';

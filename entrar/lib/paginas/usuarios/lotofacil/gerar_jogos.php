@@ -153,6 +153,7 @@
                     <input type="hidden" id="valor_19" value="<?php echo $valor_19 ;?>">
                     <input type="hidden" id="valor_20" value="<?php echo $valor_20 ;?>">
                     <input type="hidden" id="saldo_formatado" value="<?php echo $saldo_formatado ;?>">
+                    <input type="hidden" id="valor_sem_formatacao">
 
                     <H3 id="valor"></H3>
                     <span id="alerta"></span>
@@ -253,7 +254,12 @@
                 resultado = (valor_20 * qt_jogos).toFixed(2);
             }
 
-            document.getElementById('valor').textContent = 'R$ '+ resultado.replace('.', ',');
+            document.getElementById('valor_sem_formatacao').value = resultado;
+            //console.log(resultado);
+
+            let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(resultado);
+            document.getElementById('valor').textContent = valor_formatado;
+
         }
 
     </script>
