@@ -21,7 +21,7 @@
 
         // Formata o saldo em moeda
         $saldo_formatado = number_format($saldo, 2, ',', '.');
-        echo $saldo_formatado;
+        //echo $saldo_formatado;
 
         $sql_config_lotofacil = $conn->query("SELECT * FROM config_lotofacil WHERE id = '1'") or die($conn->error);
         $valor = $sql_config_lotofacil->fetch_assoc();
@@ -195,8 +195,10 @@
                     <input readonly id="dezenas" type="text">
                     <div id="contador2"></div>
                     <input id="qt_contador" type="hidden"></input>
+                    <input id="valor_sem_milhar" type="hidden"></input>
                     <h3 id="valor_consulta"></h3>
-                    <button id="gerar_jogo" onclick="gerar_jogo()">Consultar Jogo</button> 
+                    <span id="alerta2"></span>
+                    <button id="consultar_jogo" onclick="consultar_jogo()">Consultar Jogo</button> 
                 </div>
             </div>
             <div id="listaMeusJogos">

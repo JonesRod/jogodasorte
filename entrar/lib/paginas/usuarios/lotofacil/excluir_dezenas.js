@@ -82,8 +82,8 @@ function gerar_jogo() {
     //valor = valor.toFixed(2);
     saldo = saldo.toFixed(2);
 
-    console.log(valor);
-    console.log(saldo);
+    //console.log(valor);
+    //console.log(saldo);
 
     if (!isNaN(valor) && !isNaN(saldo)) {
         if (valor <= saldo) {
@@ -97,7 +97,7 @@ function gerar_jogo() {
             let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(valor);
             //console.log(valor_formatado);
             
-            document.getElementById('alerta').textContent = 'Seu saldo é de R$ ' + saldo_formatado + ' e está abaixo do custo a ser gerado: R$ ' + valor_formatado;
+            document.getElementById('alerta').textContent = 'Seu saldo é de R$ ' + saldo_formatado + ' e está abaixo do custo a ser gerado: R$ ' + valor_formatado + '.';
 
         }
     } else {

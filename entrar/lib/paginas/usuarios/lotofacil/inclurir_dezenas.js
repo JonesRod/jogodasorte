@@ -79,7 +79,12 @@ function calcular_consulta() {
         resultado = (valor_20 * 1).toFixed(2);
     }
 
-    document.getElementById('valor_consulta').textContent = 'R$ '+ resultado.replace('.', ',');
+    document.getElementById('valor_sem_milhar').value = resultado;
+    //console.log(resultado);
+
+    let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(resultado);
+    document.getElementById('valor_consulta').textContent = valor_formatado;
+
 
 }
 document.querySelectorAll('.numeros button').forEach(button => {
@@ -107,4 +112,38 @@ document.querySelectorAll('.numeros button').forEach(button => {
 
 function consultar_jogo() {
     // Coloque aqui a função para gerar o jogo
+}
+
+function consultar_jogo() {
+
+    let valor = document.getElementById('valor_sem_milhar').value;
+    //console.log(valor);
+
+    let saldo = parseFloat(document.getElementById('saldo_formatado').value.replace(',', '.'));
+
+    // Garantir que os valores tenham sempre duas casas decimais
+    //valor = valor.toFixed(2);
+    saldo = saldo.toFixed(2);
+
+    console.log(valor);
+    console.log(saldo);
+
+    if (!isNaN(valor) && !isNaN(saldo)) {
+        if (valor <= saldo) {
+            document.getElementById('alerta2').value = 'Jogo gerado.';
+            // gera jogo
+        } else {
+
+            let saldo_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(saldo);
+            //console.log(saldo_formatado);
+
+            let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(valor);
+            //console.log(valor_formatado);
+            
+            document.getElementById('alerta2').textContent = 'Seu saldo é de R$ ' + saldo_formatado + ' e está abaixo do custo a ser gerado R$ ' + valor_formatado + '.';
+
+        }
+    } else {
+        document.getElementById('alerta2').textContent = 'Valores inválidos';
+    }
 }

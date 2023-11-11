@@ -196,7 +196,44 @@ input:focus {
     /* Estilos quando o botão é clicado */
     box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
 }
+#consultar_jogo{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    /*display: block;*/
+    width: 250px; /* Define a largura dos botões */
+    height: 50px; /* Define a altura dos botões */
+    margin: 5px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: #4CAF50; /* Define a cor de fundo */
+    color: white; /* Define a cor do texto */
+    font-size: 16px; /* Define o tamanho da fonte */
+    border-radius: 5px; /* Adiciona bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra 3D */
+}
+#consultar_jogo:hover{
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: rgba(244, 164, 6, 0.942);
+    /*transform: scale(1.1);*/
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+#consultar_jogo button:hover {
+    background-color: #45a049; /* Altera a cor de fundo ao passar o mouse */
+    cursor: pointer;
+}
 
+#consultar_jogo:focus {
+    outline: none; /* Remove o contorno ao focar no botão */
+}
+#consultar_jogo:active {
+    /* Estilos quando o botão é clicado */
+    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.5);
+}
 .consultar p {
     display: flex;
     align-items: center;
