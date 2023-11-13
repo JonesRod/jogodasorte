@@ -63,20 +63,20 @@ function calcular_consulta() {
 
     var resultado;
 
-    if (qt_dezenas < 15) {
+    /*if (qt_dezenas < 15) {
         resultado = (0 * 1).toFixed(2);
-    } else if (qt_dezenas == 15) {
-        resultado = (valor_15 * 1).toFixed(2);
+    } else */if (qt_dezenas <= 15) {
+        resultado = (valor_15).toFixed(2);
     } else if (qt_dezenas == 16) {
-        resultado = (valor_16 * 1).toFixed(2);
+        resultado = (valor_16).toFixed(2);
     } else if (qt_dezenas == 17) {
-        resultado = (valor_17 * 1).toFixed(2);
+        resultado = (valor_17).toFixed(2);
     } else if (qt_dezenas == 18) {
-        resultado = (valor_18 * 1).toFixed(2);
+        resultado = (valor_18).toFixed(2);
     } else if (qt_dezenas == 19) {
-        resultado = (valor_19 * 1).toFixed(2);
+        resultado = (valor_19).toFixed(2);
     } else if (qt_dezenas == 20) {
-        resultado = (valor_20 * 1).toFixed(2);
+        resultado = (valor_20).toFixed(2);
     }
 
     document.getElementById('valor_sem_milhar').value = resultado;
@@ -84,8 +84,7 @@ function calcular_consulta() {
 
     let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(resultado);
     document.getElementById('valor_consulta').textContent = valor_formatado;
-
-
+    //console.log(valor_formatado);
 }
 document.querySelectorAll('.numeros button').forEach(button => {
     button.addEventListener('click', () => {
@@ -94,9 +93,11 @@ document.querySelectorAll('.numeros button').forEach(button => {
             toggleButton(button);
             let inputDezenas = document.getElementById('dezenas');
             inputDezenas.value = inputDezenas.value.replace(numero, '').replace('--', '-').trim();
+            document.getElementById('alerta2').textContent = '';
             atualizarContador2();
         } else {
             if (document.querySelectorAll('.numeros button.active').length < 20) {
+                document.getElementById('alerta2').textContent = '';
                 toggleButton(button);
                 adicionarDezena(button.textContent);
             }
@@ -111,39 +112,58 @@ document.querySelectorAll('.numeros button').forEach(button => {
 });
 
 function consultar_jogo() {
-    // Coloque aqui a função para gerar o jogo
-}
-
-function consultar_jogo() {
-
     let valor = document.getElementById('valor_sem_milhar').value;
-    //console.log(valor);
-
     let saldo = parseFloat(document.getElementById('saldo_formatado').value.replace(',', '.'));
+    let qt_contador = document.getElementById('qt_contador').value;
 
     // Garantir que os valores tenham sempre duas casas decimais
     //valor = valor.toFixed(2);
     saldo = saldo.toFixed(2);
 
-    console.log(valor);
-    console.log(saldo);
+    //console.log(valor);
+    //console.log(saldo);
 
     if (!isNaN(valor) && !isNaN(saldo)) {
-        if (valor <= saldo) {
-            document.getElementById('alerta2').value = 'Jogo gerado.';
-            // gera jogo
-        } else {
+        if(qt_contador >= 15 && qt_contador <= 20){
+            if (valor <= saldo) {
+                document.getElementById('alerta2').value = 'Jogo gerado.';
+                // gera jogo
 
-            let saldo_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(saldo);
-            //console.log(saldo_formatado);
 
-            let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(valor);
-            //console.log(valor_formatado);
-            
-            document.getElementById('alerta2').textContent = 'Seu saldo é de R$ ' + saldo_formatado + ' e está abaixo do custo a ser gerado R$ ' + valor_formatado + '.';
+                limparSelecaoEBotoes();
 
+            } else {
+
+                let saldo_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(saldo);
+                //console.log(saldo_formatado);
+
+                let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(valor);
+                //console.log(valor_formatado);
+                
+                document.getElementById('alerta2').textContent = 'Seu saldo é de R$ ' + saldo_formatado + ' e está abaixo do custo a ser gerado R$ ' + valor_formatado + '.';
+
+            }            
+        }else{
+            document.getElementById('alerta2').textContent = 'Você precisa selecionar entre 15 e 20 dezenas.';
         }
+
     } else {
         document.getElementById('alerta2').textContent = 'Valores inválidos';
     }
+}
+
+function limparSelecaoEBotoes() {
+    // Desselecione todos os botões (substitua 'btn' pelo seletor real dos seus botões)
+    var botoes = document.querySelectorAll('.numeros button');
+    botoes.forEach(function(botao) {
+        botao.classList.remove('active'); // Remover a classe 'active'
+
+    });
+    config_padrao();
+
+    //console.log('oi');
+    // Limpe o valor do campo (substitua 'campo' pelo seletor real do seu campo)
+    document.getElementById('valor_consulta').value = '';
+    document.getElementById('dezenas').value = '';
+    document.getElementById('alerta2').textContent = '';
 }

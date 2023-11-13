@@ -21,7 +21,7 @@
 
         // Formata o saldo em moeda
         $saldo_formatado = number_format($saldo, 2, ',', '.');
-        //echo $saldo_formatado;
+        echo $saldo_formatado;
 
         $sql_config_lotofacil = $conn->query("SELECT * FROM config_lotofacil WHERE id = '1'") or die($conn->error);
         $valor = $sql_config_lotofacil->fetch_assoc();
@@ -68,18 +68,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="gerar_jogos.css">
-    <script>
-        function config_padrao(){
-
-            // Configura a quantidade de dezenas entre 15 e 20
-            document.getElementById('qt_dezenas').value = '15';
-            document.getElementById('qt_dezenas').setAttribute('min', '15');
-            document.getElementById('qt_dezenas').setAttribute('max', '20');
-            document.getElementById('qt_jogos').value = '1';
-
-            calcular();
-        }
-    </script>
+    <script src="excluir_dezenas.js?v=1.1"></script>
 
     <title>Gerador Lotofácil</title>
 </head>
@@ -152,8 +141,8 @@
                     <input type="hidden" id="valor_18" value="<?php echo $valor_18 ;?>">
                     <input type="hidden" id="valor_19" value="<?php echo $valor_19 ;?>">
                     <input type="hidden" id="valor_20" value="<?php echo $valor_20 ;?>">
-                    <input type="hidden" id="saldo_formatado" value="<?php echo $saldo_formatado ;?>">
-                    <input type="hidden" id="valor_sem_formatacao">
+                    <input type="text" id="saldo_formatado" value="<?php echo $saldo_formatado ;?>">
+                    <input type="text" id="valor_sem_formatacao">
 
                     <H3 id="valor"></H3>
                     <span id="alerta"></span>
@@ -194,7 +183,7 @@
                     </div>
                     <input readonly id="dezenas" type="text">
                     <div id="contador2"></div>
-                    <input id="qt_contador" type="hidden"></input>
+                    <input id="qt_contador" type="text"></input>
                     <input id="valor_sem_milhar" type="hidden"></input>
                     <h3 id="valor_consulta"></h3>
                     <span id="alerta2"></span>
@@ -229,43 +218,8 @@
         
         document.getElementById('qt_dezenas').addEventListener('input', calcular);
         document.getElementById('qt_jogos').addEventListener('input', calcular);
-
-        function calcular() {
-            var qt_dezenas = parseFloat(document.getElementById('qt_dezenas').value);
-            var qt_jogos = parseFloat(document.getElementById('qt_jogos').value);
-            var valor_15 = parseFloat(document.getElementById('valor_15').value.replace(',', '.'));
-            var valor_16 = parseFloat(document.getElementById('valor_16').value.replace(',', '.'));
-            var valor_17 = parseFloat(document.getElementById('valor_17').value.replace(',', '.'));
-            var valor_18 = parseFloat(document.getElementById('valor_18').value.replace(',', '.'));
-            var valor_19 = parseFloat(document.getElementById('valor_19').value.replace(',', '.'));
-            var valor_20 = parseFloat(document.getElementById('valor_20').value.replace(',', '.'));
-
-            var resultado;
-
-            if (qt_dezenas == 15) {
-                resultado = (valor_15 * qt_jogos).toFixed(2);
-            } else if (qt_dezenas == 16) {
-                resultado = (valor_16 * qt_jogos).toFixed(2);
-            } else if (qt_dezenas == 17) {
-                resultado = (valor_17 * qt_jogos).toFixed(2);
-            } else if (qt_dezenas == 18) {
-                resultado = (valor_18 * qt_jogos).toFixed(2);
-            } else if (qt_dezenas == 19) {
-                resultado = (valor_19 * qt_jogos).toFixed(2);
-            } else if (qt_dezenas == 20) {
-                resultado = (valor_20 * qt_jogos).toFixed(2);
-            }
-
-            document.getElementById('valor_sem_formatacao').value = resultado;
-            //console.log(resultado);
-
-            let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(resultado);
-            document.getElementById('valor').textContent = valor_formatado;
-
-        }
-
     </script>
-    <script src="excluir_dezenas.js"></script>
-    <script src="inclurir_dezenas.js"></script>
+    <script src="excluir_dezenas.js?v=1.1"></script>
+    <script src="inclurir_dezenas.js?v=1.2"></script>
 </body>
 </html>
