@@ -146,16 +146,14 @@ function gerar_jogo() {
     }
 }
 
-
-
 function gerarNumerosAleatorios() {
     var qt_dezenas = parseInt(document.getElementById('qt_dezenas').value);
     var qt_jogos = parseInt(document.getElementById('qt_jogos').value);
     var dezenas_excluidas = document.getElementById('dezenas_excluidas').value.split('-').map(Number);
 
-    console.log(qt_dezenas);
-    console.log(qt_jogos);
-    console.log(dezenas_excluidas);
+    //console.log(qt_dezenas);
+    //console.log(qt_jogos);
+    //console.log(dezenas_excluidas);
 
     // Função para gerar números aleatórios sem repetição e dentro do intervalo desejado
     function gerarNumerosUnicos(inicio, fim, quantidade, excluidas) {
@@ -174,9 +172,33 @@ function gerarNumerosAleatorios() {
         var numerosDoJogo = gerarNumerosUnicos(1, 25, qt_dezenas, dezenas_excluidas);
         var resultado = numerosDoJogo.join('-');
         console.log(resultado);
+        chamarFuncaoPHP(resultado);
     }
+
 }
 
+function chamarFuncaoPHP(valor) {
+    // Cria um objeto XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Especifica o método HTTP e a URL do arquivo PHP
+    xhr.open('POST', 'consulta_jogo.php', true);
+
+    // Define a função de callback a ser chamada quando a resposta estiver pronta
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // A resposta do PHP está disponível em xhr.responseText
+            console.log(xhr.responseText);
+            // Aqui você pode manipular a resposta, como atualizar a página ou exibir uma mensagem.
+        }
+    };
+
+    // Configura os cabeçalhos da requisição
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Envie a requisição com os dados
+    xhr.send('valor= ' + encodeURIComponent(valor));
+}
 
 function limparSelecaoEBotoes() {
     // Desselecione todos os botões (substitua 'btn' pelo seletor real dos seus botões)

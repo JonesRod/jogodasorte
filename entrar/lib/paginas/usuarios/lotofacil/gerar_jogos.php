@@ -21,7 +21,7 @@
 
         // Formata o saldo em moeda
         $saldo_formatado = number_format($saldo, 2, ',', '.');
-        echo $saldo_formatado;
+        //echo $saldo_formatado;
 
         $sql_config_lotofacil = $conn->query("SELECT * FROM config_lotofacil WHERE id = '1'") or die($conn->error);
         $valor = $sql_config_lotofacil->fetch_assoc();
@@ -220,6 +220,6 @@
         document.getElementById('qt_jogos').addEventListener('input', calcular);
     </script>
     <script src="excluir_dezenas.js?v=1.1"></script>
-    <script src="inclurir_dezenas.js?v=1.2"></script>
+    <script src="inclurir_dezenas.js?v=1.1"></script>
 </body>
 </html>

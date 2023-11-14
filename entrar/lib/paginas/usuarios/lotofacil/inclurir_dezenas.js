@@ -112,25 +112,27 @@ document.querySelectorAll('.numeros button').forEach(button => {
 });
 
 function consultar_jogo() {
-    let valor = document.getElementById('valor_sem_milhar').value;
-    let saldo = parseFloat(document.getElementById('saldo_formatado').value.replace(',', '.'));
+    let valor_str = document.getElementById('valor_sem_formatacao').value; // "0,10"
+    let saldo_str = document.getElementById('saldo_formatado').value; // "1.000,00" ou "1.000"
     let qt_contador = document.getElementById('qt_contador').value;
+    let numeros_escolhidos = document.getElementById('dezenas').value;
 
-    // Garantir que os valores tenham sempre duas casas decimais
-    //valor = valor.toFixed(2);
-    saldo = saldo.toFixed(2);
+    // Converter para número usando o formato de moeda
+    let valor = parseFloat(valor_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
+    let saldo = parseFloat(saldo_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
 
     //console.log(valor);
     //console.log(saldo);
 
     if (!isNaN(valor) && !isNaN(saldo)) {
-        if(qt_contador >= 15 && qt_contador <= 20){
+        if(qt_contador >= 1 && qt_contador <= 20){
             if (valor <= saldo) {
                 document.getElementById('alerta2').value = 'Jogo gerado.';
                 // gera jogo
 
-
-                limparSelecaoEBotoes();
+                console.log(numeros_escolhidos);
+                chamarFuncaoPHP(numeros_escolhidos);
+                //limparSelecaoEBotoes();
 
             } else {
 
@@ -150,6 +152,29 @@ function consultar_jogo() {
     } else {
         document.getElementById('alerta2').textContent = 'Valores inválidos';
     }
+}
+
+function chamarFuncaoPHP(valor) {
+    // Cria um objeto XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Especifica o método HTTP e a URL do arquivo PHP
+    xhr.open('POST', 'consulta_jogo.php', true);
+
+    // Define a função de callback a ser chamada quando a resposta estiver pronta
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // A resposta do PHP está disponível em xhr.responseText
+            console.log(xhr.responseText);
+            // Aqui você pode manipular a resposta, como atualizar a página ou exibir uma mensagem.
+        }
+    };
+
+    // Configura os cabeçalhos da requisição
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Envie a requisição com os dados
+    xhr.send('valor= ' + encodeURIComponent(valor));
 }
 
 function limparSelecaoEBotoes() {
