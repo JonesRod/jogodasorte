@@ -82,6 +82,7 @@
                     apontando as melheres jogadas ou conforme sua configuraçao para gerar seus jogos.
                 </p>
                 <label id="ultimoconcurso" for="">Ultimo concurso: <?php echo $concurso . " - " . $data_formatada; ?></label><br>
+                <input id="ultimo_concurso" type="hidden" value="<?php echo $concurso; ?>">
                 <h4 id="numeros" for=""><?php echo $numeros ?></h4>
                 <h3>Configure o estilo de seu(s) jogos</h3>
 
@@ -192,7 +193,7 @@
             </div>
             <div id="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>
-                <label for="">Concurso</label><input type="text"><button>Carregar</button>
+                <label for="">Concurso</label><input type="text" id="lista_jogos"><button>Carregar</button>
             </div>
 
         </div>
@@ -220,6 +221,6 @@
         document.getElementById('qt_jogos').addEventListener('input', calcular);
     </script>
     <script src="excluir_dezenas.js?v=1.1"></script>
-    <script src="inclurir_dezenas.js?v=1.1"></script>
+    <script src="inclurir_dezenas.js?v=1.2"></script>
 </body>
 </html>

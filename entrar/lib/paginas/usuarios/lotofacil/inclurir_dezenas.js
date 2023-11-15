@@ -125,13 +125,13 @@ function consultar_jogo() {
     //console.log(saldo);
 
     if (!isNaN(valor) && !isNaN(saldo)) {
-        if(qt_contador >= 1 && qt_contador <= 20){
+        if(qt_contador >= 15 && qt_contador <= 20){
             if (valor <= saldo) {
                 document.getElementById('alerta2').value = 'Jogo gerado.';
                 // gera jogo
 
                 console.log(numeros_escolhidos);
-                chamarFuncaoPHP(numeros_escolhidos);
+                chamarFuncaoPHP();
                 //limparSelecaoEBotoes();
 
             } else {
@@ -154,10 +154,19 @@ function consultar_jogo() {
     }
 }
 
-function chamarFuncaoPHP(valor) {
+function chamarFuncaoPHP() {
+    var concurso_anterior = document.getElementById('ultimo_concurso').value;
+    concurso_anterior = parseFloat(concurso_anterior);
+    var concurso_referente = concurso_anterior + 1;
+    var qt_dez = document.getElementById('qt_contador').value;
+    var saldo_formatado = document.getElementById('saldo_formatado').value;    
+    var valor_jogo = document.getElementById('valor_sem_milhar').value;
+    var referente_jogo = 'lotofacil';
+    var jogos = document.getElementById('dezenas').value;
+
     // Cria um objeto XMLHttpRequest
     var xhr = new XMLHttpRequest();
-
+    var resposta = false;
     // Especifica o método HTTP e a URL do arquivo PHP
     xhr.open('POST', 'consulta_jogo.php', true);
 
@@ -167,15 +176,43 @@ function chamarFuncaoPHP(valor) {
             // A resposta do PHP está disponível em xhr.responseText
             console.log(xhr.responseText);
             // Aqui você pode manipular a resposta, como atualizar a página ou exibir uma mensagem.
+
+            resposta = xhr.responseText;
+            if(resposta === '1'){
+                document.getElementById('alerta2').textContent = 'Esse jogo ja foi consultado e registrado para o concurso ' + concurso_referente + '.';
+            }
+
+            saldo_formatado = saldo_formatado.replace(',', '.'); // Substitui a vírgula por ponto
+            valor_jogo = valor_jogo.replace(',', '.'); // Substitui a vírgula por ponto
+            
+            saldo_formatado = parseFloat(saldo_formatado); // 958.80
+            valor_jogo = parseFloat(valor_jogo); // 0.10
+            
+            var novo_saldo = saldo_formatado - valor_jogo; // novo_saldo = 958.70
+
+            // Agora, atualize o valor na entrada do formulário
+            document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2); // toFixed(2) para exibir duas casas decimais
+            document.getElementById('lista_jogos').value = concurso_referente;
+
         }
     };
 
     // Configura os cabeçalhos da requisição
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
+    // Monta a string de dados a serem enviados
+    var dados = 'saldo_formatado=' + encodeURIComponent(saldo_formatado) +
+                '&concurso_anterior=' + encodeURIComponent(concurso_anterior) +
+                '&concurso_referente=' + encodeURIComponent(concurso_referente) +
+                '&qt_dez=' + encodeURIComponent(qt_dez) +
+                '&valor_jogo=' + encodeURIComponent(valor_jogo) +
+                '&referente_jogo=' + encodeURIComponent(referente_jogo) +
+                '&jogos=' + encodeURIComponent(jogos);
+
     // Envie a requisição com os dados
-    xhr.send('valor= ' + encodeURIComponent(valor));
+    xhr.send(dados);
 }
+
 
 function limparSelecaoEBotoes() {
     // Desselecione todos os botões (substitua 'btn' pelo seletor real dos seus botões)
