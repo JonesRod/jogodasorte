@@ -16,12 +16,13 @@
         $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
         $usuario = $sql_query->fetch_assoc(); 
         $saldo_str = $usuario ["creditos"];
+        echo $saldo_str;
         // Substitui ',' por '.' e converte para float
-        $saldo = (float) str_replace(',', '.', $saldo_str);
+        /*$saldo = (float) str_replace(',', '.', $saldo_str);
 
         // Formata o saldo em moeda
         $saldo_formatado = number_format($saldo, 2, ',', '.');
-        //echo $saldo_formatado;
+        echo $saldo_formatado;*/
 
         $sql_config_lotofacil = $conn->query("SELECT * FROM config_lotofacil WHERE id = '1'") or die($conn->error);
         $valor = $sql_config_lotofacil->fetch_assoc();
@@ -91,35 +92,35 @@
                 <div class="esc_excluir">
                     <h4 for="dez_excluidas">Escolha até 5 dezenas que você gostaria que não saissem no(s) jogo(s) (Opcional)</h4>
                     <div class="excluir">
-                        <button onclick="removerDezena1(1)">1</button>
-                        <button onclick="removerDezena1(2)">2</button>
-                        <button onclick="removerDezena1(3)">3</button>
-                        <button onclick="removerDezena1(4)">4</button>
-                        <button onclick="removerDezena1(5)">5</button>
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>4</button>
+                        <button>5</button>
 
-                        <button onclick="removerDezena1(6)">6</button>
-                        <button onclick="removerDezena1(7)">7</button>
-                        <button onclick="removerDezena1(8)">8</button>
-                        <button onclick="removerDezena1(9)">9</button>
-                        <button onclick="removerDezena1(10)">10</button>
+                        <button>6</button>
+                        <button>7</button>
+                        <button>8</button>
+                        <button>9</button>
+                        <button>10</button>
 
-                        <button onclick="removerDezena1(11)">11</button>
-                        <button onclick="removerDezena1(12)">12</button>
-                        <button onclick="removerDezena1(13)">13</button>
-                        <button onclick="removerDezena1(14)">14</button>
-                        <button onclick="removerDezena1(15)">15</button>
+                        <button>11</button>
+                        <button>12</button>
+                        <button>13</button>
+                        <button>14</button>
+                        <button>15</button>
 
-                        <button onclick="removerDezena1(16)">16</button>
-                        <button onclick="removerDezena1(17)">17</button>
-                        <button onclick="removerDezena1(18)">18</button>
-                        <button onclick="removerDezena1(19)">19</button>
-                        <button onclick="removerDezena1(20)">20</button>
+                        <button>16</button>
+                        <button>17</button>
+                        <button>18</button>
+                        <button>19</button>
+                        <button>20</button>
 
-                        <button onclick="removerDezena1(21)">21</button>
-                        <button onclick="removerDezena1(22)">22</button>
-                        <button onclick="removerDezena1(23)">23</button>
-                        <button onclick="removerDezena1(24)">24</button>
-                        <button onclick="removerDezena1(25)">25</button>
+                        <button>21</button>
+                        <button>22</button>
+                        <button>23</button>
+                        <button>24</button>
+                        <button>25</button>
                     </div>
                     <input readonly id="dezenas_excluidas" type="text">
                     <div id="contador1"></div>
@@ -142,7 +143,7 @@
                     <input type="hidden" id="valor_18" value="<?php echo $valor_18 ;?>">
                     <input type="hidden" id="valor_19" value="<?php echo $valor_19 ;?>">
                     <input type="hidden" id="valor_20" value="<?php echo $valor_20 ;?>">
-                    <input type="text" id="saldo_formatado" value="<?php echo $saldo_formatado ;?>">
+                    <input type="text" id="saldo_formatado" value="<?php echo $saldo_str ;?>">
                     <input type="text" id="valor_sem_formatacao">
 
                     <H3 id="valor"></H3>
@@ -152,35 +153,35 @@
                 <div class="consultar">
                     <h3>Escolha de 15 a 20 dezenas.</h3>
                     <div class="numeros">
-                        <button onclick="removerDezena2(1)">1</button>
-                        <button onclick="removerDezena2(2)">2</button>
-                        <button onclick="removerDezena2(3)">3</button>
-                        <button onclick="removerDezena2(4)">4</button>
-                        <button onclick="removerDezena2(5)">5</button>
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>4</button>
+                        <button>5</button>
 
-                        <button onclick="removerDezena2(6)">6</button>
-                        <button onclick="removerDezena2(7)">7</button>
-                        <button onclick="removerDezena2(8)">8</button>
-                        <button onclick="removerDezena2(9)">9</button>
-                        <button onclick="removerDezena2(10)">10</button>
+                        <button>6</button>
+                        <button>7</button>
+                        <button>8</button>
+                        <button>9</button>
+                        <button>10</button>
 
-                        <button onclick="removerDezena2(11)">11</button>
-                        <button onclick="removerDezena2(12)">12</button>
-                        <button onclick="removerDezena2(13)">13</button>
-                        <button onclick="removerDezena2(14)">14</button>
-                        <button onclick="removerDezena2(15)">15</button>
+                        <button>11</button>
+                        <button>12</button>
+                        <button>13</button>
+                        <button>14</button>
+                        <button>15</button>
 
-                        <button onclick="removerDezena2(16)">16</button>
-                        <button onclick="removerDezena2(17)">17</button>
-                        <button onclick="removerDezena2(18)">18</button>
-                        <button onclick="removerDezena2(19)">19</button>
-                        <button onclick="removerDezena2(20)">20</button>
+                        <button>16</button>
+                        <button>17</button>
+                        <button>18</button>
+                        <button>19</button>
+                        <button>20</button>
 
-                        <button onclick="removerDezena2(21)">21</button>
-                        <button onclick="removerDezena2(22)">22</button>
-                        <button onclick="removerDezena2(23)">23</button>
-                        <button onclick="removerDezena2(24)">24</button>
-                        <button onclick="removerDezena2(25)">25</button>
+                        <button>21</button>
+                        <button>22</button>
+                        <button>23</button>
+                        <button>24</button>
+                        <button>25</button>
                     </div>
                     <input readonly id="dezenas" type="text">
                     <div id="contador2"></div>
@@ -193,9 +194,11 @@
             </div>
             <div id="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>
-                <label for="">Concurso</label><input type="text" id="lista_jogos"><button>Carregar</button>
+                <label for="lista_jogos">Concurso</label>
+                <input type="text" id="lista_jogos">
+                <button onclick="carregarJogos()">Carregar</button>
+                <div id="tabelaJogos"></div>                
             </div>
-
         </div>
         <div class="listaResultados">
             <h3>Lista de resultados do concurso escolhido</h3>
@@ -219,8 +222,11 @@
         
         document.getElementById('qt_dezenas').addEventListener('input', calcular);
         document.getElementById('qt_jogos').addEventListener('input', calcular);
+
     </script>
+
     <script src="excluir_dezenas.js?v=1.1"></script>
-    <script src="inclurir_dezenas.js?v=1.2"></script>
+    <script src="inclurir_dezenas.js?v=1.1"></script>
+    <script src="carregar_jogos.js"></script>
 </body>
 </html>

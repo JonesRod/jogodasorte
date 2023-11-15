@@ -47,29 +47,10 @@ function calcular() {
 
 }
 
-function toggleButton(button) {
+function toggleButton1(button) {
     button.classList.toggle('active');
 }
 
-function removerDezena1(numero) {
-
-    let inputDezenas = document.getElementById('dezenas_excluidas');
-    let valorAtual = inputDezenas.value.trim();
-
-    let dezenas = valorAtual.split('-').filter(Boolean).map(Number);
-    let index = dezenas.indexOf(numero);
-
-    if (index !== -1) {
-        dezenas.splice(index, 1);
-
-        if (dezenas.length > 0) {
-            inputDezenas.value = dezenas.join('-');
-        } else {
-            inputDezenas.value = '';
-        }
-    }
-    atualizarContador1();
-}
 function DezenasExcluidas(numero) {
     let inputDezenas = document.getElementById('dezenas_excluidas');
     let valorAtual = inputDezenas.value.trim();
@@ -84,13 +65,25 @@ function DezenasExcluidas(numero) {
             inputDezenas.value = dezenas.join('-');
         }
     }
+
+    // Remover o primeiro traço, se existir no início
+    if (inputDezenas.value.startsWith('-')) {
+        inputDezenas.value = inputDezenas.value.substring(1);
+    }
+
+    // Remover o último traço, se existir no final
+    if (inputDezenas.value.endsWith('-')) {
+        inputDezenas.value = inputDezenas.value.slice(0, -1);
+    }
+
     atualizarContador1();
 }
 
 function atualizarContador1() {
-
     let inputDezenas = document.getElementById('dezenas_excluidas');
-    let contador = inputDezenas.value.split('-').filter(Boolean).length;
+    let valorAtual = inputDezenas.value.trim();
+
+    let contador = valorAtual.split('-').filter(Boolean).length;
 
     document.getElementById('contador1').textContent = contador + ' dezenas marcadas';
 }
@@ -99,25 +92,19 @@ document.querySelectorAll('.excluir button').forEach(button => {
     button.addEventListener('click', () => {
         let numero = button.textContent;
         if (button.classList.contains('active')) {
-            toggleButton(button);
+            toggleButton1(button);
             let inputDezenas = document.getElementById('dezenas_excluidas');
             inputDezenas.value = inputDezenas.value.replace(numero, '').replace('--', '-').trim();
-            atualizarContador1();
+            DezenasExcluidas(''); // Adicione esta linha para chamar DezenasExcluidas com uma string vazia
         } else {
             if (document.querySelectorAll('.excluir button.active').length < 5) {
-                toggleButton(button);
+                toggleButton1(button);
                 DezenasExcluidas(button.textContent);
             }
         }
     });
-
-    button.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        let numero = button.textContent;
-        removerDezena1(numero);
-    });
-    
 });
+
 
 function gerar_jogo() {
     let valor_str = document.getElementById('valor_sem_formatacao').value; // "0,10"
