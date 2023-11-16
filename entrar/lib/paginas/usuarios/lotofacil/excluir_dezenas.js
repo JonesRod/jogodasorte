@@ -129,10 +129,6 @@ function gerarNumerosAleatorios() {
     var qt_jogos = parseInt(document.getElementById('qt_jogos').value);
     var dezenas_excluidas = document.getElementById('dezenas_excluidas').value.split('-').map(Number);
 
-    //console.log(qt_dezenas);
-    //console.log(qt_jogos);
-    //console.log(dezenas_excluidas);
-
     // Função para gerar números aleatórios sem repetição e dentro do intervalo desejado
     function gerarNumerosUnicos(inicio, fim, quantidade, excluidas) {
         var numeros = [];
@@ -145,37 +141,88 @@ function gerarNumerosAleatorios() {
         return numeros.sort((a, b) => a - b);
     }
 
-    // Gera a quantidade de jogos desejada
-    for (var j = 0; j < qt_jogos; j++) {
+    for (var j = 0; j < qt_jogos;) {
         var numerosDoJogo = gerarNumerosUnicos(1, 25, qt_dezenas, dezenas_excluidas);
         var resultado = numerosDoJogo.join('-');
         console.log(resultado);
-        chamarFuncaoPHP(resultado);
-    }
 
+        // Chama a função PHP e aguarda a resposta
+        var resposta = chamar_FuncaoPHP(resultado);
+
+        if (resposta !== '1') {
+            // Se a resposta não for 1, incrementa o contador de jogos
+            j++;
+        }
+    }
 }
 
-function chamarFuncaoPHP(valor) {
+function chamar_FuncaoPHP(numeros) {
+    var concurso_anterior = document.getElementById('ultimo_concurso').value;
+    concurso_anterior = parseFloat(concurso_anterior);
+    var concurso_referente = concurso_anterior + 1;
+    var qt_dez = document.getElementById('qt_dezenas').value;
+    var qt_jogos = document.getElementById('qt_jogos').value;
+    var saldo_formatado = document.getElementById('saldo_formatado').value;    
+    var valor_jogo = document.getElementById('valor_sem_formatacao').value;
+    var referente_jogo = 'lotofacil';
+    var jogos = numeros;
+
+    var valor_cada = valor_jogo / qt_jogos;
+    console.log(valor_cada);
     // Cria um objeto XMLHttpRequest
     var xhr = new XMLHttpRequest();
-
+    var resposta = false;
     // Especifica o método HTTP e a URL do arquivo PHP
-    xhr.open('POST', 'consulta_jogo.php', true);
+    xhr.open('POST', 'consulta_jogo1.php', true);
 
     // Define a função de callback a ser chamada quando a resposta estiver pronta
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
+        if (xhr.readyState === 4 && xhr.status === 200) {  
+
             // A resposta do PHP está disponível em xhr.responseText
             console.log(xhr.responseText);
             // Aqui você pode manipular a resposta, como atualizar a página ou exibir uma mensagem.
+
+            resposta = xhr.responseText;
+
+            if(resposta === '1'){
+
+            
+            }else{
+                saldo_formatado = parseFloat(saldo_formatado); // Exemplo: 1000.00
+                valor_cada = parseFloat(valor_cada); // Exemplo: 0.10                
+                
+                //console.log("Saldo Formatado:", saldo_formatado);
+                //console.log("Valor do Jogo:", valor_jogo);
+                
+                var novo_saldo = saldo_formatado - valor_cada;
+                console.log("Novo Saldo:", novo_saldo);
+                
+                document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
+                document.getElementById('lista_jogos').value = concurso_referente;
+                document.getElementById('alerta').textContent = 'Jogo gerado com sucesso.';
+                               
+                // Simular um clique no botão
+                carregarJogos();
+            }
+
         }
     };
 
     // Configura os cabeçalhos da requisição
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
+    // Monta a string de dados a serem enviados
+    var dados = 'saldo_formatado=' + encodeURIComponent(saldo_formatado) +
+                '&concurso_anterior=' + encodeURIComponent(concurso_anterior) +
+                '&concurso_referente=' + encodeURIComponent(concurso_referente) +
+                '&qt_dez=' + encodeURIComponent(qt_dez) +
+                '&valor_jogo=' + encodeURIComponent(valor_cada) +
+                '&referente_jogo=' + encodeURIComponent(referente_jogo) +
+                '&jogos=' + encodeURIComponent(jogos);
+
     // Envie a requisição com os dados
-    xhr.send('valor= ' + encodeURIComponent(valor));
+    xhr.send(dados);
 }
 
 function limparSelecaoEBotoes() {

@@ -153,7 +153,7 @@ function chamarFuncaoPHP() {
     var xhr = new XMLHttpRequest();
     var resposta = false;
     // Especifica o método HTTP e a URL do arquivo PHP
-    xhr.open('POST', 'consulta_jogo.php', true);
+    xhr.open('POST', 'consulta_jogo2.php', true);
 
     // Define a função de callback a ser chamada quando a resposta estiver pronta
     xhr.onreadystatechange = function () {

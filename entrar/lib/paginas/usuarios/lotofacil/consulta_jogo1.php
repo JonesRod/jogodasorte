@@ -118,28 +118,24 @@
 
                     if($deu_certo){
 
-                        // Remova os pontos e substitua vírgulas por pontos para garantir que o formato seja interpretado corretamente
-                        //$saldo_formatado = str_replace(".", "", $saldo_formatado);
-                        //$saldo_formatado = str_replace(",", ".", $saldo_formatado);
-                        
-                        //$valor_jogo = str_replace(".", "", $valor_jogo);
-                        //$valor_jogo = str_replace(",", ".", $valor_jogo);
-
-                        $numero1 = floatval($saldo_formatado);
-                        $numero2 = floatval($valor_jogo);
-                        
+                        $numero1 = $saldo_formatado;
+                        $numero2 = $valor_jogo;
+                        //echo $numero1;
+                        //echo $numero2;                        
                         $creditos_restante = $numero1 - $numero2;
-                        
+
+                        //echo $creditos_restante;
+
                         // Formate o resultado de volta para a exibição
                         //$creditos_restante_formatado = number_format($creditos_restante, 2, ".");
-
+                        //echo $creditos_restante_formatado;
                         $sql_creditos = "INSERT INTO controle_creditos(data, id_usuario, credito_atual, menos_creditos, referente_jogo, qt_dez, creditos_restante) 
                         VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$qt_dez', '$creditos_restante')";
                         $conn->query($sql_creditos) or die($conn->error);
 
                         $sql_usuario = "UPDATE usuarios
                         SET 
-                        creditos = '$creditos_restante_formatado'
+                        creditos = '$creditos_restante'
                         WHERE id = '$id'";
 
                         $conn->query($sql_usuario) or die($conn->error);

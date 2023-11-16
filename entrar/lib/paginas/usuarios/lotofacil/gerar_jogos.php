@@ -202,7 +202,10 @@
         </div>
         <div class="listaResultados">
             <h3>Lista de resultados do concurso escolhido</h3>
-            <label for="">Concurso</label><input type="number"><button>Carregar</button>
+            <label for="">Concurso</label>
+            <input type="text" id="lista_resultados">
+            <button onclick="carregarResultados()">Carregar</button>
+            <div id="tabelaResultados"></div>       
         </div>
     </div>
     <script>
@@ -228,5 +231,6 @@
     <script src="excluir_dezenas.js?v=1.1"></script>
     <script src="inclurir_dezenas.js?v=1.2"></script>
     <script src="carregar_jogos.js"></script>
+    <script src="carregar_resultados.js"></script>
 </body>
 </html>
