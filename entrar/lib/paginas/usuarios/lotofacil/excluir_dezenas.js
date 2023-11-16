@@ -11,12 +11,12 @@ function config_padrao(){
 function calcular() {
     var qt_dezenas = parseFloat(document.getElementById('qt_dezenas').value);
     var qt_jogos = parseFloat(document.getElementById('qt_jogos').value);
-    var valor_15 = parseFloat(document.getElementById('valor_15').value.replace(',', '.'));
-    var valor_16 = parseFloat(document.getElementById('valor_16').value.replace(',', '.'));
-    var valor_17 = parseFloat(document.getElementById('valor_17').value.replace(',', '.'));
-    var valor_18 = parseFloat(document.getElementById('valor_18').value.replace(',', '.'));
-    var valor_19 = parseFloat(document.getElementById('valor_19').value.replace(',', '.'));
-    var valor_20 = parseFloat(document.getElementById('valor_20').value.replace(',', '.'));
+    var valor_15 = parseFloat(document.getElementById('valor_15').value);
+    var valor_16 = parseFloat(document.getElementById('valor_16').value);
+    var valor_17 = parseFloat(document.getElementById('valor_17').value);
+    var valor_18 = parseFloat(document.getElementById('valor_18').value);
+    var valor_19 = parseFloat(document.getElementById('valor_19').value);
+    var valor_20 = parseFloat(document.getElementById('valor_20').value);
 
     var resultado;
 
@@ -35,19 +35,19 @@ function calcular() {
     }
 
     // Formatando o valor sem o símbolo de moeda
-    let valor_sem_formatado = resultado.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    //let valor_sem_formatado = resultado.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     
     // Substituindo o ponto pela vírgula
-    valor_sem_formatado = valor_sem_formatado.replace('.', ',');
+    let valor_sem_formatado = resultado;
     
-    document.getElementById('valor_sem_formatacao').value = valor_sem_formatado;
+    document.getElementById('valor_sem_formatacao').value = resultado;
     
     let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(resultado);
     document.getElementById('valor').textContent = valor_formatado;
 
 }
 
-function toggleButton1(button) {
+/*function toggleButton1(button) {
     button.classList.toggle('active');
 }
 
@@ -202,4 +202,4 @@ function limparSelecaoEBotoes() {
     document.getElementById('valor').value = '';
     document.getElementById('dezenas_excluidas').value = '';
     document.getElementById('alerta').textContent = '';
-}
+}*/

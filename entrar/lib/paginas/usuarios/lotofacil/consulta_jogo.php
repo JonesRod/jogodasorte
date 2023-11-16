@@ -30,7 +30,7 @@
         $numeros = array_map('intval', $numeros);
 
         // Consulta SQL para obter os números já registrados nos jogos
-        $sql_jogos = "SELECT concurso_referente, referente_jogo, jogos FROM jogos";
+        $sql_jogos = "SELECT concurso_referente, referente_jogo, jogos FROM jogos WHERE id_usuario = $id ";
         $result_jogos = $conn->query($sql_jogos);
 
         // Arrays para armazenar a contagem de números repetidos com diferentes quantidades de dezenas
@@ -46,6 +46,7 @@
             if ($result_jogos->num_rows > 0) {
                 // Extrai os números dos jogos registrados
                 while ($row = $result_jogos->fetch_assoc()) { 
+                    $id_usuario = $row['jogos'];
                     $numeros_jogos = explode('-', $row['jogos']);
                     $numeros_jogos = array_map('intval', $numeros_jogos);
 
@@ -58,20 +59,20 @@
                     $quantidade_repetidos = count($numeros_repetidos);
 
                     $qt_dez = intval($qt_dez);
-
-                    //echo $quantidade_repetidos;
+                    $id = intval($id);
+                    $id_usuario = intval($id_usuario);
 
                     // Atualiza o array de contagem de acordo com a quantidade de repetições
                     if ($quantidade_repetidos >= 15 && $qt_dez <= 17 && $referente_jogo_bd === $referente_jogo) {
                         echo '1';
                         exit;
-                    }else if ($quantidade_repetidos >= 16 && $qt_dez <= 18 && $referente_jogo_bd === $referente_jogo) {
+                    }else if($quantidade_repetidos >= 16 && $qt_dez <= 18 && $referente_jogo_bd === $referente_jogo) {
                         echo '1';
                         exit;
-                    }else if ($quantidade_repetidos >= 17 && $qt_dez <= 19 && $referente_jogo_bd === $referente_jogo) {
+                    }else if($quantidade_repetidos >= 17 && $qt_dez <= 19 && $referente_jogo_bd === $referente_jogo) {
                         echo '1';
                         exit;
-                    }else if ($quantidade_repetidos >= 18 && $qt_dez <= 20 && $referente_jogo_bd === $referente_jogo) {
+                    }else if($quantidade_repetidos >= 18 && $qt_dez <= 20 && $referente_jogo_bd === $referente_jogo) {
                         echo '1';
                         exit;
                     }
@@ -118,8 +119,8 @@
                     if($deu_certo){
 
                         // Remova os pontos e substitua vírgulas por pontos para garantir que o formato seja interpretado corretamente
-                        $saldo_formatado = str_replace(".", "", $saldo_formatado);
-                        $saldo_formatado = str_replace(",", ".", $saldo_formatado);
+                        //$saldo_formatado = str_replace(".", "", $saldo_formatado);
+                        //$saldo_formatado = str_replace(",", ".", $saldo_formatado);
                         
                         //$valor_jogo = str_replace(".", "", $valor_jogo);
                         //$valor_jogo = str_replace(",", ".", $valor_jogo);
@@ -130,7 +131,7 @@
                         $creditos_restante = $numero1 - $numero2;
                         
                         // Formate o resultado de volta para a exibição
-                        $creditos_restante_formatado = number_format($creditos_restante, 2, ",", ".");
+                        //$creditos_restante_formatado = number_format($creditos_restante, 2, ".");
 
                         $sql_creditos = "INSERT INTO controle_creditos(data, id_usuario, credito_atual, menos_creditos, referente_jogo, qt_dez, creditos_restante) 
                         VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$qt_dez', '$creditos_restante')";
@@ -194,8 +195,8 @@
 
                         if($deu_certo){
                             // Remova os pontos e substitua vírgulas por pontos para garantir que o formato seja interpretado corretamente
-                            $saldo_formatado = str_replace(".", "", $saldo_formatado);
-                            $saldo_formatado = str_replace(",", ".", $saldo_formatado);
+                            //$saldo_formatado = str_replace(".", "", $saldo_formatado);
+                            //$saldo_formatado = str_replace(",", ".", $saldo_formatado);
                             
                             //$valor_jogo = str_replace(".", "", $valor_jogo);
                             //$valor_jogo = str_replace(",", ".", $valor_jogo);
@@ -206,7 +207,7 @@
                             $creditos_restante = $numero1 - $numero2;
                             
                             // Formate o resultado de volta para a exibição
-                            $creditos_restante_formatado = number_format($creditos_restante, 2, ",", ".");
+                            $creditos_restante_formatado = number_format($creditos_restante, 2, ".");
 
                             $sql_creditos = "INSERT INTO controle_creditos(data, id_usuario, credito_atual, menos_creditos, referente_jogo, qt_dez, creditos_restante) 
                             VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$qt_dez', '$creditos_restante')";
