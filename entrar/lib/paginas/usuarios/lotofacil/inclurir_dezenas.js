@@ -99,14 +99,14 @@ function calcular_consulta() {
 }
 
 function consultar_jogo() {
-    let valor_str = document.getElementById('valor_sem_formatacao').value; // "0,10"
-    let saldo_str = document.getElementById('saldo_formatado').value; // "1.000,00" ou "1.000"
+    let valor = document.getElementById('valor_sem_formatacao').value; // "0,10"
+    let saldo = document.getElementById('saldo_formatado').value; // "1.000,00" ou "1.000"
     let qt_contador = document.getElementById('qt_contador').value;
     let numeros_escolhidos = document.getElementById('dezenas').value;
 
     // Converter para número usando o formato de moeda
-    let valor = parseFloat(valor_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
-    let saldo = parseFloat(saldo_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
+    //let valor = parseFloat(valor_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
+    //let saldo = parseFloat(saldo_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
 
     //console.log(valor);
     //console.log(saldo);
@@ -128,7 +128,7 @@ function consultar_jogo() {
                 let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(valor);
                 //console.log(valor_formatado);
                 
-                document.getElementById('alerta2').textContent = 'Seu saldo é de R$ ' + saldo_formatado + ' e está abaixo do custo a ser gerado R$ ' + valor_formatado + '.';
+                document.getElementById('alerta2').textContent = 'Seu saldo é de ' + saldo_formatado + ' e está abaixo do custo a ser gerado ' + valor_formatado + '.';
             }            
         }else{
             document.getElementById('alerta2').textContent = 'Você precisa selecionar entre 15 e 20 dezenas.';

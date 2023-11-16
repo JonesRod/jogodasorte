@@ -24,13 +24,36 @@
         $qt_concurso_salva = $conn->escape_string($_POST['qt_concurso_salva']);
 
         $valor_numerico_15 = preg_replace('/[^0-9,.]/', '', $valor_15);
+        $valor_numerico_15 = str_replace('.', '', $valor_numerico_15);
+        $valor_numerico_15 = str_replace(',', '.', $valor_numerico_15);
+        
         $valor_numerico_16 = preg_replace('/[^0-9,.]/', '', $valor_16);
+        $valor_numerico_16 = str_replace('.', '', $valor_numerico_16);
+        $valor_numerico_16 = str_replace(',', '.', $valor_numerico_16);
+        
         $valor_numerico_17 = preg_replace('/[^0-9,.]/', '', $valor_17);
+        $valor_numerico_17 = str_replace('.', '', $valor_numerico_17);
+        $valor_numerico_17 = str_replace(',', '.', $valor_numerico_17);
+        
         $valor_numerico_18 = preg_replace('/[^0-9,.]/', '', $valor_18);
+        $valor_numerico_18 = str_replace('.', '', $valor_numerico_18);
+        $valor_numerico_18 = str_replace(',', '.', $valor_numerico_18);
+        
         $valor_numerico_19 = preg_replace('/[^0-9,.]/', '', $valor_19);
+        $valor_numerico_19 = str_replace('.', '', $valor_numerico_19);
+        $valor_numerico_19 = str_replace(',', '.', $valor_numerico_19);
+        
         $valor_numerico_20 = preg_replace('/[^0-9,.]/', '', $valor_20);
+        $valor_numerico_20 = str_replace('.', '', $valor_numerico_20);
+        $valor_numerico_20 = str_replace(',', '.', $valor_numerico_20);
+        
         $valor_numerico_qt_concurso_confere = preg_replace('/[^0-9,.]/', '', $qt_concurso_confere);
+        $valor_numerico_qt_concurso_confere = str_replace('.', '', $valor_numerico_qt_concurso_confere);
+        $valor_numerico_qt_concurso_confere = str_replace(',', '.', $valor_numerico_qt_concurso_confere);
+        
         $valor_numerico_qt_concurso_salva = preg_replace('/[^0-9,.]/', '', $qt_concurso_salva);
+        $valor_numerico_qt_concurso_salva = str_replace('.', '', $valor_numerico_qt_concurso_salva);
+        $valor_numerico_qt_concurso_salva = str_replace(',', '.', $valor_numerico_qt_concurso_salva);        
 
         $sql = $conn->query("SELECT * FROM config_lotofacil WHERE id = '$id'");
         $result = $sql->fetch_assoc();

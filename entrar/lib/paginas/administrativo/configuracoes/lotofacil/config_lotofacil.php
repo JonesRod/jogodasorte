@@ -19,12 +19,12 @@
         $quantidade = $dados->num_rows;
 
         if($quantidade > 0){
-            $valor_15 = $registro['valor_15'];
-            $valor_16 = $registro['valor_16'];
-            $valor_17 = $registro['valor_17'];
-            $valor_18 = $registro['valor_18'];
-            $valor_19 = $registro['valor_19'];
-            $valor_20 = $registro['valor_20'];
+            $valor_15 = number_format($registro['valor_15'], 2, ',', '.'); // Format to 2 decimal places, using ',' as the decimal separator and '.' as the thousands separator
+            $valor_16 = number_format($registro['valor_16'], 2, ',', '.');
+            $valor_17 = number_format($registro['valor_17'], 2, ',', '.');
+            $valor_18 = number_format($registro['valor_18'], 2, ',', '.');
+            $valor_19 = number_format($registro['valor_19'], 2, ',', '.');
+            $valor_20 = number_format($registro['valor_20'], 2, ',', '.');
             $qt_concurso_confere = $registro['qt_concurso_confere'];
             $qt_concurso_salva = $registro['qt_concurso_salva'];
         }else{
@@ -52,7 +52,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script src="config_moeda.js?v=1.1"></script> 
     <!--<link rel="stylesheet" href="config_lotofacil.css">-->
     <style>
         body {
@@ -96,7 +96,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
-            text-align: left;
+            text-align: right;
             display: flex;
             margin-left: 15px;
         }
@@ -130,6 +130,7 @@ button:hover {
     transform: translateY(-3px);
 }
     </style>
+
     <title>Configuração</title>
 </head>
 <body>
@@ -139,39 +140,46 @@ button:hover {
 
             <input type="hidden" name="id_usuario" id="" value="<?php echo $usuario['id']; ?>">
 
+            <button type="button" onclick="calcularValores()">Calculo padrão</button>
+
             <p class="moeda">
-                <label for="valor_15">Valor de cada jogo gerado com 15 dezenas: </label>
+                <label for="valor_15">Valor de cada jogo gerado com 15 dezenas: R$</label>
                 <input required id="valor_15" name="valor_15" type="text" value="<?php echo $valor_15; ?>"
-                oninput="calcularValores()">
+                oninput="formatarCampoMoeda(this)">
             </p>
             <p class="moeda">
-                <label for="valor_16">Valor de cada jogo gerado com 16 dezenas(16): </label>
-                <input required id="valor_16"  name="valor_16" type="text" value="<?php echo $valor_16; ?>">
+                <label for="valor_16">Valor de cada jogo gerado com 16 dezenas(16): R$</label>
+                <input required id="valor_16"  name="valor_16" type="text" value="<?php echo $valor_16; ?>" 
+                oninput="formatarCampoMoeda(this)">
             </p>
             <p class="moeda">
-                <label for="valor_17">Valor de cada jogo gerado com 17 dezenas(136): </label>
-                <input required id="valor_17" name="valor_17" type="text" value="<?php echo $valor_17; ?>">
+                <label for="valor_17">Valor de cada jogo gerado com 17 dezenas(136): R$</label>
+                <input required id="valor_17" name="valor_17" type="text" value="<?php echo $valor_17; ?>"
+                oninput="formatarCampoMoeda(this)">
             </p>
             <p class="moeda">
-                <label for="valor_18">Valor de cada jogo gerado com 18 dezenas(816): </label>
-                <input required id="valor_18" name="valor_18" type="text" value="<?php echo $valor_18; ?>">
+                <label for="valor_18">Valor de cada jogo gerado com 18 dezenas(816): R$</label>
+                <input required id="valor_18" name="valor_18" type="text" value="<?php echo $valor_18; ?>"
+                oninput="formatarCampoMoeda(this)">
             </p>
             <p class="moeda">
-                <label for="valor_19">Valor de cada jogo gerado com 19 dezenas(3.876): </label>
-                <input required id="valor_19" name="valor_19" type="text" value="<?php echo $valor_19; ?>">
+                <label for="valor_19">Valor de cada jogo gerado com 19 dezenas(3.876): R$</label>
+                <input required id="valor_19" name="valor_19" type="text" value="<?php echo $valor_19; ?>"
+                oninput="formatarCampoMoeda(this)">
             </p>
             <p class="moeda">
-                <label for="valor_20">Valor de cada jogo gerado com 20 dezenas(15.504): </label>
-                <input required id="valor_20" name="valor_20" type="text" value="<?php echo $valor_20; ?>">
+                <label for="valor_20">Valor de cada jogo gerado com 20 dezenas(15.504): R$</label>
+                <input required id="valor_20" name="valor_20" type="text" value="<?php echo $valor_20; ?>"
+                oninput="formatarCampoMoeda(this)">
             </p>
             <p>
                 <label for="qt_concurso_confere">Quantidade máxima de concursos que o usuario poderá conferir com os mesmos jogos: </label>
-                <input required value="<?php echo $qt_concurso_confere; ?>"
+                <input id="qt_concurso_confere" required value="<?php echo $qt_concurso_confere; ?>"
                 name="qt_concurso_confere" type="number">
             </p>
             <p>
                 <label for="qt_concurso_salva">Quantidade máxima de ultimos concursos jogados que seram salvos: </label>
-                <input required value="<?php echo $qt_concurso_salva; ?>"
+                <input id="qt_concurso_salva" required value="<?php echo $qt_concurso_salva; ?>"
                 name="qt_concurso_salva" type="number">
             </p>
             <p>
@@ -183,6 +191,6 @@ button:hover {
             </p>   
         </form>
     </div>
-    <script src="config_moeda.js"></script> 
+    <script src="config_moeda.js?v=1.1"></script> 
 </body>
 </html>

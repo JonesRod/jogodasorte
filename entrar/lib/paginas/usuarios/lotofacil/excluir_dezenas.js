@@ -11,12 +11,13 @@ function config_padrao(){
 function calcular() {
     var qt_dezenas = parseFloat(document.getElementById('qt_dezenas').value);
     var qt_jogos = parseFloat(document.getElementById('qt_jogos').value);
-    var valor_15 = parseFloat(document.getElementById('valor_15').value);
-    var valor_16 = parseFloat(document.getElementById('valor_16').value);
-    var valor_17 = parseFloat(document.getElementById('valor_17').value);
-    var valor_18 = parseFloat(document.getElementById('valor_18').value);
-    var valor_19 = parseFloat(document.getElementById('valor_19').value);
-    var valor_20 = parseFloat(document.getElementById('valor_20').value);
+
+    var valor_15 = parseFloat(document.getElementById('valor_15').value.replace(',', '.'));
+    var valor_16 = parseFloat(document.getElementById('valor_16').value.replace(',', '.'));
+    var valor_17 = parseFloat(document.getElementById('valor_17').value.replace(',', '.'));
+    var valor_18 = parseFloat(document.getElementById('valor_18').value.replace(',', '.'));
+    var valor_19 = parseFloat(document.getElementById('valor_19').value.replace(',', '.'));
+    var valor_20 = parseFloat(document.getElementById('valor_20').value.replace(',', '.'));
 
     var resultado;
 
@@ -34,12 +35,6 @@ function calcular() {
         resultado = (valor_20 * qt_jogos).toFixed(2);
     }
 
-    // Formatando o valor sem o símbolo de moeda
-    //let valor_sem_formatado = resultado.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    
-    // Substituindo o ponto pela vírgula
-    let valor_sem_formatado = resultado;
-    
     document.getElementById('valor_sem_formatacao').value = resultado;
     
     let valor_formatado = new Intl.NumberFormat('pt-BR', { style:'currency', currency: 'BRL'}).format(resultado);
@@ -47,7 +42,7 @@ function calcular() {
 
 }
 
-/*function toggleButton1(button) {
+function toggleButton1(button) {
     button.classList.toggle('active');
 }
 
@@ -107,12 +102,8 @@ document.querySelectorAll('.excluir button').forEach(button => {
 
 
 function gerar_jogo() {
-    let valor_str = document.getElementById('valor_sem_formatacao').value; // "0,10"
-    let saldo_str = document.getElementById('saldo_formatado').value; // "1.000,00" ou "1.000"
-
-    // Converter para número usando o formato de moeda
-    let valor = parseFloat(valor_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
-    let saldo = parseFloat(saldo_str.replace('R$ ', '').replace('.', '').replace(',', '.'));
+    let valor = document.getElementById('valor_sem_formatacao').value; // "0.10"
+    let saldo = document.getElementById('saldo_formatado').value; // "1000.00"
 
     //console.log(valor); // Saída: 0.1
     //console.log(saldo); // Saída: 1000
@@ -202,4 +193,4 @@ function limparSelecaoEBotoes() {
     document.getElementById('valor').value = '';
     document.getElementById('dezenas_excluidas').value = '';
     document.getElementById('alerta').textContent = '';
-}*/
+}
