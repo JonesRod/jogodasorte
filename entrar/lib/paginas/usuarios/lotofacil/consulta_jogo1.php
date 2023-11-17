@@ -129,8 +129,8 @@
                         // Formate o resultado de volta para a exibição
                         //$creditos_restante_formatado = number_format($creditos_restante, 2, ".");
                         //echo $creditos_restante_formatado;
-                        $sql_creditos = "INSERT INTO controle_creditos(data, id_usuario, credito_atual, menos_creditos, referente_jogo, qt_dez, creditos_restante) 
-                        VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$qt_dez', '$creditos_restante')";
+                        $sql_creditos = "INSERT INTO controle_creditos(data, id_usuario, credito_atual, menos_creditos, referente_jogo, concurso_referente, qt_dez, creditos_restante) 
+                        VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$concurso_referente', '$qt_dez', '$creditos_restante')";
                         $conn->query($sql_creditos) or die($conn->error);
 
                         $sql_usuario = "UPDATE usuarios

@@ -102,13 +102,16 @@ document.querySelectorAll('.excluir button').forEach(button => {
 
 
 function gerar_jogo() {
-    let valor = document.getElementById('valor_sem_formatacao').value; // "0.10"
-    let saldo = document.getElementById('saldo_formatado').value; // "1000.00"
+    let valor = document.getElementById('valor_sem_formatacao').value.trim(); // "7752.00"
+    let saldo = document.getElementById('saldo_formatado').value.trim(); // "10000.00"
 
-    //console.log(valor); // Saída: 0.1
-    //console.log(saldo); // Saída: 1000
+    valor = parseFloat(valor);
+    saldo = parseFloat(saldo);
 
     if (!isNaN(valor) && !isNaN(saldo)) {
+        console.log(valor);
+        console.log(saldo);
+
         if (valor <= saldo) {
             document.getElementById('alerta').textContent = 'Jogo gerado.';
             // Chama a função para gerar os números aleatórios
@@ -123,6 +126,7 @@ function gerar_jogo() {
         document.getElementById('alerta').textContent = 'Valores inválidos';
     }
 }
+
 
 function gerarNumerosAleatorios() {
     var qt_dezenas = parseInt(document.getElementById('qt_dezenas').value);
@@ -168,6 +172,7 @@ function chamar_FuncaoPHP(numeros) {
     var jogos = numeros;
 
     var valor_cada = valor_jogo / qt_jogos;
+
     console.log(valor_cada);
     // Cria um objeto XMLHttpRequest
     var xhr = new XMLHttpRequest();
@@ -186,18 +191,16 @@ function chamar_FuncaoPHP(numeros) {
             resposta = xhr.responseText;
 
             if(resposta === '1'){
-
             
             }else{
                 saldo_formatado = parseFloat(saldo_formatado); // Exemplo: 1000.00
                 valor_cada = parseFloat(valor_cada); // Exemplo: 0.10                
-                
-                //console.log("Saldo Formatado:", saldo_formatado);
-                //console.log("Valor do Jogo:", valor_jogo);
-                
+            
                 var novo_saldo = saldo_formatado - valor_cada;
-                console.log("Novo Saldo:", novo_saldo);
-                
+
+                //console.log("Saldo Formatado:", saldo_formatado);
+                //console.log("Valor do Jogo:", valor_jogo);  
+
                 document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
                 document.getElementById('lista_jogos').value = concurso_referente;
                 document.getElementById('alerta').textContent = 'Jogo gerado com sucesso.';
@@ -208,6 +211,16 @@ function chamar_FuncaoPHP(numeros) {
 
         }
     };
+
+    saldo_formatado = parseFloat(saldo_formatado); // Exemplo: 1000.00
+    valor_cada = parseFloat(valor_cada); // Exemplo: 0.10                
+
+    var novo_saldo = saldo_formatado - valor_cada;
+
+    console.log("Saldo Formatado:", saldo_formatado);
+    console.log("Valor do Jogo:", valor_jogo);  
+
+    document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
 
     // Configura os cabeçalhos da requisição
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

@@ -69,7 +69,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="gerar_jogos.css">
-    <script src="excluir_dezenas.js?v=1.1"></script>
+    <script src="excluir_dezenas.js?v=1.2"></script>
 
     <title>Gerador Lotofácil</title>
 </head>
@@ -205,7 +205,8 @@
             <label for="">Concurso</label>
             <input type="text" id="lista_resultados">
             <button onclick="carregarResultados()">Carregar</button>
-            <div id="tabelaResultados"></div>       
+            <div id="tabelaResultados"></div>  
+            <button onclick="compartilharDados()">Compartilhar</button>     
         </div>
     </div>
     <script>
@@ -226,10 +227,25 @@
         document.getElementById('qt_dezenas').addEventListener('input', calcular);
         document.getElementById('qt_jogos').addEventListener('input', calcular);
 
+        function compartilharDados() {
+
+            // Seu código para compartilhar dados
+            //console.log("Compartilhando dados...");
+
+            var tabelaResultados = document.getElementById("tabelaResultados").innerHTML;
+
+            // Abra uma nova janela ou div para exibir a tabela
+            var novaJanela = window.open('', '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
+            novaJanela.document.write('<html><head><title>Tabela de Resultados</title></head><body>');
+            novaJanela.document.write('<h3>Lista de resultados do concurso escolhido</h3>');
+            novaJanela.document.write(tabelaResultados);
+            novaJanela.document.write('</body></html>');
+            novaJanela.document.close();
+        }
     </script>
 
-    <script src="excluir_dezenas.js?v=1.1"></script>
-    <script src="inclurir_dezenas.js?v=1.2"></script>
+    <script src="excluir_dezenas.js?v=1.2"></script>
+    <script src="inclurir_dezenas.js?v=1.1"></script>
     <script src="carregar_jogos.js"></script>
     <script src="carregar_resultados.js"></script>
 </body>
