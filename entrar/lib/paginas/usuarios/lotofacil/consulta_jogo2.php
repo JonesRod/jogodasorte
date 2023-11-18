@@ -133,12 +133,24 @@
                         VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$qt_dez', '$creditos_restante')";
                         $conn->query($sql_creditos) or die($conn->error);
 
-                        $sql_usuario = "UPDATE usuarios
-                        SET 
-                        creditos = '$creditos_restante'
-                        WHERE id = '$id'";
+                        $sql_dados = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
+                        $dados = $sql_dados->fetch_assoc(); 
 
-                        $conn->query($sql_usuario) or die($conn->error);
+                        if(isset($dados["admin"]) == 1){
+                            $sql_usuario = "UPDATE usuarios
+                            SET 
+                            creditos = '1000000'
+                            WHERE id = '$id'";
+
+                            $conn->query($sql_usuario) or die($conn->error);
+                        }else{
+                            $sql_usuario = "UPDATE usuarios
+                            SET 
+                            creditos = '$creditos_restante'
+                            WHERE id = '$id'";
+
+                            $conn->query($sql_usuario) or die($conn->error);
+                        }
                         
                     } else {
                         // Se houver um erro na consulta
@@ -209,12 +221,24 @@
                             VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$qt_dez', '$creditos_restante')";
                             $conn->query($sql_creditos) or die($conn->error);
 
-                            $sql_usuario = "UPDATE usuarios
-                            SET 
-                            creditos = '$creditos_restante_formatado'
-                            WHERE id = '$id'";
-
-                            $conn->query($sql_usuario) or die($conn->error);
+                            $sql_dados = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
+                            $dados = $sql_dados->fetch_assoc(); 
+                            
+                            if(isset($dados["admin"]) == 1){
+                                $sql_usuario = "UPDATE usuarios
+                                SET 
+                                creditos = '1000000'
+                                WHERE id = '$id'";
+    
+                                $conn->query($sql_usuario) or die($conn->error);
+                            }else{
+                                $sql_usuario = "UPDATE usuarios
+                                SET 
+                                creditos = '$creditos_restante'
+                                WHERE id = '$id'";
+    
+                                $conn->query($sql_usuario) or die($conn->error);
+                            }
 
                         } else {
                             // Se houver um erro na consulta

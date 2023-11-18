@@ -104,6 +104,28 @@
                             $repeticoes_por_quantidade[$quantidade_repetidos]++;
                             $concurso_repetido_por_quantidade[$quantidade_repetidos][] = $row['concurso'];
                         }
+                        if (isset($row['referente_jogo'])) {
+                            $referente_jogo_bd = $row['referente_jogo'];
+                        }
+    
+                        $qt_dez = intval($qt_dez);
+                        $id = intval($id);
+                        $id_usuario = intval($id_usuario);
+    
+                        // Atualiza o array de contagem de acordo com a quantidade de repetições
+                        if ($quantidade_repetidos >= 15 && $qt_dez <= 17 && $referente_jogo_bd === $referente_jogo) {
+                            echo '1';
+                            exit;
+                        }else if($quantidade_repetidos >= 16 && $qt_dez <= 18 && $referente_jogo_bd === $referente_jogo) {
+                            echo '1';
+                            exit;
+                        }else if($quantidade_repetidos >= 17 && $qt_dez <= 19 && $referente_jogo_bd === $referente_jogo) {
+                            echo '1';
+                            exit;
+                        }else if($quantidade_repetidos >= 18 && $qt_dez <= 20 && $referente_jogo_bd === $referente_jogo) {
+                            echo '1';
+                            exit;
+                        }
                     }
 
                     // Exibe a contagem de números repetidos para diferentes quantidades de dezenas
@@ -133,13 +155,24 @@
                         VALUES(NOW(), '$id', '$saldo_formatado', '$valor_jogo', '$referente_jogo', '$concurso_referente', '$qt_dez', '$creditos_restante')";
                         $conn->query($sql_creditos) or die($conn->error);
 
-                        $sql_usuario = "UPDATE usuarios
-                        SET 
-                        creditos = '$creditos_restante'
-                        WHERE id = '$id'";
+                        $sql_dados = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
+                        $dados = $sql_dados->fetch_assoc(); 
 
-                        $conn->query($sql_usuario) or die($conn->error);
-                        
+                        if(isset($dados["admin"]) == 1){
+                            $sql_usuario = "UPDATE usuarios
+                            SET 
+                            creditos = '1000000'
+                            WHERE id = '$id'";
+
+                            $conn->query($sql_usuario) or die($conn->error);
+                        }else{
+                            $sql_usuario = "UPDATE usuarios
+                            SET 
+                            creditos = '$creditos_restante'
+                            WHERE id = '$id'";
+
+                            $conn->query($sql_usuario) or die($conn->error);
+                        }
                     } else {
                         // Se houver um erro na consulta
                         die($conn->error); 

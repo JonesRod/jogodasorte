@@ -16,7 +16,7 @@
         $sql_query = $conn->query("SELECT * FROM usuarios WHERE id = '$id'") or die($conn->error);
         $usuario = $sql_query->fetch_assoc(); 
         $saldo_str = $usuario ["creditos"];
-        echo $saldo_str;
+        //echo $saldo_str;
         // Substitui ',' por '.' e converte para float
         /*$saldo = (float) str_replace(',', '.', $saldo_str);
 
@@ -68,8 +68,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="gerar_jogos.css">
-    <script src="excluir_dezenas.js?v=1.2"></script>
+    <link rel="stylesheet" href="gerar_jogos.css?v=1.3">
+    <!--<script src="excluir_dezenas.js?v=1.1"></script>-->
 
     <title>Gerador Lotofácil</title>
 </head>
@@ -143,8 +143,8 @@
                     <input type="hidden" id="valor_18" value="<?php echo $valor_18 ;?>">
                     <input type="hidden" id="valor_19" value="<?php echo $valor_19 ;?>">
                     <input type="hidden" id="valor_20" value="<?php echo $valor_20 ;?>">
-                    <input type="text" id="saldo_formatado" value="<?php echo $saldo_str ;?>">
-                    <input type="text" id="valor_sem_formatacao">
+                    <input type="hidden" id="saldo_formatado" value="<?php echo $saldo_str ;?>">
+                    <input type="hidden" id="valor_sem_formatacao">
 
                     <H3 id="valor"></H3>
                     <span id="alerta"></span>
@@ -185,19 +185,20 @@
                     </div>
                     <input readonly id="dezenas" type="text">
                     <div id="contador2"></div>
-                    <input id="qt_contador" type="text"></input>
-                    <input id="valor_sem_milhar" type="text"></input>
+                    <input id="qt_contador" type="hidden"></input>
+                    <input id="valor_sem_milhar" type="hidden"></input>
                     <h3 id="valor_consulta"></h3>
                     <span id="alerta2"></span>
                     <button id="consultar_jogo" onclick="consultar_jogo()">Consultar Jogo</button> 
                 </div>
             </div>
-            <div id="listaMeusJogos">
+            <div class="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>
                 <label for="lista_jogos">Concurso</label>
                 <input type="text" id="lista_jogos">
                 <button onclick="carregarJogos()">Carregar</button>
-                <div id="tabelaJogos"></div>                
+                <div id="tabelaJogos"></div>  
+                <button onclick="compartilharlistaMeusJogos()">Compartilhar</button>                
             </div>
         </div>
         <div class="listaResultados">
@@ -206,7 +207,7 @@
             <input type="text" id="lista_resultados">
             <button onclick="carregarResultados()">Carregar</button>
             <div id="tabelaResultados"></div>  
-            <button onclick="compartilharDados()">Compartilhar</button>     
+            <button onclick="compartilharlistaResultados()">Compartilhar</button>     
         </div>
     </div>
     <script>
@@ -227,7 +228,22 @@
         document.getElementById('qt_dezenas').addEventListener('input', calcular);
         document.getElementById('qt_jogos').addEventListener('input', calcular);
 
-        function compartilharDados() {
+        function compartilharlistaMeusJogos() {
+
+            // Seu código para compartilhar dados
+            //console.log("Compartilhando dados...");
+
+            var tabelaResultados = document.getElementById("tabelaJogos").innerHTML;
+
+            // Abra uma nova janela ou div para exibir a tabela
+            var novaJanela = window.open('', '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
+            novaJanela.document.write('<html><head><title>Tabela de jogos</title></head><body>');
+            novaJanela.document.write('<h3>Lista de jogos</h3>');
+            novaJanela.document.write(tabelaResultados);
+            novaJanela.document.write('</body></html>');
+            novaJanela.document.close();
+        }
+        function compartilharlistaResultados() {
 
             // Seu código para compartilhar dados
             //console.log("Compartilhando dados...");
@@ -237,14 +253,14 @@
             // Abra uma nova janela ou div para exibir a tabela
             var novaJanela = window.open('', '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
             novaJanela.document.write('<html><head><title>Tabela de Resultados</title></head><body>');
-            novaJanela.document.write('<h3>Lista de resultados do concurso escolhido</h3>');
+            novaJanela.document.write('<h3>Lista de resultados</h3>');
             novaJanela.document.write(tabelaResultados);
             novaJanela.document.write('</body></html>');
             novaJanela.document.close();
         }
     </script>
 
-    <script src="excluir_dezenas.js?v=1.2"></script>
+    <!--<script src="excluir_dezenas.js?v=1.1"></script>-->
     <script src="inclurir_dezenas.js?v=1.1"></script>
     <script src="carregar_jogos.js"></script>
     <script src="carregar_resultados.js"></script>

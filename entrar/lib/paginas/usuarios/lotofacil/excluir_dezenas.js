@@ -155,7 +155,7 @@ function gerarNumerosAleatorios() {
 
         if (resposta !== '1') {
             // Se a resposta não for 1, incrementa o contador de jogos
-            j++;
+            //j++;
         }
     }
 }
