@@ -64,16 +64,16 @@
 
                     // Atualiza o array de contagem de acordo com a quantidade de repetições
                     if ($quantidade_repetidos >= 15 && $qt_dez <= 17 && $referente_jogo_bd === $referente_jogo) {
-                        echo '1';
+                        echo 'repetido';
                         exit;
                     }else if($quantidade_repetidos >= 16 && $qt_dez <= 18 && $referente_jogo_bd === $referente_jogo) {
-                        echo '1';
+                        echo 'repetido';
                         exit;
                     }else if($quantidade_repetidos >= 17 && $qt_dez <= 19 && $referente_jogo_bd === $referente_jogo) {
-                        echo '1';
+                        echo 'repetido';
                         exit;
                     }else if($quantidade_repetidos >= 18 && $qt_dez <= 20 && $referente_jogo_bd === $referente_jogo) {
-                        echo '1';
+                        echo 'repetido';
                         exit;
                     }
                 }                        
@@ -113,17 +113,11 @@
                         $id_usuario = intval($id_usuario);
     
                         // Atualiza o array de contagem de acordo com a quantidade de repetições
-                        if ($quantidade_repetidos >= 15 && $qt_dez <= 17 && $referente_jogo_bd === $referente_jogo) {
-                            echo '1';
-                            exit;
-                        }else if($quantidade_repetidos >= 16 && $qt_dez <= 18 && $referente_jogo_bd === $referente_jogo) {
-                            echo '1';
-                            exit;
-                        }else if($quantidade_repetidos >= 17 && $qt_dez <= 19 && $referente_jogo_bd === $referente_jogo) {
-                            echo '1';
+                        if ($quantidade_repetidos >= 15 && $qt_dez <= 18 && $referente_jogo_bd === $referente_jogo) {
+                            echo 'repetido';
                             exit;
                         }else if($quantidade_repetidos >= 18 && $qt_dez <= 20 && $referente_jogo_bd === $referente_jogo) {
-                            echo '1';
+                            echo 'repetido';
                             exit;
                         }
                     }

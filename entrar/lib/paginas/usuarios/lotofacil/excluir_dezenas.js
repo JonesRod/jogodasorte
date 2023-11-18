@@ -113,7 +113,6 @@ function gerar_jogo() {
         console.log(saldo);
 
         if (valor <= saldo) {
-            document.getElementById('alerta').textContent = 'Jogo gerado.';
             // Chama a função para gerar os números aleatórios
             gerarNumerosAleatorios();
             limparSelecaoEBotoes();
@@ -149,15 +148,19 @@ function gerarNumerosAleatorios() {
         var numerosDoJogo = gerarNumerosUnicos(1, 25, qt_dezenas, dezenas_excluidas);
         var resultado = numerosDoJogo.join('-');
         console.log(resultado);
+        
 
         // Chama a função PHP e aguarda a resposta
         var resposta = chamar_FuncaoPHP(resultado);
 
-        if (resposta !== '1') {
-            // Se a resposta não for 1, incrementa o contador de jogos
-            //j++;
+        if (resposta === 'repetido') {
+            console.log('repetido');
+            j++;            
+        }else{
+            j++;
         }
     }
+
 }
 
 function chamar_FuncaoPHP(numeros) {
@@ -173,7 +176,7 @@ function chamar_FuncaoPHP(numeros) {
 
     var valor_cada = valor_jogo / qt_jogos;
 
-    console.log(valor_cada);
+    //console.log(valor_cada);
     // Cria um objeto XMLHttpRequest
     var xhr = new XMLHttpRequest();
     var resposta = false;
@@ -184,14 +187,10 @@ function chamar_FuncaoPHP(numeros) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {  
 
-            // A resposta do PHP está disponível em xhr.responseText
-            console.log(xhr.responseText);
-            // Aqui você pode manipular a resposta, como atualizar a página ou exibir uma mensagem.
-
             resposta = xhr.responseText;
 
-            if(resposta === '1'){
-            
+            if(resposta === 'repetido'){
+
             }else{
                 saldo_formatado = parseFloat(saldo_formatado); // Exemplo: 1000.00
                 valor_cada = parseFloat(valor_cada); // Exemplo: 0.10                
@@ -217,8 +216,8 @@ function chamar_FuncaoPHP(numeros) {
 
     var novo_saldo = saldo_formatado - valor_cada;
 
-    console.log("Saldo Formatado:", saldo_formatado);
-    console.log("Valor do Jogo:", valor_jogo);  
+    //console.log("Saldo Formatado:", saldo_formatado);
+    //console.log("Valor do Jogo:", valor_jogo);  
 
     document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
 
@@ -236,7 +235,8 @@ function chamar_FuncaoPHP(numeros) {
 
     // Envie a requisição com os dados
     xhr.send(dados);
-}
+}              
+
 
 function limparSelecaoEBotoes() {
     // Desselecione todos os botões (substitua 'btn' pelo seletor real dos seus botões)
