@@ -181,7 +181,7 @@ function chamar_FuncaoPHP(numeros) {
 
     var valor_cada = valor_jogo / qt_jogos;
 
-    console.log(valor_cada);
+    //console.log(valor_cada);
     // Cria um objeto XMLHttpRequest
     var xhr = new XMLHttpRequest();
     var resposta = false;
@@ -199,7 +199,7 @@ function chamar_FuncaoPHP(numeros) {
             resposta = xhr.responseText;
 
             if(resposta === 'repetido'){
-            
+             // gerar outro jogo no lugar
             }else{
                 saldo_formatado = parseFloat(saldo_formatado); // Exemplo: 1000.00
                 valor_cada = parseFloat(valor_cada); // Exemplo: 0.10                

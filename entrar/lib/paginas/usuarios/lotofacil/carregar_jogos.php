@@ -11,7 +11,7 @@
         $id = $_SESSION['usuario'];
     
         // Consulta SQL para obter os jogos do concurso escolhido ordenados pelo ID
-        $jogos = "SELECT * FROM jogos WHERE id_usuario = $id || concurso_referente = $concursoEscolhido ORDER BY id ASC";
+        $jogos = "SELECT * FROM jogos WHERE id_usuario = $id AND concurso_referente = $concursoEscolhido ORDER BY id ASC";
         $result = $conn->query($jogos);
 
         // Verifica se a consulta foi bem-sucedida
@@ -81,7 +81,7 @@
                 echo "<tr>
                         <td style='text-align: center;'>" . $ordem . "</td>
                         <td style='text-align: center;'>" . $row['qt_dez'] . "</td>
-                        <td>" . $row['jogos'] . "</td>
+                        <td style='text-align: left;'>" . $row['jogos'] . "</td>
                         <td style='text-align: center;'>" . $acertos11 . "</td>
                         <td style='text-align: center;'>" . $acertos12 . "</td>
                         <td style='text-align: center;'>" . $acertos13 . "</td>

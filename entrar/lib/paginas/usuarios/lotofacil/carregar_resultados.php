@@ -8,15 +8,17 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION['usuario'])) {
     $id = $_SESSION['usuario'];
     $concursoEscolhido = $_GET['concurso'];
-
+    $referente_jogo = 'lotofacil';
+    
     // Consulta SQL para obter os jogos do concurso escolhido ordenados pelo ID
-    $jogos = "SELECT * FROM jogos WHERE id_usuario = $id AND concurso_referente = $concursoEscolhido ORDER BY id ASC";
+    $jogos = "SELECT * FROM jogos WHERE id_usuario = $id && referente_jogo = '$referente_jogo' && concurso_referente = $concursoEscolhido ORDER BY id ASC";
     $resultJogos = $conn->query($jogos);
-
+    
     // Verifica se a consulta foi bem-sucedida
     if ($resultJogos === false) {
         die("Erro na consulta: " . $conn->error);
     }
+    
 
     // Exibe a tabela HTML
     echo "<table border='1'>
@@ -84,7 +86,7 @@ if (isset($_SESSION['usuario'])) {
                     echo "<tr>
                             <td style='text-align: center;'>" . $ordem . "</td>
                             <td style='text-align: center;'>" . $rowJogos['qt_dez'] . "</td>
-                            <td>" . $rowJogos['jogos'] . "</td>
+                            <td style='text-align: left;'>" . $rowJogos['jogos'] . "</td>
                             <td style='text-align: center;'>" . $acertos11 . "</td>
                             <td style='text-align: center;'>" . $acertos12 . "</td>
                             <td style='text-align: center;'>" . $acertos13 . "</td>
@@ -107,7 +109,7 @@ if (isset($_SESSION['usuario'])) {
     echo "<h3>Tabela de acertos de todos</h3>";
 
     // Consulta SQL para obter os jogos do concurso escolhido ordenados pelo ID
-    $jogos = "SELECT * FROM jogos WHERE concurso_referente = $concursoEscolhido ORDER BY id ASC";
+    $jogos = "SELECT * FROM jogos WHERE id_usuario = $id && referente_jogo = '$referente_jogo' && concurso_referente <> $concursoEscolhido ORDER BY id DESC";
     $result = $conn->query($jogos);
 
     // Verifica se a consulta foi bem-sucedida
@@ -119,6 +121,7 @@ if (isset($_SESSION['usuario'])) {
     echo "<table border='1'>
             <tr>
                 <th>Usuarios</th>
+                <th>Ref. concurso</th>
                 <th>Qt dez.</th>
                 <th>11 Acertos</th>
                 <th>12 Acertos</th>
@@ -178,6 +181,7 @@ if (isset($_SESSION['usuario'])) {
             if ($acertos11 > 0 || $acertos12 > 0 || $acertos13 > 0 || $acertos14 > 0 || $acertos15 > 0) {
                 echo "<tr>
                         <td style='text-align: center;'>Usuario</td>
+                        <td style='text-align: center;'>".$rowJogos['concurso_referente']."</td>
                         <td style='text-align: center;'>" . $rowJogos['qt_dez'] . "</td>
                         <td style='text-align: center;'>" . $acertos11 . "</td>
                         <td style='text-align: center;'>" . $acertos12 . "</td>
