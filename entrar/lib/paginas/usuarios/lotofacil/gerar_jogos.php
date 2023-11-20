@@ -67,9 +67,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Carregue o script xlsx antes do seu código -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="gerar_jogos.css?v=1.3">
-    <script src="excluir_dezenas.js?v=1.1"></script>
+    <link rel="stylesheet" href="gerar_jogos.css?v=1.1">
+    <script src="excluir_dezenas.js?v=1.2"></script>
 
     <title>Gerador Lotofácil</title>
 </head>
@@ -194,12 +196,13 @@
             </div>
             <div class="listaMeusJogos">
                 <h3>Lista de jogos gerados para o concurso escolhido</h3>
-                <label for="lista_jogos">Concurso</label>
+               <label for="lista_jogos">Concurso</label>
                 <input type="text" id="lista_jogos">
                 <button onclick="carregarJogos()">Carregar</button>
                 <div id="tabelaJogos"></div>  
-                <button onclick="compartilharlistaMeusJogos()">Compartilhar</button>                
-            </div>
+                <button class="busca_jogo" onclick="imprimirListaMeusJogos()">Imprimir</button>
+                <button class="busca_jogo" id="btnExport1">Exportar para Excel</button>                
+            </div> 
         </div>
         <div class="listaResultados">
             <h3>Lista de resultados do concurso escolhido</h3>
@@ -207,9 +210,12 @@
             <input type="text" id="lista_resultados">
             <button onclick="carregarResultados()">Carregar</button>
             <div id="tabelaResultados"></div>  
-            <button onclick="compartilharlistaResultados()">Compartilhar</button>     
+            <button class="busca_jogo" onclick="imprimirlistaResultados()">Imprimir</button> 
+            <button class="busca_jogo" id="btnExport2">Exportar para Excel</button>     
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
     <script>
         document.getElementById('qt_dezenas').addEventListener('input', function() {
             if (this.value < 15) {
@@ -228,39 +234,91 @@
         document.getElementById('qt_dezenas').addEventListener('input', calcular);
         document.getElementById('qt_jogos').addEventListener('input', calcular);
 
-        function compartilharlistaMeusJogos() {
-
-            // Seu código para compartilhar dados
-            //console.log("Compartilhando dados...");
-
-            var tabelaResultados = document.getElementById("tabelaJogos").innerHTML;
-
-            // Abra uma nova janela ou div para exibir a tabela
+        function imprimirListaMeusJogos() {
+            var conteudoDiv = document.getElementById("tabelaJogos").innerHTML;
             var novaJanela = window.open('', '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-            novaJanela.document.write('<html><head><title>Tabela de jogos</title></head><body>');
-            novaJanela.document.write('<h3>Lista de jogos</h3>');
-            novaJanela.document.write(tabelaResultados);
+            novaJanela.document.write('<html><head><title>Imprimir Lista de Jogos</title>');
+            novaJanela.document.write('<style>');
+            novaJanela.document.write('body { font-family: Arial, sans-serif; text-align: center; }');
+            novaJanela.document.write('h3 { color: blue; }'); // Exemplo de estilo para o título
+            novaJanela.document.write('table { margin: 0 auto; border-collapse: collapse; }'); // Centraliza a tabela
+            novaJanela.document.write('td, th { border: 1px solid black; padding: 8px; }'); // Estilo para células da tabela
+            novaJanela.document.write('button { margin: 10; color: blue; }'); // Exemplo de estilo para o título
+            novaJanela.document.write('</style>');
+            novaJanela.document.write('</head><body>');
+            novaJanela.document.write('<h3>Lista dos meus Jogos</h3>');
+            novaJanela.document.write(conteudoDiv);
             novaJanela.document.write('</body></html>');
             novaJanela.document.close();
         }
-        function compartilharlistaResultados() {
 
-            // Seu código para compartilhar dados
-            //console.log("Compartilhando dados...");
+        $(document).ready(function () {
+            $("#btnExport1").click(function (e) {
+                e.preventDefault();
 
-            var tabelaResultados = document.getElementById("tabelaResultados").innerHTML;
+                // Obtenha o valor do campo de entrada lista_jogos
+                var concurso = document.getElementById('lista_jogos').value;
 
-            // Abra uma nova janela ou div para exibir a tabela
+                // Obtenha o conteúdo da tabela
+                var table_div = document.getElementById('tabelaJogos');   
+
+                // Esse "\ufeff" é importante para manter os acentos
+                var blobData = new Blob(['\ufeff' + table_div.outerHTML], { type: 'application/vnd.ms-excel' });
+                var url = window.URL.createObjectURL(blobData);
+                var a = document.createElement('a');
+                a.href = url;
+
+                // Concatene o valor do concurso ao nome do arquivo
+                a.download = 'Meus jogos da Lotofacil referente o concurso ' + concurso + '.xls';
+                a.click();
+            });
+        });
+
+        function imprimirlistaResultados() {
+            var conteudoDiv = document.getElementById("tabelaResultados").innerHTML;
             var novaJanela = window.open('', '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-            novaJanela.document.write('<html><head><title>Tabela de Resultados</title></head><body>');
-            novaJanela.document.write('<h3>Lista de resultados</h3>');
-            novaJanela.document.write(tabelaResultados);
+            novaJanela.document.write('<html><head><title>Imprimir Lista de Resultados</title>');
+            novaJanela.document.write('<style>');
+            novaJanela.document.write('body { font-family: Arial, sans-serif; text-align: center; }');
+            novaJanela.document.write('h3 { color: blue; }'); // Exemplo de estilo para o título
+            novaJanela.document.write('table { margin: 0 auto; border-collapse: collapse; }'); // Centraliza a tabela
+            novaJanela.document.write('td, th { border: 1px solid black; padding: 8px; }'); // Estilo para células da tabela
+            novaJanela.document.write('button { margin: 10; color: blue; }'); // Exemplo de estilo para o título
+            novaJanela.document.write('</style>');
+            novaJanela.document.write('</head><body>');
+            novaJanela.document.write('<h3>Lista dos meus Resultados</h3>');
+            novaJanela.document.write(conteudoDiv);
             novaJanela.document.write('</body></html>');
             novaJanela.document.close();
         }
+
+        $(document).ready(function () {
+            $("#btnExport2").click(function (e) {
+                e.preventDefault();
+
+                // Obtenha o valor do campo de entrada lista_jogos
+                var concurso = document.getElementById('lista_resultados').value;
+
+                // Obtenha o conteúdo da tabela
+                var table_div = document.getElementById('tabelaResultados');   
+
+                // Esse "\ufeff" é importante para manter os acentos
+                var blobData = new Blob(['\ufeff' + table_div.outerHTML], { type: 'application/vnd.ms-excel' });
+                var url = window.URL.createObjectURL(blobData);
+                var a = document.createElement('a');
+                a.href = url;
+
+                // Concatene o valor do concurso ao nome do arquivo
+                a.download = 'Meus resultados da Lotofacil referente o concurso ' + concurso + '.xls';
+                a.click();
+            });
+        });
+
+
     </script>
+    
 
-    <script src="excluir_dezenas.js?v=1.1"></script>
+    <script src="excluir_dezenas.js?v=1.2"></script>
     <script src="inclurir_dezenas.js?v=1.1"></script>
     <script src="carregar_jogos.js"></script>
     <script src="carregar_resultados.js"></script>

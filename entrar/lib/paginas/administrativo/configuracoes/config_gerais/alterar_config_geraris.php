@@ -21,7 +21,11 @@
             $creditos = $conn->escape_string($_POST['creditos']);
             $termos = $conn->escape_string($_POST['termos']);
 
+            // Remover todos os caracteres que não são dígitos, ponto ou vírgula
             $valor_numerico = preg_replace('/[^0-9,.]/', '', $creditos);
+
+            // Substituir a vírgula por um ponto
+            $valor_numerico = str_replace(',', '.', $valor_numerico);
 
             $sql_code = "UPDATE config_admin
             SET 

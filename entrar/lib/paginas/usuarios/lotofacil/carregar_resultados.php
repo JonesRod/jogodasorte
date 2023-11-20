@@ -179,6 +179,7 @@ if (isset($_SESSION['usuario'])) {
 
             // Adiciona a condição para exibir somente os jogos com pelo menos 11 acertos
             if ($acertos11 > 0 || $acertos12 > 0 || $acertos13 > 0 || $acertos14 > 0 || $acertos15 > 0) {
+
                 echo "<tr>
                         <td style='text-align: center;'>Usuario</td>
                         <td style='text-align: center;'>".$rowJogos['concurso_referente']."</td>

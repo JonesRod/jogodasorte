@@ -7,7 +7,20 @@ function config_padrao(){
     document.getElementById('qt_jogos').value = '1';
 
     calcular();
+
+    var concurso_anterior = document.getElementById('ultimo_concurso').value;
+    concurso_anterior = parseFloat(concurso_anterior);
+    var concurso_referente = concurso_anterior + 1;
+
+    document.getElementById('lista_jogos').value = concurso_referente;
+    document.getElementById('lista_resultados').value = concurso_anterior;
+
+    // Simular um clique no botão
+    carregarJogos();
+
+    carregarResultados();
 }
+
 function calcular() {
     var qt_dezenas = parseFloat(document.getElementById('qt_dezenas').value);
     var qt_jogos = parseFloat(document.getElementById('qt_jogos').value);

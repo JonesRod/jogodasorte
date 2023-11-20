@@ -85,6 +85,10 @@ input:focus {
     border-collapse: collapse;
     margin: 10px;
 } 
+.busca_jogo{
+    font-weight: bold; /* Deixa o texto em negrito */
+    margin: 10px;
+}
 #primeirainstrucao{
     font-weight: bold; /* Deixa o texto em negrito */
     text-align: center;
