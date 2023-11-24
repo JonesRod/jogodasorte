@@ -24,7 +24,6 @@ function config_padrao(){
 function calcular() {
     var qt_dezenas = parseFloat(document.getElementById('qt_dezenas').value);
     var qt_jogos = parseFloat(document.getElementById('qt_jogos').value);
-
     var valor_15 = parseFloat(document.getElementById('valor_15').value.replace(',', '.'));
     var valor_16 = parseFloat(document.getElementById('valor_16').value.replace(',', '.'));
     var valor_17 = parseFloat(document.getElementById('valor_17').value.replace(',', '.'));
@@ -139,8 +138,7 @@ function gerar_jogo() {
     }
 }
 
-
-function gerarNumerosAleatorios() {
+/*function gerarNumerosAleatorios() {
     var qt_dezenas = parseInt(document.getElementById('qt_dezenas').value);
     var qt_jogos = parseInt(document.getElementById('qt_jogos').value);
     var dezenas_excluidas = document.getElementById('dezenas_excluidas').value.split('-').map(Number);
@@ -158,19 +156,26 @@ function gerarNumerosAleatorios() {
     }
 
     function gerarJogo() {
-        var numerosDoJogo = gerarNumerosUnicos(1, 25, qt_dezenas, dezenas_excluidas);
-        var resultado = numerosDoJogo.join('-');
-
-        // Chama a função PHP e aguarda a resposta
-        var resposta = chamar_FuncaoPHP(resultado);
-
-        if (resposta === 'repetido') {
-            console.log('Jogo repetido, gerando outro...');
-            return gerarJogo(); // Chama recursivamente para gerar outro jogo
-        }
-        return resultado;
+        return new Promise(async (resolve) => {
+            var numerosDoJogo = gerarNumerosUnicos(1, 25, qt_dezenas, dezenas_excluidas);
+            var resultado = numerosDoJogo.join('-');
+    
+            // Chama a função PHP e aguarda a resposta
+            var resposta = await chamar_FuncaoPHP(resultado);
+    
+            if (resposta === 'repetido') {
+                console.log('Jogo repetido, gerando outro...');
+                exit;
+                //resolve(await gerarJogo()); // Chama recursivamente para gerar outro jogo
+            } else {
+                console.log('Jogo ok');
+                //resolve(resultado);
+                exit;
+            }
+        });
     }
-
+    
+    
     var jogos = [];
     for (var j = 0; j < qt_jogos; j++) {
         var novoJogo = gerarJogo();
@@ -178,85 +183,121 @@ function gerarNumerosAleatorios() {
     }
 
     console.log('Jogos gerados:', jogos);
+}*/
+function gerarNumerosAleatorios() {
+    var qt_dezenas = parseInt(document.getElementById('qt_dezenas').value);
+    var qt_jogos = parseInt(document.getElementById('qt_jogos').value);
+    var dezenas_excluidas = document.getElementById('dezenas_excluidas').value.split('-').map(Number);
+
+    // Função para gerar números aleatórios sem repetição e dentro do intervalo desejado
+    function gerarNumerosUnicos(inicio, fim, quantidade, excluidas) {
+        var numeros = [];
+        while (numeros.length < quantidade) {
+            var numeroAleatorio = Math.floor(Math.random() * (fim - inicio + 1)) + inicio;
+            if (!numeros.includes(numeroAleatorio) && !excluidas.includes(numeroAleatorio)) {
+                numeros.push(numeroAleatorio);
+            }
+        }
+        return numeros.sort((a, b) => a - b);
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function gerarJogo() {
+        var numerosDoJogo = gerarNumerosUnicos(1, 25, qt_dezenas, dezenas_excluidas);
+        var resultado = numerosDoJogo.join('-');
+
+        // Chama a função PHP e aguarda a resposta
+        var resposta = await chamar_FuncaoPHP(resultado);
+
+        if (resposta === 'repetido') {
+            console.log('Jogo repetido, gerando outro...');
+            document.getElementById('alerta').textContent = 'Jogo repetido, gerando outro...';
+            //await sleep(1000); // Aguarda 1 segundo
+            //return gerarJogo(); // Chama recursivamente para gerar outro jogo
+        } else {
+            console.log('Jogo ok');
+            document.getElementById('alerta').textContent = 'Jogo gerado com sucesso.';
+            await sleep(1000); // Aguarda 1 segundo
+
+            if (qt_jogos > 1) {
+                // Se há mais jogos a serem gerados, decrementa a quantidade e continua
+                document.getElementById('qt_jogos').value = qt_jogos - 1;
+                return await gerarJogo();
+            } else {
+                return resultado;
+            }
+        }
+    }
+
+    // Inicia o processo de geração de jogos
+    gerarJogo().then(resultado => {
+        console.log('Jogos gerados:', resultado);
+    });
 }
 
-
 function chamar_FuncaoPHP(numeros) {
-    var concurso_anterior = document.getElementById('ultimo_concurso').value;
-    concurso_anterior = parseFloat(concurso_anterior);
-    var concurso_referente = concurso_anterior + 1;
-    var qt_dez = document.getElementById('qt_dezenas').value;
-    var qt_jogos = document.getElementById('qt_jogos').value;
-    var saldo_formatado = document.getElementById('saldo_formatado').value;    
-    var valor_jogo = document.getElementById('valor_sem_formatacao').value;
-    var referente_jogo = 'lotofacil';
-    var jogos = numeros;
+    return new Promise(function (resolve) {
+        var concurso_anterior = document.getElementById('ultimo_concurso').value;
+        concurso_anterior = parseFloat(concurso_anterior);
+        var concurso_referente = concurso_anterior + 1;
+        var qt_dez = document.getElementById('qt_dezenas').value;
+        var saldo_formatado = document.getElementById('saldo_formatado').value;
+        var valor_jogo = document.getElementById('valor_sem_formatacao').value;
+        var referente_jogo = 'lotofacil';
+        var jogos = numeros;
 
-    var valor_cada = valor_jogo / qt_jogos;
+        var valor_cada = valor_jogo / qt_dez;
 
-    //console.log(valor_cada);
-    // Cria um objeto XMLHttpRequest
-    var xhr = new XMLHttpRequest();
-    var resposta = false;
-    // Especifica o método HTTP e a URL do arquivo PHP
-    xhr.open('POST', 'consulta_jogo1.php', true);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'consulta_jogo1.php', true);
 
-    // Define a função de callback a ser chamada quando a resposta estiver pronta
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {  
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var resposta = xhr.responseText;
 
-            // A resposta do PHP está disponível em xhr.responseText
-            //console.log(xhr.responseText);
-            // Aqui você pode manipular a resposta, como atualizar a página ou exibir uma mensagem.
+                if (resposta === 'repetido') {
+                    // gerar outro jogo no lugar
+                    resolve(resposta);
+                } else {
+                    saldo_formatado = parseFloat(saldo_formatado);
+                    valor_cada = parseFloat(valor_cada);
 
-            resposta = xhr.responseText;
+                    var novo_saldo = saldo_formatado - valor_cada;
 
-            if(resposta === 'repetido'){
-             // gerar outro jogo no lugar
-            }else{
-                saldo_formatado = parseFloat(saldo_formatado); // Exemplo: 1000.00
-                valor_cada = parseFloat(valor_cada); // Exemplo: 0.10                
-            
-                var novo_saldo = saldo_formatado - valor_cada;
-
-                //console.log("Saldo Formatado:", saldo_formatado);
-                //console.log("Valor do Jogo:", valor_jogo);  
-
-                document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
-                document.getElementById('lista_jogos').value = concurso_referente;
-                document.getElementById('alerta').textContent = 'Jogo gerado com sucesso.';
-                               
-                // Simular um clique no botão
-                carregarJogos();
+                    document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
+                    document.getElementById('lista_jogos').value = concurso_referente;
+                    // Simular um clique no botão
+                    carregarJogos();
+                    resolve(resposta);
+                }
             }
+        };
 
-        }
-    };
+        saldo_formatado = parseFloat(saldo_formatado);
+        valor_cada = parseFloat(valor_cada);
 
-    saldo_formatado = parseFloat(saldo_formatado); // Exemplo: 1000.00
-    valor_cada = parseFloat(valor_cada); // Exemplo: 0.10                
+        var novo_saldo = saldo_formatado - valor_cada;
 
-    var novo_saldo = saldo_formatado - valor_cada;
+        document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
 
-    //console.log("Saldo Formatado:", saldo_formatado);
-    //console.log("Valor do Jogo:", valor_jogo);  
+        // Configura os cabeçalhos da requisição
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    document.getElementById('saldo_formatado').value = novo_saldo.toFixed(2);
+        // Monta a string de dados a serem enviados
+        var dados = 'saldo_formatado=' + encodeURIComponent(saldo_formatado) +
+            '&concurso_anterior=' + encodeURIComponent(concurso_anterior) +
+            '&concurso_referente=' + encodeURIComponent(concurso_referente) +
+            '&qt_dez=' + encodeURIComponent(qt_dez) +
+            '&valor_jogo=' + encodeURIComponent(valor_cada) +
+            '&referente_jogo=' + encodeURIComponent(referente_jogo) +
+            '&jogos=' + encodeURIComponent(jogos);
 
-    // Configura os cabeçalhos da requisição
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    // Monta a string de dados a serem enviados
-    var dados = 'saldo_formatado=' + encodeURIComponent(saldo_formatado) +
-                '&concurso_anterior=' + encodeURIComponent(concurso_anterior) +
-                '&concurso_referente=' + encodeURIComponent(concurso_referente) +
-                '&qt_dez=' + encodeURIComponent(qt_dez) +
-                '&valor_jogo=' + encodeURIComponent(valor_cada) +
-                '&referente_jogo=' + encodeURIComponent(referente_jogo) +
-                '&jogos=' + encodeURIComponent(jogos);
-
-    // Envie a requisição com os dados
-    xhr.send(dados);
+        // Envie a requisição com os dados
+        xhr.send(dados);
+    });
 }
 
 

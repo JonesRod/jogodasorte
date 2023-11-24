@@ -316,8 +316,6 @@
 
 
     </script>
-    
-
     <script src="excluir_dezenas.js?v=1.2"></script>
     <script src="inclurir_dezenas.js?v=1.1"></script>
     <script src="carregar_jogos.js"></script>

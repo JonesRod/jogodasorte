@@ -121,7 +121,7 @@ if (isset($_SESSION['usuario'])) {
     echo "<table border='1'>
             <tr>
                 <th>Usuarios</th>
-                <th>Ref. concurso</th>
+                <th>Concurso Ref.</th>
                 <th>Qt dez.</th>
                 <th>11 Acertos</th>
                 <th>12 Acertos</th>
